@@ -1,0 +1,224 @@
+
+/* modal */
+.modal-register {
+  position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background-color: rgba(0, 0, 0, 0.4);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   z-index: 1000;
+   animation: fadeIn linear 0.4s;
+}
+
+.modal-register_content {
+   background-color: #FFF;
+   width: 500px;
+   max-width: calc(100% - 16px);
+   min-height: 200px;
+   position: relative;
+   border-radius: 5px;
+   animation: modalFaceIn ease 0.4s;
+}
+
+.modal-register_inner {
+   margin: 16px;
+}
+
+.modal-register-close {
+   position: absolute;
+   top: 0;
+   right: 0;
+   padding: 16px;
+   cursor: pointer;
+   opacity: 0.8;
+   color: var( --black-user-color);
+   z-index: 10;
+}
+
+.modal-register-close>ion-icon {
+   font-size: 3rem;
+   font-weight: bold;
+}
+
+.modal-register-header {
+   position: relative;
+}
+
+.modal-register-imgs {
+   padding-top: 45%;
+   background-image: url(/vperfume/slide/5.webp);
+   background-repeat: no-repeat;
+   background-position: top center;
+   background-size: cover;
+   border-top-left-radius: 5px;
+   border-top-right-radius: 5px;
+}
+
+.modal-register-head,
+.modal-register-head-register {
+   font-size: 2.5rem;
+   font-weight: bold;
+   display: inline-block;
+   line-height: 1.6;
+   background: linear-gradient(to right, var(--btn-gradient-from), var( --btn-gradient-to));
+   -webkit-background-clip: text;
+   color: transparent;
+   padding: 20px 0 4px 0;
+}
+
+.modal-register-head-group {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.modal-register-head-login {
+   font-size: 2rem;
+   font-weight: bold;
+   display: inline-block;
+   line-height: 1.6;
+   background: linear-gradient(to right, #5e03ad, #a103b6);
+   -webkit-background-clip: text;
+   color: transparent;
+  padding: 4px 0;
+  margin-top: 20px;
+}
+.modal-register-head-login:hover {
+   cursor: pointer;
+   transform: translateX(-2px);
+   transition: all 0.3s ease;
+   opacity: 0.8;
+}
+
+.modal-register-label{
+   display: block;
+   font-size: 1.4rem;
+   font-weight: 400;
+   color: var(--text-color);
+   margin-bottom: 6px;
+}
+
+.modal-register-input{
+   border: 1px solid #c0b8b8;
+   width: 100%;
+   padding: 10px;
+   font-size: 1.4rem;
+   margin-bottom: 16px;
+   outline: none;
+   box-shadow: 0 0.5px 2px rgba(96,97,112,.36);
+   border-radius: 4px;
+}
+
+.modal-register-group {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.modal-register-group-label {
+   display: block;
+   width: 100%;
+}
+
+.modal-register-group-label:first-child{
+   margin-right: 16px ;
+}
+
+
+.modal-register_policy-text {
+   font-size: 1.3rem;
+   line-height: 1.8rem;
+   text-align: center;
+   padding: 0 10px;
+}
+
+.modal-register_text-link {
+   font-weight: 500;
+   text-decoration: none;
+   color: #2e90fa;
+}
+
+.modal-register_text-link:hover {
+   color: #7db4ef;
+}
+
+.modal-register_controls {
+   margin-top: 40px;
+   display:flex;
+   justify-content: flex-end;
+}
+
+.btn--sucsies {
+   min-width: 180px;
+   border-radius: 5px;
+   border: 1px solid #cbd5e1;
+   font-weight: 600;
+   background-color: #edf1f5;
+   color: #a6b3c2;
+}
+
+.modal-register_help {
+   display: flex;
+   justify-content: flex-end;
+}
+
+.modal-register_help-link {
+   text-decoration: none;
+   font-size: 1.4rem;
+   color: #939393;
+   font-weight: 500;
+   line-height: 1.6;
+}
+
+.modal-register_help-separate{
+   display: block;
+   border-left: 1px solid #eaeaea;
+   margin: -1px 16px 0;
+   height: 22px;
+
+}
+.modal-register_help-forgot {
+   color: #ef3f05;
+}
+
+.modal-register_help-forgot:hover {
+   color: #fa5f2c;
+}
+
+
+/* responsive  register*/
+@media (max-width: 1024px) {
+
+}
+
+@media (min-width: 740px) and (max-width: 1024px) {
+  .modal-register_content {
+      width: 100%;
+      max-width: calc(100% - 16px);
+      height: 100vh;
+  }
+  .modal-register-mobile-group {
+      display: block;
+  } 
+}
+
+@media (max-width: 739px) {
+  .modal-register_content {
+      width: 100%;
+      max-width: calc(100% - 16px);
+      max-height: 100%;
+  }
+  .modal-register-mobile-group {
+      display: block;
+  } 
+  .btn-primary {
+      width: 100%;
+      height: 40px;
+  }
+}
+
+/* end responsive register */

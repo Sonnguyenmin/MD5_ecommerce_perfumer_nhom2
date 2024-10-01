@@ -1,0 +1,145 @@
+.dashboard-content {
+  background-color: var(--panel-color); 
+  width: 100%;
+}
+
+.overview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 10px 0 10px;
+  .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 12px;
+    width: calc(100% / 4 - 12px);
+    padding: 25px 40px;
+    background-color: var(--box1-color);
+    .dashboard-text {
+      white-space: nowrap;
+      font-size: 1.7rem;
+      font-weight: 400;
+      color: var(--text-color);
+    }
+    .dashboard-number {
+      font-size: 2.7rem;
+      font-weight: 500;
+      padding: 12px 0;
+      color: var(--text-color);
+    }
+    i {
+      font-size: 2rem;
+      color: var(--text-color);
+    }
+  }
+}
+
+.dashboard-content .box2 {
+  background-color: var(--box2-color);
+}
+
+.dashboard-content .box3 {
+  background-color: var(--box3-color);
+}
+
+
+.table-container {
+  margin-top: 20px;
+  background-color: var(--panel-color);
+  padding: 20px;
+  border-radius: 12px;
+
+  h2 {
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .responsive-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border: 1px solid #ccc;
+      color: var(--text-color);
+    }
+
+    th {
+      font-size: 1.3rem;
+      font-weight: 600;
+      background-color: var(--box1-color);
+      color: var(--text-color);
+    }
+
+    td {
+      font-size: 1.1rem;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--box2-color);
+    }
+
+    @media (max-width: 739px) {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+
+      th, td {
+        display: inline-block;
+        min-width: 150px;
+      }
+    }
+  }
+}
+
+@media (min-width: 740px) and (max-width: 1024px) {
+  .overview .box {
+    width: calc(100% / 2 - 12px);
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 739px) {
+  .overview .box {
+    width: calc(100% - 12px);
+    margin-top: 12px;
+  }
+  
+}
+
+
+.table-group {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between;
+  gap: 20px; 
+}
+
+.table-group-inner {
+  flex: 1; 
+  min-width: 300px; 
+  max-width: 48%; 
+  margin-bottom: 20px; 
+}
+
+
+@media (min-width: 768px) {
+  .table-group-inner {
+    max-width: 48%; 
+  }
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+  .table-group-inner {
+    max-width: 100%; 
+  }
+}

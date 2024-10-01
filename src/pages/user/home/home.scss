@@ -1,0 +1,148 @@
+
+.slider-item-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  display: none !important; 
+}
+
+.swiper-button-item-next,
+.swiper-button-item-prev{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.swiper-button-item-prev {
+  background-color: rgb(255, 255, 255, 0.7);
+  border-radius: 4px;
+  left: 10%; 
+  cursor: pointer;
+}
+
+.swiper-button-item-next {
+  background-color: rgb(255, 255, 255, 0.7);
+  border-radius: 4px;
+  right: 10%; 
+  cursor: pointer;
+}
+
+.swiper-button-item-prev img,
+.swiper-button-item-next img {
+  width: 30px;
+  height: auto;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .swiper-button-item-prev {
+    background-color: rgb(255, 255, 255, 0.7);
+    border-radius: 4px;
+    left: 10%; 
+    cursor: pointer;
+  }
+  
+  .swiper-button-item-next {
+    background-color: rgb(255, 255, 255, 0.7);
+    border-radius: 4px;
+    right: 10%; 
+    cursor: pointer;
+  }
+
+  .swiper-new-prev {
+    background-color: rgba(214, 214, 214, 0.7);
+   border-radius: 4px;
+   left: 0%; 
+   cursor: pointer;
+ }
+ 
+ .swiper-new-next {
+    background-color: rgba(214, 214, 214, 0.7);
+   border-radius: 4px;
+   right: 0%; 
+   cursor: pointer;
+ }
+}
+
+@media (min-width: 740px) and (max-width: 1024px) {
+  .swiper-button-item-prev {
+    background-color: rgb(255, 255, 255, 0.7);
+    border-radius: 4px;
+    left: 10px; 
+    cursor: pointer;
+  }
+  
+  .swiper-button-item-next {
+    background-color: rgb(255, 255, 255, 0.7);
+    border-radius: 4px;
+    right: 10px; 
+    cursor: pointer;
+  }
+
+  .swiper-new-prev {
+    background-color: rgb(255, 255, 255, 0.7);
+    border-radius: 4px;
+    left: 5px; 
+    cursor: pointer;
+  }
+  
+  .swiper-new-next {
+    background-color: rgb(255, 255, 255, 0.7);
+    border-radius: 4px;
+    right: 5px; 
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 739px) {
+  .swiper-button-item-prev,
+  .swiper-button-item-next {
+    display: none; 
+  }
+  .swiper-new-prev,
+  .swiper-new-next {
+    display: none; 
+  }
+}
+
+/*banner slider*/
+.swiper-pagination {
+  display: none;
+}
+
+
+
+.swiper-new-next,
+.swiper-new-prev{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.swiper-new-prev {
+  background-color: rgba(214, 214, 214, 0.7);
+  border-radius: 4px;
+  left: 0%; 
+  cursor: pointer;
+}
+
+.swiper-new-next {
+  background-color: rgba(214, 214, 214, 0.7);
+  border-radius: 4px;
+  right: 0%; 
+  cursor: pointer;
+}
+
+.swiper-new-prev img,
+.swiper-new-next img {
+  width: 30px;
+  height: auto;
+  cursor: pointer;
+}
