@@ -1,44 +1,62 @@
-import './categories.scss';
+import "./categories.scss";
 
-import { Button, Dropdown, Input, Modal, Radio, Select, Tag } from 'antd';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import { FaFilter } from 'react-icons/fa';
-import { IoClose } from 'react-icons/io5';
-import { LuRefreshCw } from 'react-icons/lu';
+import { Button, Dropdown, Input, Modal, Radio, Select, Tag } from "antd";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { FaFilter } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+import { LuRefreshCw } from "react-icons/lu";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { findAll } from "../../../services/categoryService";
 
 const ManagerCategory = () => {
   const items = [
     {
-      key: '1',
+      key: "1",
       label: <span>Hủy bỏ bộ lọc</span>,
     },
     {
-      key: '2',
+      key: "2",
       label: <span>Đang hoạt động</span>,
     },
     {
-      key: '3',
+      key: "3",
       label: <span>Ngừng hoạt động</span>,
     },
   ];
 
   const options = [
     {
-      key: '4',
+      key: "4",
       label: <span>Chỉnh sửa</span>,
     },
     {
-      key: '5',
+      key: "5",
       label: <span>Chặn</span>,
     },
     {
-      key: '6',
+      key: "6",
       label: <span>Xóa</span>,
     },
   ];
 
+  const [isFormAdd, setIsFormAdd] = useState(false);
+
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+
+  const dispatch = useDispatch();
+  const loadData = () => {
+    dispatch(findAll({ page, search }));
+  };
+
+  useEffect(() => {
+    loadData();
+  }, [page, search]);
+
   return (
     <>
+      {/* <button onClick={}>test</button> */}
       <Modal
         title={<h3 className="text-[20px]">Xác nhận xóa</h3>}
         open={false}
@@ -72,7 +90,10 @@ const ManagerCategory = () => {
             placement="bottom"
           >
             <Button className="border-none shadow-none">
-              <FaFilter size={20} className="cursor-pointer text-gray-500 hover:text-gray-600" />
+              <FaFilter
+                size={20}
+                className="cursor-pointer text-gray-500 hover:text-gray-600"
+              />
             </Button>
           </Dropdown>
 
@@ -81,7 +102,10 @@ const ManagerCategory = () => {
               className="w-[300px] py-7 text-[var(--text-color)] text-[14px] font-medium"
               placeholder="Tìm kiếm tài khoản theo tên"
             />
-            <LuRefreshCw size={24} className="text-gray-500 hover:text-gray-700 cursor-pointer" />
+            <LuRefreshCw
+              size={24}
+              className="text-gray-500 hover:text-gray-700 cursor-pointer"
+            />
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -136,10 +160,18 @@ const ManagerCategory = () => {
                     customer.address
                   </td>
                   <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                    {true ? <Tag color="green">Đang hoạt động</Tag> : <Tag color="red">Ngừng hoạt động</Tag>}
+                    {true ? (
+                      <Tag color="green">Đang hoạt động</Tag>
+                    ) : (
+                      <Tag color="red">Ngừng hoạt động</Tag>
+                    )}
                   </td>
                   <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center">
-                    <Dropdown menu={{ items: options }} placement="bottom" trigger={['click']}>
+                    <Dropdown
+                      menu={{ items: options }}
+                      placement="bottom"
+                      trigger={["click"]}
+                    >
                       <Button className="border-none shadow-none focus:shadow-none focus:bg-none">
                         <span className="text-[26px] text-[#d3732a]">
                           <i className="uil uil-file-edit-alt"></i>
@@ -155,7 +187,8 @@ const ManagerCategory = () => {
 
         <div className="mt-4 flex justify-between items-center flex-wrap gap-3">
           <div className="text-[14px] whitespace-nowrap text-[var(--text-color)]">
-            Hiển thị <b className="font-number">10</b> trên <b className="font-number">100</b> bản ghi
+            Hiển thị <b className="font-number">10</b> trên{" "}
+            <b className="font-number">100</b> bản ghi
           </div>
           <div className="flex items-center gap-5">
             <Select
@@ -165,20 +198,20 @@ const ManagerCategory = () => {
               }}
               options={[
                 {
-                  value: '10',
-                  label: 'Hiển thị 10 bản ghi / trang',
+                  value: "10",
+                  label: "Hiển thị 10 bản ghi / trang",
                 },
                 {
-                  value: '20',
-                  label: 'Hiển thị 20 bản ghi / trang',
+                  value: "20",
+                  label: "Hiển thị 20 bản ghi / trang",
                 },
                 {
-                  value: '50',
-                  label: 'Hiển thị 50 bản ghi / trang',
+                  value: "50",
+                  label: "Hiển thị 50 bản ghi / trang",
                 },
                 {
-                  value: '100',
-                  label: 'Hiển thị 100 bản ghi / trang',
+                  value: "100",
+                  label: "Hiển thị 100 bản ghi / trang",
                 },
               ]}
             />
@@ -203,7 +236,10 @@ const ManagerCategory = () => {
             <form className="bg-white px-6 py-5 rounded-lg w-full max-w-md">
               <header className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold mb-4">Thêm mới khách hàng</h2>
-                <IoClose size={24} className="cursor-pointer hover:opacity-70" />
+                <IoClose
+                  size={24}
+                  className="cursor-pointer hover:opacity-70"
+                />
               </header>
               <div className="mb-4">
                 <label className="block font-medium mb-2">Tên</label>
