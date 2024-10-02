@@ -1,10 +1,19 @@
 import { Link } from 'react-router-dom';
 import './register.scss';
+import { Button, Input } from 'antd';
+import { useState } from 'react';
 
 export default function Register() {
+  const [user, setUser] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
   return (
     <>
-      <main className="modal-register ">
+      <form className="modal-register ">
         <div className="modal-register_content">
           <div className="modal-register_inner">
             <div className="modal-register-close">
@@ -23,55 +32,57 @@ export default function Register() {
               <label htmlFor="resgiter-fullName" className="modal-register-label">
                 Họ và tên:
               </label>
-              <input type="text" placeholder="Họ và tên" className="modal-register-input" />
+              <Input name="fullName" id="fullName" placeholder="Họ và tên" className="modal-register-input" />
               <label htmlFor="resgiter-email" className="modal-register-label">
                 Email:
               </label>
-              <input
-                type="text"
-                id="resgiter-email"
-                placeholder="example.@gmail.com"
-                className="modal-register-input"
-              />
+              <Input name="email" id="email" className="modal-register-input" placeholder="example.@gmail.com" />
               <div className="modal-register-group">
                 <div className="modal-register-group-label">
                   <label htmlFor="resgiter-pass" className="modal-register-label">
                     Mật khẩu:
                   </label>
-                  <input type="password" placeholder="Mật khẩu" className="modal-register-input" />
+                  <Input.Password
+                    name="password"
+                    id="password"
+                    placeholder="Mật khẩu"
+                    className="modal-register-input"
+                  />
                 </div>
                 <div className="modal-register-group-label">
                   <label htmlFor="resgiter-pass" className="modal-register-label">
                     Nhập lại mật khẩu:
                   </label>
-                  <input
-                    type="password"
-                    id="resgiter-pass"
+                  <Input.Password
                     placeholder="Nhập lại mật khẩu"
                     className="modal-register-input"
+                    name="confirmPassword"
+                    id="confirmPassword"
                   />
                 </div>
               </div>
             </section>
             <div className="modal-register_aside">
               <p className="modal-register_policy-text">
-                Bằng việc đăng kí, bạn đã đồng ý với Canifa về
+                Bằng việc đăng kí, bạn đã đồng ý với SQ_perfumer về{' '}
                 <a href="" className="modal-register_text-link">
                   Điểu khoản dịch vụ
                 </a>{' '}
-                &amp;
+                &amp;{' '}
                 <a href="" className="modal-register_text-link">
                   Chính sách bảo mật
                 </a>
               </p>
             </div>
             <div className="modal-register_controls">
-              <button className="btn_user-login ">ĐĂNG KÝ</button>
+              <Button htmlType="submit" className="btn_user-login" type="primary">
+                ĐĂNG KÝ
+              </Button>
             </div>
           </div>
           {/* end resgiter */}
         </div>
-      </main>
+      </form>
     </>
   );
 }
