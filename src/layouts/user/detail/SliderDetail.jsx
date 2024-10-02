@@ -9,7 +9,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 
 // Import required modules
-import { FreeMode, Navigation, Thumbs } from 'swiper/modules';
+import { FreeMode, Pagination, Navigation, Thumbs } from 'swiper/modules';
 
 export default function SliderDetail() {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -18,15 +18,19 @@ export default function SliderDetail() {
     <div className="sliderContainer">
       {/* Main Swiper */}
       <Swiper
-        style={{
-          '--swiper-navigation-color': '#fff',
-          '--swiper-pagination-color': '#fff',
-        }}
+        // style={{
+        //   '--swiper-navigation-color': '#fff',
+        //   '--swiper-pagination-color': '#fff',
+        // }}
         loop={true}
         spaceBetween={10}
-        navigation={true}
-        thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined} // Use null instead of undefined
-        modules={[FreeMode, Navigation, Thumbs]}
+        thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined}
+        pagination={{ clickable: true }}
+        navigation={{
+          nextEl: '.swiper-new-next',
+          prevEl: '.swiper-new-prev',
+        }}
+        modules={[FreeMode, Navigation, Thumbs, Pagination]}
         className="mainSwiper"
       >
         <SwiperSlide>
@@ -59,6 +63,12 @@ export default function SliderDetail() {
         <SwiperSlide>
           <img src="/vperfume/nuochoanam/10.jpg" alt="Slide 10" />
         </SwiperSlide>
+        <div className="swiper-new-prev">
+          <img src="/fonts/chevron-back-outline.svg" alt="Previous" />
+        </div>
+        <div className="swiper-new-next">
+          <img src="/fonts/chevron-right-outline.svg" alt="Next" />
+        </div>
       </Swiper>
 
       {/* Thumbnail Swiper */}

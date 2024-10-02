@@ -8,6 +8,7 @@ import Register from '../pages/auth/register';
 import ProductDetails from '../pages/user/productDetail';
 import Shops from '../pages/user/shops';
 import CheckOut from '../pages/user/checkout';
+import ProfileUser from '../pages/user/prodfileUser';
 // import LazyLoader from '../components/LazyLoader';
 
 // const UserPage = React.lazy(() => import('../layouts/user/UserLayout'));
@@ -55,6 +56,10 @@ const PublicRoutes = [
       {
         path: '/checkout',
         element: <CheckOut />,
+      },
+      {
+        path: '/profile',
+        element: <ProfileUser />,
       },
     ],
   },
