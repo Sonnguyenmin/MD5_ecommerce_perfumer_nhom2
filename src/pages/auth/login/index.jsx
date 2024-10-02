@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import './login.scss';
+import { Input } from 'antd';
 
 export default function Login() {
   return (
     <>
-      <div className="modalUser">
+      <form className="modalUser">
         <div className="modalUser_content ">
           <div className="modalUser_inner">
             <div className="modalUser-close ">
@@ -18,21 +19,19 @@ export default function Login() {
               <label htmlFor="resgiter-email" className="modalUser-label">
                 Nhập email của bạn
               </label>
-              <input type="text" className="modalUser-input" placeholder="Email" />
+              <Input name="email" id="email" className="modalUser-input" placeholder="Email" />
               <label htmlFor="resgiter-pass" className="modalUser-label">
                 Mật khẩu:
               </label>
-              <input type="password" className="modalUser-input" placeholder="Mật khẩu" />
+              <Input.Password name="password" id="password" className="modalUser-input" placeholder="Mật khẩu" />
             </section>
             <div className="modalUser_aside">
               <div className="modalUser_help">
-                <a href="" className="modalUser_help-link modalUser_help-forgot">
+                <Link href="" className="modalUser_help-link modalUser_help-forgot">
                   Quên mật khẩu
-                </a>
+                </Link>
                 <span className="modalUser_help-separate" />
-                <a href="" className="modalUser_help-link">
-                  Cần trợ giúp ?
-                </a>
+                <div className="modalUser_help-link">Bạn chưa có tài khoản ấn đăng ký</div>
               </div>
             </div>
             <div className="modalUser_controls">
@@ -44,7 +43,7 @@ export default function Login() {
           </div>
           {/* end*/}
         </div>
-      </div>
+      </form>
     </>
   );
 }
