@@ -8,6 +8,10 @@ const categorySlice = createSlice({
     loading: "idle",
     data: null,
     error: null,
+    totalPages: 1,
+    // size: 5,
+    numberOfElements: 0,
+    totalElements: 0,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -19,7 +23,10 @@ const categorySlice = createSlice({
     builder.addCase(findAll.fulfilled, (state, action) => {
       state.loading = SUCCESSFULLY;
       state.data = action.payload.content;
-      console.log(action);
+      console.log(action.payload);
+      state.totalPages = action.payload.totalPages;
+      state.numberOfElements = action.payload.numberOfElements;
+      state.totalElements = action.payload.totalElements;
     });
 
     builder.addCase(findAll.rejected, (state, action) => {
