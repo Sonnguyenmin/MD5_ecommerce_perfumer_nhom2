@@ -6,22 +6,23 @@
    left: 0;
    right: 0;
    bottom: 0;
-   background-color: rgba(0, 0, 0, 0.4);
+   background-color: #fafafa;
    display: flex;
    align-items: center;
    justify-content: center;
-   z-index: 1000;
-   animation: fadeIn linear 0.4s;
+   z-index: 100;
+   // animation: fadeInUser 0.4s linear ;
 }
 
 .modalUser_content {
-   background-color: #FFF;
    width: 500px;
    max-width: calc(100% - 16px);
    min-height: 200px;
    position: relative;
    border-radius: 5px;
-   animation: modalFaceIn ease 0.4s;
+   animation: modalFaceInUser 0.5s ease ;
+   background-color: #eeeeee;
+ box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .modalUser_inner {
@@ -42,7 +43,15 @@
 .modalUser-close>ion-icon {
    font-size: 3rem;
    font-weight: bold;
+   &:hover {
+      transform: translateX(2px);
+      animation: all 0.3s ease;
+      color: var(--plus-user-color);
+
+   }
 }
+
+
 
 .modalUser-header {
    position: relative;
@@ -105,9 +114,9 @@
 .modalUser-input{
    border: 1px solid #c0b8b8;
    width: 100%;
-   padding: 10px;
+   padding: 7px;
    font-size: 1.4rem;
-   margin-bottom: 16px;
+   margin-bottom: 20px;
    outline: none;
    box-shadow: 0 0.5px 2px rgba(96,97,112,.36);
    border-radius: 4px;
@@ -120,6 +129,7 @@
 }
 
 .modalUser-group-label {
+   position: relative;
    display: block;
    width: 100%;
 }
@@ -147,7 +157,7 @@
 }
 
 .modalUser_controls {
-   margin-top: 60px;
+   margin-top: 20px;
    display:flex;
    justify-content: flex-end;
 }
@@ -176,17 +186,17 @@
 
 .modalUser_help-separate{
    display: block;
-   border-left: 1px solid #eaeaea;
+   border-left: 1px solid #868585;
    margin: -1px 16px 0;
    height: 22px;
 
 }
 .modalUser_help-forgot {
-   color: var( --blue-user-color);
+   color: var( --plus-user-color);
 }
 
 .modalUser_help-forgot:hover {
-   color: var( --blue-user-color);
+   color: var( --plus-user-color);
    opacity: 0.9;
 }
 
@@ -194,8 +204,8 @@
    min-width: 140px;
    color: #21255f;
    border-radius: 5px;
-   font-weight: 500;
-   background-color: #f8f9fa;
+   font-weight: 600;
+   background-color: #edf1f5;
    margin-right: 15px;
    padding: 0 20px;
    height: 38px;
@@ -209,6 +219,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
 }
 
 .btn_user-register:hover {
@@ -233,7 +244,7 @@
    background-color: var(--btn-gradient-from) ;
    color: #eaeaea;
    border-radius: 5px;
-   font-weight: 500;
+   font-weight: 600;
 }
 
 .btn_user-login:hover{
@@ -241,17 +252,3 @@
    opacity: 0.8;
    cursor: pointer;
 }
-
-
-/* responsive login */
-@media (max-width: 1024px) {
-
-}
-@media (min-width: 740px) and (max-width: 1024px) {
-
-}
-
-@media (max-width: 739px) {
-  
-}
-/* end responsive login */

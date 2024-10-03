@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Navigations from './navigations';
 import CartHeader from './CartHeader';
+import AccountUser from './AccountUser';
 
 export default function HeaderLayout() {
   return (
@@ -55,9 +56,7 @@ export default function HeaderLayout() {
                 <Link to="/newspaper" className="h_store-icon">
                   <span>Tin tức</span>
                 </Link>
-                <div className="h_account-icon">
-                  <span>Tài khoản</span>
-                </div>
+                <AccountUser />
                 <CartHeader />
               </div>
               {/* ----------------- */}

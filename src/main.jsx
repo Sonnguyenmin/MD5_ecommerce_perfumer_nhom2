@@ -8,9 +8,13 @@ import './assets/css/base.scss';
 import './assets/css/grid.scss';
 import './assets/css/main.scss';
 import './assets/css/responsive.scss';
+import { Provider } from 'react-redux';
+import store from './redux/store/index.js';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={routes}></RouterProvider>
+    <Provider store={store}>
+      <RouterProvider router={routes} />
+    </Provider>
   </StrictMode>,
 );
