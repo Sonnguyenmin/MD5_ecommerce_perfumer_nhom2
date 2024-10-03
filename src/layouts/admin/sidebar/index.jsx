@@ -9,7 +9,7 @@ export default function SidebarAdmin({ toggleDarkMode, toggleCloseSidebar, isDar
       <nav className={`sidebar ${isClose ? 'close' : ''}`}>
         <Link to="/admin" className="sidebar-logo">
           <img className="sidebar-logo-imgs" src="/SQ_logo.png" alt="" />
-          <span className="sidebar-logo-name">SQ_perfumer</span>
+          <span className="sidebar-logo-name">SQD_perfumer</span>
         </Link>
         <div className="sidebar-menu">
           <ul className="sidebar-list">

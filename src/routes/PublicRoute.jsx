@@ -68,7 +68,7 @@ const PublicRoutes = [
     element: <NotFound />,
   },
   {
-    path: '/Unauthorized',
+    path: '/unauthorized',
     element: <UnauthorizedPage />,
   },
   {

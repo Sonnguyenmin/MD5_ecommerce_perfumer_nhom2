@@ -325,6 +325,7 @@ const ManagerCategory = () => {
           </div>
         </div>
 
+
         {isFormAdd && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[1000]">
             <form
@@ -333,6 +334,7 @@ const ManagerCategory = () => {
               }}
               className="bg-white px-6 py-5 rounded-lg w-full max-w-md z-[1000]"
             >
+
               <header className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold mb-4">Thêm danh mục</h2>
                 <IoClose

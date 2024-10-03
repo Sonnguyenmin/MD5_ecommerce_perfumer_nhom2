@@ -29,7 +29,7 @@ const UnauthorizedPage = () => {
               onClick={() => window.history.back()}
               className="flex-1 flex items-center justify-center px-4 py-4 border border-transparent text-base font-medium rounded-md text-red-600 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out"
             >
-              <FaArrowLeft className="mr-2 text-[16px]" /> Trở lại
+              <FaArrowLeft className="mr-2 text-[16px]" onClick={() => window.history.back()} /> Trở lại
             </button>
           </div>
         </div>

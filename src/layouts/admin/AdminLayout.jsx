@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './adminLayout.scss';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import HeaderAdmin from './header';
 import SidebarAdmin from './sidebar';
 
@@ -26,6 +26,17 @@ export default function AdminLayout() {
     localStorage.setItem('close', JSON.stringify(updateClose));
   };
 
+  const isRoleAdmin = () => {
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (user) {
+      if (user.roles.includes('ROLE_ADMIN')) {
+        return true;
+      }
+      return false;
+    }
+    return false;
+  };
+
   return (
     <>
       <main className={`sidebarMain ${isDarkMode ? 'dark' : ''}`}>
@@ -42,7 +53,8 @@ export default function AdminLayout() {
             isDarkMode={isDarkMode}
           />
           <div className="admin-wrapper">
-            <Outlet />
+            {isRoleAdmin() ? <Outlet /> : <Navigate to={'/login'} />}
+            {/* <Outlet /> */}
           </div>
         </div>
       </main>
