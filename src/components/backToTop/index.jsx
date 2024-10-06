@@ -35,7 +35,7 @@ export default function BackToTop() {
       {isShow && (
         <button
           onClick={handleBackToTop}
-          className="fixed right-[30px] bottom-[30px] px-4 py-4 bg-[var(--plus-user-color)] rounded-[5px] z-[80]"
+          className="fixed right-[30px] bottom-[30px] px-4 py-4 bg-[var(--plus-user-color)] rounded-[5px] z-[50]"
         >
           <i className="uil uil-angle-up flex items-center justify-center font-bold text-[24px] text-[var(--white-user-color)]"></i>
         </button>

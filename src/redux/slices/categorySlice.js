@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { findAll } from "../../services/categoryService";
-import { FAILED, PENDING, SUCCESSFULLY } from "../constants/status";
+import { createSlice } from '@reduxjs/toolkit';
+import { findAll } from '../../services/categoryService';
+import { FAILED, IDLE, PENDING, SUCCESSFULLY } from '../constants/status';
 
 const categorySlice = createSlice({
-  name: "category",
+  name: 'category',
   initialState: {
-    loading: "idle",
+    loading: IDLE,
     data: null,
     error: null,
     totalPages: 1,
@@ -23,7 +23,6 @@ const categorySlice = createSlice({
     builder.addCase(findAll.fulfilled, (state, action) => {
       state.loading = SUCCESSFULLY;
       state.data = action.payload.content;
-      console.log(action.payload);
       state.totalPages = action.payload.totalPages;
       state.numberOfElements = action.payload.numberOfElements;
       state.totalElements = action.payload.totalElements;

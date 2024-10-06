@@ -2,7 +2,7 @@ import './sidebar.scss';
 import { Link, NavLink } from 'react-router-dom';
 import React from 'react';
 
-export default function SidebarAdmin({ toggleDarkMode, toggleCloseSidebar, isDarkMode, isClose }) {
+export default function SidebarAdmin({ toggleDarkMode, toggleCloseSidebar, isDarkMode, isClose, t }) {
   return (
     <>
       <div className={!isClose ? 'sidebar-overlay' : ''} onClick={toggleCloseSidebar}></div>
@@ -16,63 +16,77 @@ export default function SidebarAdmin({ toggleDarkMode, toggleCloseSidebar, isDar
             <li className="sidebar-item">
               <NavLink end to="/admin" className="sidebar-link">
                 <i className="uil uil-estate"></i>
-                <span className="sidebar-link-name">Trang Quản trị</span>
+                <span className="sidebar-link-name">{t('admin.0.sidebar.0.dashboard')}</span>
               </NavLink>
             </li>
             <li className="sidebar-item">
-              <NavLink to="content" className="sidebar-link">
-                <i className="uil uil-files-landscapes"></i>
-                <span className="sidebar-link-name">Content</span>
+              <NavLink to="brand" className="sidebar-link">
+                <i className="uil uil-cube"></i>
+                <span className="sidebar-link-name">{t('admin.0.sidebar.0.brand')}</span>
               </NavLink>
             </li>
             <li className="sidebar-item">
               <NavLink to="categories" className="sidebar-link">
                 <i className="uil uil-layer-group"></i>
-                <span className="sidebar-link-name">Danh mục</span>
+                <span className="sidebar-link-name">{t('admin.0.sidebar.0.category')}</span>
               </NavLink>
             </li>
             <li className="sidebar-item">
-              <NavLink to="sizes" className="sidebar-link">
+              <NavLink to="capacity" className="sidebar-link">
                 <i className="uil uil-image-resize-landscape"></i>
-                <span className="sidebar-link-name">Kích thước</span>
-              </NavLink>
-            </li>
-            <li className="sidebar-item">
-              <NavLink to="color" className="sidebar-link">
-                <i className="uil uil-palette"></i>
-                <span className="sidebar-link-name">Màu sắc</span>
+                <span className="sidebar-link-name">{t('admin.0.sidebar.0.capacity')}</span>
               </NavLink>
             </li>
             <li className="sidebar-item">
               <NavLink to="products" className="sidebar-link">
-                <i className="uil uil-wallet"></i>
-                <span className="sidebar-link-name">Sản phẩm</span>
+                <i className="uil uil-box"></i>
+                <span className="sidebar-link-name">{t('admin.0.sidebar.0.product')}</span>
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink to="productDetail" className="sidebar-link">
+                <i className="uil uil-dropbox"></i>
+                <span className="sidebar-link-name">{t('admin.0.sidebar.0.productDetail')}</span>
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink to="order" className="sidebar-link">
+                <i className="uil uil-shopping-basket"></i>
+                <span className="sidebar-link-name">{t('admin.0.sidebar.0.order')}</span>
               </NavLink>
             </li>
             <li className="sidebar-item">
               <NavLink to="comments" className="sidebar-link">
                 <i className="uil uil-comment-message"></i>
-                <span className="sidebar-link-name">Bình luận</span>
+                <span className="sidebar-link-name">{t('admin.0.sidebar.0.comment')}</span>
               </NavLink>
             </li>
             <li className="sidebar-item">
               <NavLink to="slider" className="sidebar-link">
-                <i className="uil uil-images"></i>
-                <span className="sidebar-link-name">Trình chiếu</span>
+                <i className="uil uil-meeting-board"></i>
+                <span className="sidebar-link-name">{t('admin.0.sidebar.0.banner')}</span>
+              </NavLink>
+            </li>
+            <li className="sidebar-item">
+              <NavLink to="users" className="sidebar-link">
+                <i className="uil uil-users-alt"></i>
+                <span className="sidebar-link-name">{t('admin.0.sidebar.0.user')}</span>
               </NavLink>
             </li>
           </ul>
           <ul className="sidebar-logout">
-            <li className="sidebar-item ">
-              <a href="" className="sidebar-link">
+            {/* <li className="sidebar-item ">
+              <div className="sidebar-link">
                 <i className="uil uil-signout"></i>
-                <span className="sidebar-link-name">Đăng xuất</span>
-              </a>
-            </li>
+                <span className="sidebar-link-name">{t('admin.0.sidebar.0.signOut')}</span>
+              </div>
+            </li> */}
             <li className="sidebar-item sidebar-mode">
-              <div href="#" className="sidebar-link">
+              <div className="sidebar-link">
                 {isDarkMode ? <i className="uil uil-moon"></i> : <i className="uil uil-sun"></i>}
-                <span className="sidebar-link-name">{`${isDarkMode ? 'Chế độ tối' : 'chế độ sáng'}`}</span>
+                <span className="sidebar-link-name">
+                  {isDarkMode ? t('admin.0.sidebar.0.darkMode') : t('admin.0.sidebar.0.lightMode')}
+                </span>
               </div>
               <div className="sidebar-toggle">
                 <span className={`sidebar-switch ${isDarkMode ? 'dark' : ''}`} onClick={toggleDarkMode}></span>

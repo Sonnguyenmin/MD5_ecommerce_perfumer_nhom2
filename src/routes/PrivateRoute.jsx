@@ -4,6 +4,8 @@ import Dashboard from '../pages/admin/dashboard';
 import AdminLayout from '../layouts/admin/AdminLayout';
 import ManagerCategory from '../pages/admin/managerCategory';
 import ManagerProduct from '../pages/admin/managerProduct';
+import ManagerUser from '../pages/admin/managerUser';
+import ManagerBanner from '../pages/admin/managerBanner';
 
 // const AdminPage = React.lazy(() => import('../layouts/admin/AdminLayout'));
 // const DashboardPage = React.lazy(() => import('../pages/admin/dashboard'));
@@ -47,6 +49,14 @@ const PrivateRoutes = [
       {
         path: 'products',
         element: <ManagerProduct />,
+      },
+      {
+        path: 'users',
+        element: <ManagerUser />,
+      },
+      {
+        path: 'slider',
+        element: <ManagerBanner />,
       },
     ],
   },

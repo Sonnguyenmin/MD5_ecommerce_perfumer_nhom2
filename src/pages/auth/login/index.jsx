@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react';
 import { login } from '../../../services/authService';
 import { useDispatch } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { Cookies } from 'react-cookie';
 
 export default function Login() {
   //Hàm xử lý tắt form
@@ -98,20 +97,24 @@ export default function Login() {
         const resultAction = await dispatch(login(user));
 
         const originalPromiseResult = unwrapResult(resultAction);
-        console.log(originalPromiseResult);
 
         if (originalPromiseResult) {
           let data = originalPromiseResult.data;
-          console.log(data);
-          const cookies = new Cookies();
-          cookies.set('accessToken', data.accessToken, { maxAge: 864000 });
-          cookies.set('type', data.type);
 
-          data = { ...data, accessToken: '', type: '' };
+          const userInfo = {
+            address: data.address,
+            avatar: data.avatar,
+            createdAt: data.createdAt,
+            email: data.email,
+            fullName: data.fullName,
+            phone: data.phone,
+            roles: data.roles,
+            username: data.username,
+          };
 
-          localStorage.setItem('user', JSON.stringify(data));
+          localStorage.setItem('userInfo', JSON.stringify(userInfo));
 
-          if (data.roles.includes('ROLE_ADMIN')) {
+          if (data?.roles.some((item) => item === 'ROLE_ADMIN')) {
             navigate('/admin');
           } else {
             navigate('/');
@@ -120,12 +123,12 @@ export default function Login() {
           notification.success({
             message: 'Thành công',
             description: 'Đăng nhập thành công',
+            duration: 2,
           });
         }
       } catch (error) {
-        const responseError = error?.response?.data?.data;
-        message.error(responseError);
-        setErrorServer(responseError);
+        message.error(error.toString());
+        // setErrorServer(error);
       } finally {
         setIsLoading(false);
       }

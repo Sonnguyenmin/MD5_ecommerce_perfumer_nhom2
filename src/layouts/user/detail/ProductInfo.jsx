@@ -87,7 +87,7 @@ export default function ProductInfo({ toggleVisibility, visible }) {
           </div>
         </div>
         <div className="product-details-desc">
-          <div className="details-desc-wrap" onClick={() => toggleVisibility('description')}>
+          {/* <div className="details-desc-wrap" onClick={() => toggleVisibility('description')}>
             <div className={visible.description ? 'details-desc-list action' : 'details-desc-list'}>Mô tả</div>
             {visible.description && (
               <div className="details-desc-content">
@@ -96,7 +96,7 @@ export default function ProductInfo({ toggleVisibility, visible }) {
                 Nguyên liệu mềm mại thoáng mát, chống tia UV bảo vệ làn da dưới nắng.
               </div>
             )}
-          </div>
+          </div> */}
 
           <div className="details-desc-wrap" onClick={() => toggleVisibility('material')}>
             <div className={visible.material ? 'details-desc-list action' : 'details-desc-list'}>Chất liệu</div>

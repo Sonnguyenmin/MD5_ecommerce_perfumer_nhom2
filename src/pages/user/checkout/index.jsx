@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './checkout.scss';
 
 import React from 'react';
@@ -10,9 +11,9 @@ export default function CheckOut() {
           <ul className="breadcrumb_list">
             <li className="breadcrumb_item">
               <ion-icon name="home-outline" />
-              <a href="/home.html" className="breadcrumb_link">
+              <Link href="/home.html" className="breadcrumb_link">
                 Trang chủ
-              </a>
+              </Link>
             </li>
             <li className="breadcrumb_item">
               <strong>Checkout</strong>
@@ -41,9 +42,9 @@ export default function CheckOut() {
                   <div className="checkout-inner">
                     <header className="checkout-header">
                       <h2 className="checkout-title">Thông tin giao hàng</h2>
-                      <a href="" className="checkout-edit">
+                      <Link href="" className="checkout-edit">
                         Thay đổi
-                      </a>
+                      </Link>
                     </header>
                     <div className="checkout-form-content">
                       <div className="checkout-form-fullname">
@@ -120,9 +121,9 @@ export default function CheckOut() {
                           <td className="checkout-col">
                             <div className="checkout-info">
                               <div className="checkout-photo">
-                                <a href="" className="checkout-photo-link">
+                                <Link href="" className="checkout-photo-link">
                                   <img src="vperfume/nuochoanu/1.jpg" alt="" className="checkout-photo-img" />
-                                </a>
+                                </Link>
                               </div>
                               <div className="checkout-details">
                                 <strong className="checkout-details-name">Váy liên bé gái</strong>

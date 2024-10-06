@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import ProductDescription from './productDescription';
+import ProductRelateReviews from './productRelateReviews';
 
 export default function ProductReview({ product }) {
   const [selectedValue, setSelectedValue] = useState('Description');
@@ -10,9 +12,9 @@ export default function ProductReview({ product }) {
     <>
       <div className="mt-14">
         {/* Form with Radio Inputs */}
-        <div className="radio-inputs w-full flex rounded-lg bg-[var(--plus-user-color)]  px-4 pt-4 space-x-4">
+        <div className="radio-inputs w-full flex rounded-lg border-b-2 border-[var(--border-user-color)]  px-5 pt-3 space-x-5">
           {/* Description Radio */}
-          <label className="radio relative cursor-pointer">
+          <label className="radio relative cursor-pointer relative">
             <input
               type="radio"
               name="radio"
@@ -23,10 +25,12 @@ export default function ProductReview({ product }) {
             />
             <span
               className={`name flex items-center justify-center rounded-t-lg px-3 py-4 text-[1.4rem] font-medium  transition-all duration-150 relative ${
-                selectedValue === 'Description' ? 'bg-gray-200 font-semibold' : 'hover:text-white'
+                selectedValue === 'Description'
+                  ? 'text-[var(--plus-user-color)] font-semibold'
+                  : 'hover:text-[var(--plus-user-color)e'
               }`}
             >
-              Description
+              MÔ TẢ
             </span>
             {selectedValue === 'Description' && (
               <>
@@ -37,7 +41,7 @@ export default function ProductReview({ product }) {
           </label>
 
           {/* Review Radio */}
-          <label className="radio relative cursor-pointer">
+          <label className="radio relative cursor-pointer relative">
             <input
               type="radio"
               name="radio"
@@ -48,10 +52,12 @@ export default function ProductReview({ product }) {
             />
             <span
               className={`name flex items-center justify-center rounded-t-lg text-[1.4rem] font-medium px-3 py-4 transition-all duration-150 relative ${
-                selectedValue === 'Reviews' ? 'bg-gray-200 font-semibold' : 'hover:text-white'
+                selectedValue === 'Reviews'
+                  ? 'text-[var(--plus-user-color)] font-semibold'
+                  : 'hover:text-[var(--plus-user-color)e'
               }`}
             >
-              Review
+              ĐÁNH GIÁ KHÁCH HÀNG
             </span>
             {selectedValue === 'Reviews' && (
               <>
@@ -62,7 +68,7 @@ export default function ProductReview({ product }) {
           </label>
 
           {/* Shipping Radio */}
-          <label className="radio relative cursor-pointer">
+          {/* <label className="radio relative cursor-pointer relative">
             <input
               type="radio"
               name="radio"
@@ -73,7 +79,9 @@ export default function ProductReview({ product }) {
             />
             <span
               className={`name flex items-center justify-center rounded-t-lg text-[1.4rem] font-medium  px-3 py-4 transition-all duration-150 relative ${
-                selectedValue === 'Shipping' ? 'bg-gray-200 font-semibold' : 'hover:text-white'
+                selectedValue === 'Shipping'
+                  ? 'text-[var(--plus-user-color)] font-semibold'
+                  : 'hover:text-[var(--plus-user-color)e'
               }`}
             >
               Shipping Policy
@@ -84,15 +92,13 @@ export default function ProductReview({ product }) {
                 <span className="absolute w-2.5 h-2.5 bg-green-400 bottom-0 left-[-10px] rounded-br-full shadow-lg"></span>
               </>
             )}
-          </label>
+          </label> */}
         </div>
 
         {/* Conditional Divs */}
-        {/* {selectedValue === 'Description' && < />}
+        {selectedValue === 'Description' && <ProductDescription />}
 
         {selectedValue === 'Reviews' && <ProductRelateReviews product={product} />}
-
-        {selectedValue === 'Shipping' && <ProductRelateShipping />} */}
       </div>
     </>
   );
