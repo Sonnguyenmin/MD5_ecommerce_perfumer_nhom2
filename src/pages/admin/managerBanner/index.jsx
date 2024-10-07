@@ -1,63 +1,41 @@
+import { Button, Dropdown, Input, notification, Select } from 'antd';
 
-import './categories.scss';
-
-import { Button, Dropdown, Input, Modal, notification, Radio, Select, Tag } from 'antd';
 import Pagination from '@mui/material/Pagination';
+
 import { FaFilter } from 'react-icons/fa';
 import { LuRefreshCw } from 'react-icons/lu';
 import { styled } from '@mui/material/styles';
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDebounce } from '@uidotdev/usehooks';
-import AddCategory from './addCategory';
-import EditCategory from './EditCategory';
+import { addBanner, deleteBanner, editBanner, findAllBanner } from '../../../services/bannerService';
+import { useEffect, useState } from 'react';
+import AddBanner from './AddBanner';
+import DeleteBanner from './DeleteBanner';
+import EditBanner from './EditBanner';
 
-export default function ManagerCategory() {
-  //#region Khai báo các biến trạng thái category
-
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { IoClose } from "react-icons/io5";
-import {
-  addCategory,
-  deleteCategory,
-  editCategory,
-  findAllCategory,
-  findAllCategoryNoPagination,
-} from "../../../services/categoryService";
-
-
+export default function ManagerBanner() {
+  //#region Hàm khởi tạo trạng thái banner
   const [isFormAdd, setIsFormAdd] = useState(false);
   const [isFormEdit, setIsFormEdit] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [baseId, setBaseId] = useState(null);
-  const [category, setCategory] = useState({
-    categoryName: '',
-    description: '',
+  const [banner, setBanner] = useState({
+    bannerName: '',
+    urlImage: '',
   });
+  const [file, setFile] = useState(null);
 
-  const [categoryNameError, setCategoryNameError] = useState('');
- 
-
-  const {
-    dataCategory,
-    loadingCategory,
-    errorCategory,
-    totalPagesCategory,
-    numberOfElementsCategory,
-    totalElementsCategory,
-    allCategories,
-  } = useSelector((state) => state.category);
-
+  const [urlImageError, setUrlImageError] = useState('');
+  const { data, totalPages, numberOfElements, totalElements } = useSelector((state) => state.banner);
 
   const dispatch = useDispatch();
   const debounce = useDebounce(search, 500);
 
   const loadData = () => {
-    dispatch(findAllCategory({ page, search: debounce }));
+    dispatch(findAllBanner({ page, search: debounce }));
   };
-
   //#endregion
 
   /**
@@ -68,28 +46,20 @@ import {
   }, [page, debounce]);
 
   /**
-   * Hàm xác thực dữ liệu cho danh mục.
+   * Hàm xác thực dữ liệu cho banner.
    * @param {*} name - Tên của trường cần xác thực.
    * @param {*} value - Giá trị cần xác thực.
    * @returns {boolean} - Trả về true nếu hợp lệ, false nếu không.
    */
-  const validateData = (name, value, id = null) => {
+  const validateData = (name, value) => {
     let inValid = true;
     switch (name) {
-      case 'categoryName':
-        if (!value.trim()) {
-          setCategoryNameError('Tên danh mục không được để trống');
+      case 'urlImage':
+        if (!value) {
+          setUrlImageError('Ảnh banner không được để trống');
           inValid = false;
         } else {
-          const existingCategory = data.find(
-            (cate) => cate.categoryName.toLowerCase() === value.toLowerCase() && cate.id !== id,
-          );
-          if (existingCategory) {
-            setCategoryNameError('Tên danh mục đã tồn tại');
-            inValid = false;
-          } else {
-            setCategoryNameError('');
-          }
+          setUrlImageError('');
         }
         break;
       default:
@@ -111,111 +81,156 @@ import {
    * Hàm xử lý thay đổi ô tìm kiếm.
    * @param {*} e - Đối tượng sự kiện.
    */
-  const handleSearch = (e) => {
-    setSearch(e.target.value);
+  const handleBannerSearch = (e) => {
+    const value = e.target.value;
+    setSearch(value);
     setPage(1);
   };
 
   /**
-   * Hàm xử lý thay đổi trong các trường nhập liệu cho chi tiết danh mục.
+   * Hàm xử lý thay đổi trong các trường nhập liệu cho chi tiết banner.
    * @param {*} e - Đối tượng sự kiện.
    */
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
-    setCategory({
-      ...category,
+    setBanner({
+      ...banner,
       [name]: value,
     });
-
-    validateData(name, value);
   };
 
   /**
-   * Hàm xử lý thêm một danh mục mới.
-   * @param {*} category - Danh mục cần thêm.
+   * Xử lý việc chọn tệp cho hình ảnh banner.
+   * @param {*} e - Sự kiện được kích hoạt khi người dùng chọn tệp.
    */
-  const handleAddCategory = (category) => {
-    const categoryNameValid = validateData('categoryName', category.categoryName);
+  const handleGetFile = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    validateData('urlImage', selectedFile);
+  };
 
-    if (categoryNameValid) {
-      dispatch(addCategory(category)).then(() => {
+  /**
+   * Xử lý việc thêm banner mới.
+   * Kiểm tra tính hợp lệ của hình ảnh và thực hiện hành động thêm banner.
+   */
+  const handleAddBanner = () => {
+    const isUrlImageValid = validateData('urlImage', file);
+
+    if (!isUrlImageValid) {
+      notification.error({
+        message: 'Lỗi',
+        description: 'Vui lòng chọn hình ảnh banner!',
+        duration: 2,
+      });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('bannerName', banner.bannerName);
+    formData.append('urlImage', file);
+
+    dispatch(addBanner(formData))
+      .then(() => {
         loadData();
         notification.success({
           message: 'Thành công',
-          description: 'Danh mục đã được thêm thành công!',
+          description: 'Banner đã được thêm thành công!',
+          duration: 1,
+        });
+      })
+      .catch((error) => {
+        notification.error({
+          message: 'Lỗi',
+          description: 'Có lỗi xảy ra trong quá trình thêm banner!',
           duration: 2,
         });
       });
-      setIsFormAdd(false);
-    }
+
+    //reset lại form
+    setBanner({ bannerName: '', urlImage: '' });
+    setFile(null);
+    setIsFormAdd(false);
   };
 
   /**
-   * Mở form chỉnh sửa cho một danh mục cụ thể.
-   * @param {*} id - ID của danh mục cần chỉnh sửa.
+   * Mở form chỉnh sửa cho một banner cụ thể.
+   * @param {*} id - ID của banner cần chỉnh sửa.
    */
   const handleOpenFormEdit = (id) => {
-    // find the old cat
-    const findById = data.find((cat) => cat.id === id);
+    const findBannerById = data.find((ban) => ban.id === id);
     setBaseId(id);
-    setCategory(findById);
+    setBanner(findBannerById);
     setIsFormEdit(true);
   };
 
+  /**
+   * Mở modal xác nhận để xóa banner.
+   * @param {*} id - ID của banner cần xóa.
+   */
   const handleOpenModal = (id) => {
     setBaseId(id);
     setIsModal(true);
   };
 
   /**
-   * Hàm xử lý thay đổi trạng thái của một danh mục.
-   * Chuyển đổi trạng thái của danh mục dựa trên ID của nó.
+   * Hàm xử lý chỉnh sửa một banner.
+   * Xác thực ảnh và gửi hành động chỉnh sửa nếu hợp lệ.
    *
-   * @param {*} id - ID của danh mục cần cập nhật.
+   * @param {*} param - Chứa baseId của banner cần chỉnh sửa.
    */
-  const handleChangeStatus = (id) => {
-    const categoryStatusFindById = data.find((cate) => cate.id === id);
-    const updatedStatus = !categoryStatusFindById.status;
+  const handleEditBanner = ({ baseId }) => {
+    // Nếu không có file mới, giữ lại ảnh cũ
+    if (file) {
+      const isUrlImageValid = validateData('urlImage', file);
 
-    dispatch(editCategory({ id, category: { ...categoryStatusFindById, status: updatedStatus } })).then(() => {
-      loadData();
-      notification.success({
-        message: 'Thành công',
-        description: `Danh mục đã được ${updatedStatus ? 'Đang hoạt động' : 'Ngừng hoạt động'}!`,
-        duration: 1,
-      });
-    });
-  };
+      if (!isUrlImageValid) {
+        notification.error({
+          message: 'Lỗi',
+          description: 'Vui lòng chọn hình ảnh banner hợp lệ!',
+          duration: 1,
+        });
+        return;
+      }
+    }
 
-  /**
-   * Hàm xử lý chỉnh sửa một danh mục.
-   * Xác thực tên danh mục và gửi hành động chỉnh sửa nếu hợp lệ.
-   *
-   * @param {*} param - Chứa baseId của danh mục cần chỉnh sửa.
-   */
-  const handleEditCategory = ({ baseId }) => {
-    const categoryNameValid = validateData('categoryName', category.categoryName.trim(), baseId);
-    if (categoryNameValid) {
-      dispatch(editCategory({ id: baseId, category: category })).then(() => {
+    const formData = new FormData();
+    formData.append('bannerName', banner.bannerName);
+
+    // Nếu có file mới thì thêm vào formData, không thì giữ ảnh cũ
+    if (file) {
+      formData.append('urlImage', file);
+    }
+
+    dispatch(editBanner({ baseId, formData }))
+      .then(() => {
         loadData();
         notification.success({
           message: 'Thành công',
-          description: 'Danh mục đã được chỉnh sửa thành công!',
+          description: 'Banner đã được chỉnh sửa thành công!',
+          duration: 1,
+        });
+      })
+      .catch((error) => {
+        notification.error({
+          message: 'Lỗi',
+          description: 'Chỉnh sửa banner không thành công!',
           duration: 1,
         });
       });
-      setIsFormEdit(false);
-    }
+
+    // Reset lại form
+    setBanner({ bannerName: '', urlImage: '' });
+    setFile(null);
+    setIsFormEdit(false);
   };
 
   /**
-   * Hàm xử lý xóa một danh mục.
-   * Gửi hành động xóa và hiển thị thông báo thành công.
-   *
-   * @param {*} id - ID của danh mục cần xóa.
+   * Xử lý việc xóa banner.
+   * Gửi yêu cầu xóa banner và cập nhật trạng thái sau khi xóa.
+   * @param {*} id - ID của banner cần xóa.
    */
-  const handleDeleteCategory = (id) => {
-    dispatch(deleteCategory(id)).then(() => {
+  const handleDeleteBanner = (id) => {
+    dispatch(deleteBanner(id)).then(() => {
       if (numberOfElements === 1 && page > 1) {
         setPage(page - 1);
       } else {
@@ -223,41 +238,37 @@ import {
       }
       notification.success({
         message: 'Thành công',
-        description: 'Danh mục đã được xóa thành công!',
+        description: 'banner đã được xóa thành công!',
         duration: 1,
       });
     });
-
     setIsModal(false);
   };
 
   /**
-   * Định nghĩa các mục cho việc lọc danh mục.
+   *Danh sách các mục để sắp xếp danh sách banner.
    */
   const items = [
     {
       key: '1',
-      label: <span>Hủy bỏ bộ lọc</span>,
+      label: <span>Sắp xếp theo STT</span>,
     },
     {
       key: '2',
-      label: <span>Đang hoạt động</span>,
+      label: <span>Sắp xếp theo A đến Z</span>,
     },
     {
       key: '3',
-      label: <span>Ngừng hoạt động</span>,
+      label: <span>Sắp xếp theo Z đến A</span>,
     },
   ];
 
   /**
-   * Tạo các tùy chọn cho việc tương tác với một danh mục.
-   * Bao gồm các hành động chỉnh sửa, thay đổi trạng thái và xóa dựa trên ID danh mục.
-   *
-   * @param {*} id - ID của danh mục.
-   * @returns {Array} - Mảng các đối tượng tùy chọn.
+   * Tạo các tùy chọn cho menu thả xuống liên quan đến từng banner.
+   * @param {*} id - ID của banner.
+   * @returns {Array} - Mảng các tùy chọn cho menu thả xuống.
    */
   const options = (id) => {
-    const category = data.find((cat) => cat.id === id);
     return [
       {
         key: '4',
@@ -274,14 +285,6 @@ import {
       },
       {
         key: '5',
-        label: (
-          <span className="leading-[32px]" onClick={() => handleChangeStatus(id)}>
-            {category.status ? 'Chặn' : 'Bỏ chặn'}
-          </span>
-        ),
-      },
-      {
-        key: '6',
         label: (
           <span className="leading-[32px]" onClick={() => handleOpenModal(id)}>
             Xóa
@@ -313,29 +316,15 @@ import {
 
   return (
     <>
-      <Modal
-        title={<h3 className="text-[20px]">Xác nhận xóa</h3>}
-        open={isModal}
-        maskClosable={false}
-        footer={
-          <>
-            <Button onClick={() => setIsModal(false)}>Hủy</Button>
-            <Button danger type="primary" onClick={() => handleDeleteCategory(baseId)}>
-              Xóa
-            </Button>
-          </>
-        }
-      >
-        <p>Bạn có chắc chắn muốn xóa danh mục này không?</p>
-      </Modal>
+      <DeleteBanner handleDeleteBanner={handleDeleteBanner} isModal={isModal} setIsModal={setIsModal} baseId={baseId} />
 
       <div className="w-full bg-[var(--panel-color)] rounded-[6px] mx-auto p-6">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-[20px] leading-10 text-[var(--text-color)] whitespace-nowrap font-bold font-number">
-            Danh sách danh mục
+          <h1 className="text-[20px] text-[var(--text-color)] whitespace-nowrap font-bold font-number">
+            Danh sách Banner
           </h1>
-          <Button onClick={() => setIsFormAdd(true)} type="primary" className="py-7">
-            Thêm mới danh mục
+          <Button type="primary" className="py-6" onClick={() => setIsFormAdd(true)}>
+            Thêm mới banner
           </Button>
         </div>
         <div className="mb-4 flex justify-between items-center">
@@ -353,8 +342,8 @@ import {
           <div className="flex items-center gap-3">
             <Input.Search
               className="w-[300px] py-7 text-[var(--text-color)] text-[14px] font-medium"
-              placeholder="Tìm kiếm danh mục theo tên"
-              onChange={handleSearch}
+              placeholder="Tìm kiếm banner theo tên"
+              onChange={handleBannerSearch}
             />
             <LuRefreshCw size={24} className="text-gray-500 hover:text-gray-700 cursor-pointer" />
           </div>
@@ -363,16 +352,15 @@ import {
           <div className="h-[56vh] overflow-y-auto">
             <table className="min-w-full table-auto">
               <thead className="sticky top-0 z-10">
-                <tr className="bg-[var(--box1-color)] max-w-full">
+                <tr className="bg-[var(--box1-color)]">
                   <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
                     STT
                   </th>
                   <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
                     Tên
                   </th>
-
                   <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
-                    Trạng thái
+                    Hình ảnh
                   </th>
                   <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
                     Hành động
@@ -380,31 +368,29 @@ import {
                 </tr>
               </thead>
               <tbody className="overflow-y-auto">
-
-                {dataCategory?.length === 0 ? (
+                {data?.length === 0 ? (
                   <tr>
                     <td
                       colSpan={4}
                       className="px-4 h-[50px] text-[20px] text-[var(--text-color)] text-center font-bold"
                     >
-                      {search ? `Không tìm thấy danh mục tên  ${search}` : 'Danh sách danh mục trống'}
-
+                      {search ? `Không tìm thấy banner tên ${search}` : 'Danh sách banner trống'}
                     </td>
                   </tr>
                 ) : (
-                  dataCategory?.map((cat, index) => (
-                    <tr key={cat.id} className="border-b ">
-                      <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
+                  data?.map((banner, index) => (
+                    <tr className="border-b" key={banner.id}>
+                      <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
                         {index + 1 + (page - 1) * 5}
                       </td>
-                      <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                        {cat.categoryName}
+                      <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
+                        {banner.bannerName || 'Đang cập nhật'}
                       </td>
-                      <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                        {cat.status ? <Tag color="green">Đang hoạt động</Tag> : <Tag color="red">Ngừng hoạt động</Tag>}
+                      <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
+                        <img src={banner.urlImage} alt="" className="w-[90%] h-[90%] object-contain" />
                       </td>
-                      <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center">
-                        <Dropdown menu={{ items: options(cat.id) }} placement="bottom" trigger={['click']}>
+                      <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center">
+                        <Dropdown menu={{ items: options(banner.id) }} placement="bottom" trigger={['click']}>
                           <Button className="border-none shadow-none focus:shadow-none focus:bg-none">
                             <span className="text-[26px] text-[#d3732a]">
                               <i className="uil uil-file-edit-alt"></i>
@@ -422,13 +408,11 @@ import {
 
         <div className="mt-4 flex justify-between items-center flex-wrap gap-3">
           <div className="text-[14px] whitespace-nowrap text-[var(--text-color)]">
-
-            Hiển thị <b className="font-number">{numberOfElementsCategory}</b>{" "}
-            trên <b className="font-number">{totalElementsCategory}</b> bản ghi
-
+            Hiển thị <b className="font-number">{numberOfElements}</b> trên{' '}
+            <b className="font-number">{totalElements}</b> bản ghi
           </div>
           <div className="flex items-center gap-5">
-            {/* <Select
+            <Select
               defaultValue="Hiển thị 10 bản ghi / trang"
               style={{
                 width: 220,
@@ -451,40 +435,35 @@ import {
                   label: 'Hiển thị 100 bản ghi / trang',
                 },
               ]}
-            /> */}
+            />
 
             <CustomPagination
               color="primary"
               size="large"
               page={page}
-              count={totalPagesCategory}
+              count={totalPages}
               onChange={handleChangePage}
             ></CustomPagination>
           </div>
         </div>
-
-
-        {/* Form add */}
         {isFormAdd && (
-          <AddCategory
-            handleChangeInput={handleChangeInput}
-            categoryNameError={categoryNameError}
-            handleAddCategory={handleAddCategory}
+          <AddBanner
+            handleAddBanner={handleAddBanner}
             setIsFormAdd={setIsFormAdd}
-            category={category}
+            handleChangeInput={handleChangeInput}
+            handleGetFile={handleGetFile}
+            urlImageError={urlImageError}
           />
-
-       
         )}
 
-        {/* Form edit */}
         {isFormEdit && (
-          <EditCategory
+          <EditBanner
+            handleEditBanner={() => handleEditBanner({ baseId })}
             handleChangeInput={handleChangeInput}
-            category={category}
             setIsFormEdit={setIsFormEdit}
-            handleEditCategory={() => handleEditCategory({ baseId })}
-            categoryNameError={categoryNameError}
+            handleGetFile={handleGetFile}
+            banner={banner}
+            urlImageError={urlImageError}
           />
         )}
       </div>

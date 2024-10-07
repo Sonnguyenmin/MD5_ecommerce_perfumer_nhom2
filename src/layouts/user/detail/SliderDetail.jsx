@@ -73,7 +73,7 @@ export default function SliderDetail() {
 
       {/* Thumbnail Swiper */}
       <Swiper
-        onSwiper={setThumbsSwiper} // This sets thumbsSwiper when the thumbnail Swiper is initialized
+        onSwiper={setThumbsSwiper}
         loop={true}
         spaceBetween={10}
         slidesPerView={4}

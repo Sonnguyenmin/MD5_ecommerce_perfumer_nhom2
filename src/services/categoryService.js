@@ -1,5 +1,7 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { BASE_URL } from "../api";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { BASE_URL } from '../api';
+import { DELETE, GET, POST, PUT } from '../constants/httpMethod';
+
 
 export const findAllCategory = createAsyncThunk(
   "category/findAll",
@@ -29,20 +31,13 @@ export const addCategory = createAsyncThunk(
   }
 );
 
-export const editCategory = createAsyncThunk(
-  "category/edit",
-  async ({ id, category }) => {
-    const res = await BASE_URL.put(`admin/categories/${id}`, category);
-    console.log(res);
-    return res;
-  }
-);
 
-export const deleteCategory = createAsyncThunk(
-  "category/delete",
-  async (id) => {
-    const res = await BASE_URL.delete(`admin/categories/${id}`);
-    console.log(res);
-    return res;
-  }
-);
+export const editCategory = createAsyncThunk('category/edit', async ({ id, category }) => {
+  const res = await BASE_URL[PUT](`admin/categories/${id}`, category);
+  return res;
+});
+
+export const deleteCategory = createAsyncThunk('category/delete', async (id) => {
+  const res = await BASE_URL[DELETE](`admin/categories/${id}`);
+  return res;
+});

@@ -133,6 +133,7 @@ export default function Register() {
           notification.success({
             message: 'Thành công',
             description: response?.data?.data,
+            duration: 2,
           });
         }
       } catch (error) {
@@ -249,9 +250,9 @@ export default function Register() {
                   Điểu khoản dịch vụ
                 </Link>{' '}
                 &amp;{' '}
-                <a href="" className="modal-register_text-link">
+                <Link href="" className="modal-register_text-link">
                   Chính sách bảo mật
-                </a>
+                </Link>
               </p>
             </div>
             <div className="modal-register_controls">

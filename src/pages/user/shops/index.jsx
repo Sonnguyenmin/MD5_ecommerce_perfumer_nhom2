@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './shops.scss';
 
 export default function Shops() {
@@ -85,7 +86,7 @@ export default function Shops() {
                     <div className="product_free">
                       <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                     </div>
-                    <a
+                    <Link
                       href=""
                       className="product_item-img"
                       style={{
@@ -96,9 +97,9 @@ export default function Shops() {
                       <span>Thêm nhanh vào giỏ</span>
                     </div>
                     <div className="product_opsions">
-                      <a href="" className="product_item-head">
+                      <Link href="" className="product_item-head">
                         Áo khoác chống nắng nam
-                      </a>
+                      </Link>
                       <div className="product_item-price">549.000 ₫</div>
                     </div>
                   </div>
@@ -111,7 +112,7 @@ export default function Shops() {
                     <div className="product_free">
                       <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                     </div>
-                    <a
+                    <Link
                       href=""
                       className="product_item-img"
                       style={{
@@ -122,9 +123,9 @@ export default function Shops() {
                       <span>Thêm nhanh vào giỏ</span>
                     </div>
                     <div className="product_opsions">
-                      <a href="" className="product_item-head">
+                      <Link href="" className="product_item-head">
                         Áo khoác chống nắng nam
-                      </a>
+                      </Link>
                       <div className="product_item-price">549.000 ₫</div>
                     </div>
                   </div>
@@ -137,7 +138,7 @@ export default function Shops() {
                     <div className="product_free">
                       <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                     </div>
-                    <a
+                    <Link
                       href=""
                       className="product_item-img"
                       style={{
@@ -148,9 +149,9 @@ export default function Shops() {
                       <span>Thêm nhanh vào giỏ</span>
                     </div>
                     <div className="product_opsions">
-                      <a href="" className="product_item-head">
+                      <Link href="" className="product_item-head">
                         Áo khoác chống nắng nam
-                      </a>
+                      </Link>
                       <div className="product_item-price">549.000 ₫</div>
                     </div>
                   </div>
@@ -163,7 +164,7 @@ export default function Shops() {
                     <div className="product_free">
                       <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                     </div>
-                    <a
+                    <Link
                       href=""
                       className="product_item-img"
                       style={{
@@ -174,9 +175,9 @@ export default function Shops() {
                       <span>Thêm nhanh vào giỏ</span>
                     </div>
                     <div className="product_opsions">
-                      <a href="" className="product_item-head">
+                      <Link href="" className="product_item-head">
                         Áo khoác chống nắng nam
-                      </a>
+                      </Link>
                       <div className="product_item-price">549.000 ₫</div>
                     </div>
                   </div>
@@ -189,7 +190,7 @@ export default function Shops() {
                     <div className="product_free">
                       <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                     </div>
-                    <a
+                    <Link
                       href=""
                       className="product_item-img"
                       style={{
@@ -200,9 +201,9 @@ export default function Shops() {
                       <span>Thêm nhanh vào giỏ</span>
                     </div>
                     <div className="product_opsions">
-                      <a href="" className="product_item-head">
+                      <Link href="" className="product_item-head">
                         Áo khoác chống nắng nam
-                      </a>
+                      </Link>
                       <div className="product_item-price">549.000 ₫</div>
                     </div>
                   </div>
@@ -215,7 +216,7 @@ export default function Shops() {
                     <div className="product_free">
                       <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                     </div>
-                    <a
+                    <Link
                       href=""
                       className="product_item-img"
                       style={{
@@ -226,9 +227,9 @@ export default function Shops() {
                       <span>Thêm nhanh vào giỏ</span>
                     </div>
                     <div className="product_opsions">
-                      <a href="" className="product_item-head">
+                      <Link href="" className="product_item-head">
                         Áo khoác chống nắng nam
-                      </a>
+                      </Link>
                       <div className="product_item-price">549.000 ₫</div>
                     </div>
                   </div>
@@ -241,7 +242,7 @@ export default function Shops() {
                     <div className="product_free">
                       <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                     </div>
-                    <a
+                    <Link
                       href=""
                       className="product_item-img"
                       style={{
@@ -252,9 +253,9 @@ export default function Shops() {
                       <span>Thêm nhanh vào giỏ</span>
                     </div>
                     <div className="product_opsions">
-                      <a href="" className="product_item-head">
+                      <Link href="" className="product_item-head">
                         Áo khoác chống nắng nam
-                      </a>
+                      </Link>
                       <div className="product_item-price">549.000 ₫</div>
                     </div>
                   </div>
@@ -267,7 +268,7 @@ export default function Shops() {
                     <div className="product_free">
                       <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                     </div>
-                    <a
+                    <Link
                       href=""
                       className="product_item-img"
                       style={{
@@ -278,9 +279,9 @@ export default function Shops() {
                       <span>Thêm nhanh vào giỏ</span>
                     </div>
                     <div className="product_opsions">
-                      <a href="" className="product_item-head">
+                      <Link href="" className="product_item-head">
                         Áo khoác chống nắng nam
-                      </a>
+                      </Link>
                       <div className="product_item-price">549.000 ₫</div>
                     </div>
                   </div>
@@ -293,7 +294,7 @@ export default function Shops() {
                     <div className="product_free">
                       <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                     </div>
-                    <a
+                    <Link
                       href=""
                       className="product_item-img"
                       style={{
@@ -304,9 +305,9 @@ export default function Shops() {
                       <span>Thêm nhanh vào giỏ</span>
                     </div>
                     <div className="product_opsions">
-                      <a href="" className="product_item-head">
+                      <Link href="" className="product_item-head">
                         Áo khoác chống nắng nam
-                      </a>
+                      </Link>
                       <div className="product_item-price">549.000 ₫</div>
                     </div>
                   </div>
@@ -319,7 +320,7 @@ export default function Shops() {
                     <div className="product_free">
                       <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                     </div>
-                    <a
+                    <Link
                       href=""
                       className="product_item-img"
                       style={{
@@ -330,9 +331,9 @@ export default function Shops() {
                       <span>Thêm nhanh vào giỏ</span>
                     </div>
                     <div className="product_opsions">
-                      <a href="" className="product_item-head">
+                      <Link href="" className="product_item-head">
                         Áo khoác chống nắng nam
-                      </a>
+                      </Link>
                       <div className="product_item-price">549.000 ₫</div>
                     </div>
                   </div>
@@ -345,7 +346,7 @@ export default function Shops() {
                     <div className="product_free">
                       <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                     </div>
-                    <a
+                    <Link
                       href=""
                       className="product_item-img"
                       style={{
@@ -356,9 +357,9 @@ export default function Shops() {
                       <span>Thêm nhanh vào giỏ</span>
                     </div>
                     <div className="product_opsions">
-                      <a href="" className="product_item-head">
+                      <Link href="" className="product_item-head">
                         Áo khoác chống nắng nam
-                      </a>
+                      </Link>
                       <div className="product_item-price">549.000 ₫</div>
                     </div>
                   </div>
@@ -371,7 +372,7 @@ export default function Shops() {
                     <div className="product_free">
                       <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                     </div>
-                    <a
+                    <Link
                       href=""
                       className="product_item-img"
                       style={{
@@ -382,9 +383,9 @@ export default function Shops() {
                       <span>Thêm nhanh vào giỏ</span>
                     </div>
                     <div className="product_opsions">
-                      <a href="" className="product_item-head">
+                      <Link href="" className="product_item-head">
                         Áo khoác chống nắng nam
-                      </a>
+                      </Link>
                       <div className="product_item-price">549.000 ₫</div>
                     </div>
                   </div>
@@ -392,34 +393,34 @@ export default function Shops() {
               </div>
               <ul className="pagination tootbal_pagination">
                 <li className="pagination-item">
-                  <a href="" className="pagination-item_link">
+                  <Link href="" className="pagination-item_link">
                     <ion-icon name="chevron-back-outline" />
-                  </a>
+                  </Link>
                 </li>
                 <li className="pagination-item pagination-item--active">
-                  <a href="" className="pagination-item_link">
+                  <Link href="" className="pagination-item_link">
                     1
-                  </a>
+                  </Link>
                 </li>
                 <li className="pagination-item">
-                  <a href="" className="pagination-item_link">
+                  <Link href="" className="pagination-item_link">
                     2
-                  </a>
+                  </Link>
                 </li>
                 <li className="pagination-item">
-                  <a href="" className="pagination-item_link">
+                  <Link href="" className="pagination-item_link">
                     ...
-                  </a>
+                  </Link>
                 </li>
                 <li className="pagination-item">
-                  <a href="" className="pagination-item_link">
+                  <Link href="" className="pagination-item_link">
                     5
-                  </a>
+                  </Link>
                 </li>
                 <li className="pagination-item">
-                  <a href="" className="pagination-item_link">
+                  <Link href="" className="pagination-item_link">
                     <ion-icon name="chevron-forward-outline" />
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

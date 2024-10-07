@@ -14,9 +14,8 @@ const handleAddInterceptors = (instance) => {
     (config) => {
       const cookies = new Cookies();
       const accessToken = cookies.get('accessToken');
-      const type = cookies.get('type');
-      if (accessToken && type) {
-        config.headers.Authorization = `${type} ${accessToken}`;
+      if (accessToken) {
+        config.headers.Authorization = `Bearer ${accessToken.data.accessToken}`;
       }
       return config;
     },
@@ -25,4 +24,5 @@ const handleAddInterceptors = (instance) => {
   // response
 };
 
+handleAddInterceptors(BASE_URL);
 export default BASE_URL;

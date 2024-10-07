@@ -17,7 +17,7 @@ export default function ProductDetails() {
     }));
   };
 
-  const [currentImage, setCurrentImage] = useState(1); // Bắt đầu với hình ảnh đầu tiên
+  // const [currentImage, setCurrentImage] = useState(1); // Bắt đầu với hình ảnh đầu tiên
 
   return (
     <>

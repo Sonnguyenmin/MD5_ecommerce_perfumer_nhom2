@@ -1,0 +1,44 @@
+{
+  "admin": [
+    {
+      "sidebar": [
+        {
+          "dashboard": "Trang quản trị",
+          "brand": "Thương hiệu",
+          "category": "Danh mục",
+          "capacity": "Dung tích",
+          "product": "Sản phẩm",
+          "productDetail": "Chi tiết sản phẩm",
+          "order": "Giỏ hàng",
+          "comment": "Bình luận",
+          "banner": "Trình chiếu",
+          "user": "Người dùng",
+          "signOut": "Đăng xuất",
+          "darkMode": "Chế độ tối",
+          "lightMode": "Chế độ sáng"
+        }
+      ],
+      "headerAdmin": [
+        {
+          "vietnamese": "Việt Nam",
+          "england": "Anh Quốc",
+          "nameAdmin": "Quản trị viên",
+          "signOutAdmin": "Đăng xuất"
+        }
+      ],
+      "categories": [
+        {
+          "title": "Danh sách danh mục",
+          "search": "Tìm kiếm danh mục theo tên",
+          "nameCate": "Tên",
+          "statusCate": "Trạng thái",
+          "actionCate": "Hành động",
+          "page1": "Hiển thị 10 bản ghi/trang",
+          "page2": "SHiển thị 20 bản ghi/trang",
+          "page3": "Hiển thị 50 bản ghi/trang",
+          "page4": "Hiển thị 100 bản ghi/trang"
+        }
+      ]
+    }
+  ]
+}

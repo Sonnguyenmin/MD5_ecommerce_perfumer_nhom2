@@ -1,17 +1,20 @@
+
 import { createSlice } from "@reduxjs/toolkit";
 import {
   findAllCategory,
   findAllCategoryNoPagination,
 } from "../../services/categoryService";
-import { FAILED, PENDING, SUCCESSFULLY } from "../constants/status";
+
 
 const categorySlice = createSlice({
-  name: "category",
+  name: 'category',
   initialState: {
-    loadingCategory: "idle",
+
+    loadingCategory: IDLE,
     dataCategory: null,
     errorCategory: null,
     totalPagesCategory: 1,
+
     // size: 5,
     numberOfElementsCategory: 0,
     totalElementsCategory: 0,
@@ -24,12 +27,14 @@ const categorySlice = createSlice({
       state.loadingCategory = PENDING;
     });
 
+
     builder.addCase(findAllCategory.fulfilled, (state, action) => {
       state.loadingCategory = SUCCESSFULLY;
       state.dataCategory = action.payload.content;
       state.totalPagesCategory = action.payload.totalPages;
       state.numberOfElementsCategory = action.payload.numberOfElements;
       state.totalElementsCategory = action.payload.totalElements;
+
     });
 
     builder.addCase(findAllCategory.rejected, (state, action) => {

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as status from '../constants/status';
-import { login } from '../../services/authService';
+import { loadUserFormCookie, login } from '../../services/authService';
+import { Cookies } from 'react-cookie';
 
 const authSlice = createSlice({
   name: 'auth',
@@ -9,7 +10,15 @@ const authSlice = createSlice({
     data: null,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      const cookies = new Cookies();
+      cookies.remove('accessToken');
+      localStorage.removeItem('userInfo');
+
+      state.data = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state, action) => {
@@ -24,8 +33,13 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.status = status.FAILED;
         state.error = action.error.message;
+      })
+
+      .addCase(loadUserFormCookie.fulfilled, (state, action) => {
+        state.data = action.payload;
       });
   },
 });
 
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;

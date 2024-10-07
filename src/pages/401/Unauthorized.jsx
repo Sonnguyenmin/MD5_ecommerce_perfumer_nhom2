@@ -1,8 +1,9 @@
 import React from 'react';
 import { FaLock, FaHome, FaArrowLeft } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const UnauthorizedPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-100 to-yellow-100 flex items-center justify-center px-4 sm:px-6 lg:px-8">
       <div className="max-w-[400px] w-full space-y-8 bg-white p-10 rounded-xl shadow-2xl">
@@ -26,10 +27,10 @@ const UnauthorizedPage = () => {
               <FaHome className="mr-2 text-[16px]" /> Trang chủ
             </Link>
             <button
-              onClick={() => window.history.back()}
+              onClick={() => navigate(-1)}
               className="flex-1 flex items-center justify-center px-4 py-4 border border-transparent text-base font-medium rounded-md text-red-600 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150 ease-in-out"
             >
-              <FaArrowLeft className="mr-2 text-[16px]" onClick={() => window.history.back()} /> Trở lại
+              <FaArrowLeft className="mr-2 text-[16px]" /> Trở lại
             </button>
           </div>
         </div>
