@@ -1,3 +1,4 @@
+
 import './categories.scss';
 
 import { Button, Dropdown, Input, Modal, notification, Radio, Select, Tag } from 'antd';
@@ -7,13 +8,24 @@ import { LuRefreshCw } from 'react-icons/lu';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory, deleteCategory, editCategory, findAll } from '../../../services/categoryService';
 import { useDebounce } from '@uidotdev/usehooks';
 import AddCategory from './addCategory';
 import EditCategory from './EditCategory';
 
 export default function ManagerCategory() {
   //#region Khai báo các biến trạng thái category
+
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
+import {
+  addCategory,
+  deleteCategory,
+  editCategory,
+  findAllCategory,
+  findAllCategoryNoPagination,
+} from "../../../services/categoryService";
+
+
   const [isFormAdd, setIsFormAdd] = useState(false);
   const [isFormEdit, setIsFormEdit] = useState(false);
   const [isModal, setIsModal] = useState(false);
@@ -24,14 +36,26 @@ export default function ManagerCategory() {
     categoryName: '',
     description: '',
   });
+
   const [categoryNameError, setCategoryNameError] = useState('');
-  const { data, loading, error, totalPages, numberOfElements, totalElements } = useSelector((state) => state.category);
+ 
+
+  const {
+    dataCategory,
+    loadingCategory,
+    errorCategory,
+    totalPagesCategory,
+    numberOfElementsCategory,
+    totalElementsCategory,
+    allCategories,
+  } = useSelector((state) => state.category);
+
 
   const dispatch = useDispatch();
   const debounce = useDebounce(search, 500);
 
   const loadData = () => {
-    dispatch(findAll({ page, search: debounce }));
+    dispatch(findAllCategory({ page, search: debounce }));
   };
 
   //#endregion
@@ -356,17 +380,19 @@ export default function ManagerCategory() {
                 </tr>
               </thead>
               <tbody className="overflow-y-auto">
-                {data?.length === 0 ? (
+
+                {dataCategory?.length === 0 ? (
                   <tr>
                     <td
                       colSpan={4}
                       className="px-4 h-[50px] text-[20px] text-[var(--text-color)] text-center font-bold"
                     >
                       {search ? `Không tìm thấy danh mục tên  ${search}` : 'Danh sách danh mục trống'}
+
                     </td>
                   </tr>
                 ) : (
-                  data?.map((cat, index) => (
+                  dataCategory?.map((cat, index) => (
                     <tr key={cat.id} className="border-b ">
                       <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
                         {index + 1 + (page - 1) * 5}
@@ -396,8 +422,10 @@ export default function ManagerCategory() {
 
         <div className="mt-4 flex justify-between items-center flex-wrap gap-3">
           <div className="text-[14px] whitespace-nowrap text-[var(--text-color)]">
-            Hiển thị <b className="font-number">{numberOfElements}</b> trên{' '}
-            <b className="font-number">{totalElements}</b> bản ghi
+
+            Hiển thị <b className="font-number">{numberOfElementsCategory}</b>{" "}
+            trên <b className="font-number">{totalElementsCategory}</b> bản ghi
+
           </div>
           <div className="flex items-center gap-5">
             {/* <Select
@@ -429,11 +457,12 @@ export default function ManagerCategory() {
               color="primary"
               size="large"
               page={page}
-              count={totalPages}
+              count={totalPagesCategory}
               onChange={handleChangePage}
             ></CustomPagination>
           </div>
         </div>
+
 
         {/* Form add */}
         {isFormAdd && (
@@ -444,6 +473,8 @@ export default function ManagerCategory() {
             setIsFormAdd={setIsFormAdd}
             category={category}
           />
+
+       
         )}
 
         {/* Form edit */}
