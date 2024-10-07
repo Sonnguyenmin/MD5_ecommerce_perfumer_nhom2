@@ -1,4 +1,3 @@
-
 import './categories.scss';
 
 import { Button, Dropdown, Input, Modal, notification, Radio, Select, Tag } from 'antd';
@@ -12,19 +11,16 @@ import { useDebounce } from '@uidotdev/usehooks';
 import AddCategory from './addCategory';
 import EditCategory from './EditCategory';
 
-export default function ManagerCategory() {
-  //#region Khai báo các biến trạng thái category
-
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { IoClose } from "react-icons/io5";
 import {
   addCategory,
   deleteCategory,
   editCategory,
   findAllCategory,
   findAllCategoryNoPagination,
-} from "../../../services/categoryService";
+} from '../../../services/categoryService';
 
+export default function ManagerCategory() {
+  //#region Khai báo các biến trạng thái category
 
   const [isFormAdd, setIsFormAdd] = useState(false);
   const [isFormEdit, setIsFormEdit] = useState(false);
@@ -38,7 +34,6 @@ import {
   });
 
   const [categoryNameError, setCategoryNameError] = useState('');
- 
 
   const {
     dataCategory,
@@ -49,7 +44,6 @@ import {
     totalElementsCategory,
     allCategories,
   } = useSelector((state) => state.category);
-
 
   const dispatch = useDispatch();
   const debounce = useDebounce(search, 500);
@@ -81,7 +75,7 @@ import {
           setCategoryNameError('Tên danh mục không được để trống');
           inValid = false;
         } else {
-          const existingCategory = data.find(
+          const existingCategory = dataCategory.find(
             (cate) => cate.categoryName.toLowerCase() === value.toLowerCase() && cate.id !== id,
           );
           if (existingCategory) {
@@ -156,7 +150,7 @@ import {
    */
   const handleOpenFormEdit = (id) => {
     // find the old cat
-    const findById = data.find((cat) => cat.id === id);
+    const findById = dataCategory.find((cat) => cat.id === id);
     setBaseId(id);
     setCategory(findById);
     setIsFormEdit(true);
@@ -174,7 +168,7 @@ import {
    * @param {*} id - ID của danh mục cần cập nhật.
    */
   const handleChangeStatus = (id) => {
-    const categoryStatusFindById = data.find((cate) => cate.id === id);
+    const categoryStatusFindById = dataCategory.find((cate) => cate.id === id);
     const updatedStatus = !categoryStatusFindById.status;
 
     dispatch(editCategory({ id, category: { ...categoryStatusFindById, status: updatedStatus } })).then(() => {
@@ -257,7 +251,7 @@ import {
    * @returns {Array} - Mảng các đối tượng tùy chọn.
    */
   const options = (id) => {
-    const category = data.find((cat) => cat.id === id);
+    const category = dataCategory.find((cat) => cat.id === id);
     return [
       {
         key: '4',
@@ -380,7 +374,6 @@ import {
                 </tr>
               </thead>
               <tbody className="overflow-y-auto">
-
                 {dataCategory?.length === 0 ? (
                   <tr>
                     <td
@@ -388,7 +381,6 @@ import {
                       className="px-4 h-[50px] text-[20px] text-[var(--text-color)] text-center font-bold"
                     >
                       {search ? `Không tìm thấy danh mục tên  ${search}` : 'Danh sách danh mục trống'}
-
                     </td>
                   </tr>
                 ) : (
@@ -422,10 +414,8 @@ import {
 
         <div className="mt-4 flex justify-between items-center flex-wrap gap-3">
           <div className="text-[14px] whitespace-nowrap text-[var(--text-color)]">
-
-            Hiển thị <b className="font-number">{numberOfElementsCategory}</b>{" "}
-            trên <b className="font-number">{totalElementsCategory}</b> bản ghi
-
+            Hiển thị <b className="font-number">{numberOfElementsCategory}</b> trên{' '}
+            <b className="font-number">{totalElementsCategory}</b> bản ghi
           </div>
           <div className="flex items-center gap-5">
             {/* <Select
@@ -463,7 +453,6 @@ import {
           </div>
         </div>
 
-
         {/* Form add */}
         {isFormAdd && (
           <AddCategory
@@ -473,8 +462,6 @@ import {
             setIsFormAdd={setIsFormAdd}
             category={category}
           />
-
-       
         )}
 
         {/* Form edit */}

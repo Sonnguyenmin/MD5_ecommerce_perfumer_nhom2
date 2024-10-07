@@ -5,32 +5,32 @@ import { findBrandAll } from '../../services/brandService';
 const brandSlice = createSlice({
   name: 'brand',
   initialState: {
-    loading: IDLE,
-    data: null,
-    error: null,
-    totalPages: 1,
+    loadingBrand: IDLE,
+    dataBrand: null,
+    errorBrand: null,
+    totalPagesBrand: 1,
     // size: 5,
-    numberOfElements: 0,
-    totalElements: 0,
+    numberOfElementsBrand: 0,
+    totalElementsBrand: 0,
   },
   reducers: {},
   extraReducers: (builder) => {
     // FIND ALL
     builder.addCase(findBrandAll.pending, (state) => {
-      state.loading = PENDING;
+      state.loadingBrand = PENDING;
     });
 
     builder.addCase(findBrandAll.fulfilled, (state, action) => {
-      state.loading = SUCCESSFULLY;
-      state.data = action.payload.content;
-      state.totalPages = action.payload.totalPages;
-      state.numberOfElements = action.payload.numberOfElements;
-      state.totalElements = action.payload.totalElements;
+      state.loadingBrand = SUCCESSFULLY;
+      state.dataBrand = action.payload.content;
+      state.totalPagesBrand = action.payload.totalPages;
+      state.numberOfElementsBrand = action.payload.numberOfElements;
+      state.totalElementsBrand = action.payload.totalElements;
     });
 
     builder.addCase(findBrandAll.rejected, (state, action) => {
-      state.loading = FAILED;
-      state.error = action.error.message;
+      state.loading.Brand = FAILED;
+      state.errorBrand = action.error.message;
     });
   },
 });
