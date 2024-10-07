@@ -20,7 +20,7 @@ export default function SidebarAdmin({ toggleDarkMode, toggleCloseSidebar, isDar
               </NavLink>
             </li>
             <li className="sidebar-item">
-              <NavLink to="brand" className="sidebar-link">
+              <NavLink to="brands" className="sidebar-link">
                 <i className="uil uil-cube"></i>
                 <span className="sidebar-link-name">{t('admin.0.sidebar.0.brand')}</span>
               </NavLink>

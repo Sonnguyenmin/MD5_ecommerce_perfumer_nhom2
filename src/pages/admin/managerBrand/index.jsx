@@ -1,37 +1,36 @@
-import './categories.scss';
-
-import { Button, Dropdown, Input, Modal, notification, Radio, Select, Tag } from 'antd';
+import { Button, Dropdown, Input, Modal, notification, Tag } from 'antd';
 import Pagination from '@mui/material/Pagination';
 import { FaFilter } from 'react-icons/fa';
 import { LuRefreshCw } from 'react-icons/lu';
 import { styled } from '@mui/material/styles';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory, deleteCategory, editCategory, findAll } from '../../../services/categoryService';
 import { useDebounce } from '@uidotdev/usehooks';
-import AddCategory from './addCategory';
-import EditCategory from './EditCategory';
+import { addBrand, deleteBrand, editBrand, findBrandAll } from '../../../services/brandService';
+import { editBanner } from '../../../services/bannerService';
+import AddBrand from './AddBrand';
+import EditBrand from './EditBrand';
 
-export default function ManagerCategory() {
-  //#region Khai báo các biến trạng thái category
+export default function ManagerBrand() {
+  //#region Khai báo các biến trạng thái brand
   const [isFormAdd, setIsFormAdd] = useState(false);
   const [isFormEdit, setIsFormEdit] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [baseId, setBaseId] = useState(null);
-  const [category, setCategory] = useState({
-    categoryName: '',
+  const [brand, setBrand] = useState({
+    brandName: '',
     description: '',
   });
-  const [categoryNameError, setCategoryNameError] = useState('');
-  const { data, loading, error, totalPages, numberOfElements, totalElements } = useSelector((state) => state.category);
+  const [brandNameError, setBrandNameError] = useState('');
+  const { data, loading, error, totalPages, numberOfElements, totalElements } = useSelector((state) => state.brand);
 
   const dispatch = useDispatch();
   const debounce = useDebounce(search, 500);
 
   const loadData = () => {
-    dispatch(findAll({ page, search: debounce }));
+    dispatch(findBrandAll({ page, search: debounce }));
   };
 
   //#endregion
@@ -52,19 +51,17 @@ export default function ManagerCategory() {
   const validateData = (name, value, id = null) => {
     let inValid = true;
     switch (name) {
-      case 'categoryName':
+      case 'brandName':
         if (!value.trim()) {
-          setCategoryNameError('Tên danh mục không được để trống');
+          setBrandNameError('Tên thương hiệu không được để trống');
           inValid = false;
         } else {
-          const existingCategory = data.find(
-            (cate) => cate.categoryName.toLowerCase() === value.toLowerCase() && cate.id !== id,
-          );
-          if (existingCategory) {
-            setCategoryNameError('Tên danh mục đã tồn tại');
+          const existingBrand = data.find((br) => br.brandName.toLowerCase() === value.toLowerCase() && br.id !== id);
+          if (existingBrand) {
+            setBrandNameError('Tên thương hiệu đã tồn tại');
             inValid = false;
           } else {
-            setCategoryNameError('');
+            setBrandNameError('');
           }
         }
         break;
@@ -93,13 +90,13 @@ export default function ManagerCategory() {
   };
 
   /**
-   * Hàm xử lý thay đổi trong các trường nhập liệu cho chi tiết danh mục.
+   * Hàm xử lý thay đổi trong các trường nhập liệu cho chi tiết thương hiệu.
    * @param {*} e - Đối tượng sự kiện.
    */
   const handleChangeInput = (e) => {
     const { name, value } = e.target;
-    setCategory({
-      ...category,
+    setBrand({
+      ...brand,
       [name]: value,
     });
 
@@ -107,18 +104,18 @@ export default function ManagerCategory() {
   };
 
   /**
-   * Hàm xử lý thêm một danh mục mới.
-   * @param {*} category - Danh mục cần thêm.
+   * Hàm xử lý thêm một thương hiệu mới.
+   * @param {*} brand - thương hiệu cần thêm.
    */
-  const handleAddCategory = (category) => {
-    const categoryNameValid = validateData('categoryName', category.categoryName);
+  const handleAddBrand = (brand) => {
+    const brandNameValid = validateData('brandName', brand.brandName);
 
-    if (categoryNameValid) {
-      dispatch(addCategory(category)).then(() => {
+    if (brandNameValid) {
+      dispatch(addBrand(brand)).then(() => {
         loadData();
         notification.success({
           message: 'Thành công',
-          description: 'Danh mục đã được thêm thành công!',
+          description: 'Thương hiệu đã được thêm thành công!',
           duration: 2,
         });
       });
@@ -127,14 +124,14 @@ export default function ManagerCategory() {
   };
 
   /**
-   * Mở form chỉnh sửa cho một danh mục cụ thể.
-   * @param {*} id - ID của danh mục cần chỉnh sửa.
+   * Mở form chỉnh sửa cho một thương hiệu cụ thể.
+   * @param {*} id - ID của thương hiệu cần chỉnh sửa.
    */
   const handleOpenFormEdit = (id) => {
     // find the old cat
-    const findById = data.find((cat) => cat.id === id);
+    const findById = data.find((br) => br.id === id);
     setBaseId(id);
-    setCategory(findById);
+    setBrand(findById);
     setIsFormEdit(true);
   };
 
@@ -144,39 +141,39 @@ export default function ManagerCategory() {
   };
 
   /**
-   * Hàm xử lý thay đổi trạng thái của một danh mục.
-   * Chuyển đổi trạng thái của danh mục dựa trên ID của nó.
+   * Hàm xử lý thay đổi trạng thái của một thương hiệu.
+   * Chuyển đổi trạng thái của thương hiệu dựa trên ID của nó.
    *
-   * @param {*} id - ID của danh mục cần cập nhật.
+   * @param {*} id - ID của thương hiệu cần cập nhật.
    */
   const handleChangeStatus = (id) => {
-    const categoryStatusFindById = data.find((cate) => cate.id === id);
-    const updatedStatus = !categoryStatusFindById.status;
+    const brandStatusFindById = data.find((br) => br.id === id);
+    const updatedStatus = !brandStatusFindById.status;
 
-    dispatch(editCategory({ id, category: { ...categoryStatusFindById, status: updatedStatus } })).then(() => {
+    dispatch(editBanner({ id, brand: { ...brandStatusFindById, status: updatedStatus } })).then(() => {
       loadData();
       notification.success({
         message: 'Thành công',
-        description: `Danh mục đã được ${updatedStatus ? 'Đang hoạt động' : 'Ngừng hoạt động'}!`,
+        description: `Thương hiệu đã được ${updatedStatus ? 'Đang hoạt động' : 'Ngừng hoạt động'}!`,
         duration: 1,
       });
     });
   };
 
   /**
-   * Hàm xử lý chỉnh sửa một danh mục.
-   * Xác thực tên danh mục và gửi hành động chỉnh sửa nếu hợp lệ.
+   * Hàm xử lý chỉnh sửa một thương hiệu.
+   * Xác thực tên thương hiệu và gửi hành động chỉnh sửa nếu hợp lệ.
    *
-   * @param {*} param - Chứa baseId của danh mục cần chỉnh sửa.
+   * @param {*} param - Chứa baseId của thương hiệu cần chỉnh sửa.
    */
-  const handleEditCategory = ({ baseId }) => {
-    const categoryNameValid = validateData('categoryName', category.categoryName.trim(), baseId);
-    if (categoryNameValid) {
-      dispatch(editCategory({ id: baseId, category: category })).then(() => {
+  const handleEditBrand = ({ baseId }) => {
+    const brandNameValid = validateData('brandName', brand.brandName.trim(), baseId);
+    if (brandNameValid) {
+      dispatch(editBrand({ id: baseId, brand: brand })).then(() => {
         loadData();
         notification.success({
           message: 'Thành công',
-          description: 'Danh mục đã được chỉnh sửa thành công!',
+          description: 'Thương hiệu đã được chỉnh sửa thành công!',
           duration: 1,
         });
       });
@@ -185,13 +182,13 @@ export default function ManagerCategory() {
   };
 
   /**
-   * Hàm xử lý xóa một danh mục.
+   * Hàm xử lý xóa một thương hiệu.
    * Gửi hành động xóa và hiển thị thông báo thành công.
    *
-   * @param {*} id - ID của danh mục cần xóa.
+   * @param {*} id - ID của thương hiệu cần xóa.
    */
-  const handleDeleteCategory = (id) => {
-    dispatch(deleteCategory(id)).then(() => {
+  const handleDeleteBrand = (id) => {
+    dispatch(deleteBrand(id)).then(() => {
       if (numberOfElements === 1 && page > 1) {
         setPage(page - 1);
       } else {
@@ -199,7 +196,7 @@ export default function ManagerCategory() {
       }
       notification.success({
         message: 'Thành công',
-        description: 'Danh mục đã được xóa thành công!',
+        description: 'Thương hiệu đã được xóa thành công!',
         duration: 1,
       });
     });
@@ -208,7 +205,7 @@ export default function ManagerCategory() {
   };
 
   /**
-   * Định nghĩa các mục cho việc lọc danh mục.
+   * Định nghĩa các mục cho việc lọc thương hiệu.
    */
   const items = [
     {
@@ -226,14 +223,14 @@ export default function ManagerCategory() {
   ];
 
   /**
-   * Tạo các tùy chọn cho việc tương tác với một danh mục.
-   * Bao gồm các hành động chỉnh sửa, thay đổi trạng thái và xóa dựa trên ID danh mục.
+   * Tạo các tùy chọn cho việc tương tác với một thương hiệu.
+   * Bao gồm các hành động chỉnh sửa, thay đổi trạng thái và xóa dựa trên ID thương hiệu.
    *
-   * @param {*} id - ID của danh mục.
+   * @param {*} id - ID của thương hiệu.
    * @returns {Array} - Mảng các đối tượng tùy chọn.
    */
   const options = (id) => {
-    const category = data.find((cat) => cat.id === id);
+    const brand = data.find((br) => br.id === id);
     return [
       {
         key: '4',
@@ -252,7 +249,7 @@ export default function ManagerCategory() {
         key: '5',
         label: (
           <span className="leading-[32px]" onClick={() => handleChangeStatus(id)}>
-            {category.status ? 'Chặn' : 'Bỏ chặn'}
+            {brand.status ? 'Chặn' : 'Bỏ chặn'}
           </span>
         ),
       },
@@ -296,22 +293,22 @@ export default function ManagerCategory() {
         footer={
           <>
             <Button onClick={() => setIsModal(false)}>Hủy</Button>
-            <Button danger type="primary" onClick={() => handleDeleteCategory(baseId)}>
+            <Button danger type="primary" onClick={() => handleDeleteBrand(baseId)}>
               Xóa
             </Button>
           </>
         }
       >
-        <p>Bạn có chắc chắn muốn xóa danh mục này không?</p>
+        <p>Bạn có chắc chắn muốn xóa thương hiệu này không?</p>
       </Modal>
 
       <div className="w-full bg-[var(--panel-color)] rounded-[6px] mx-auto p-6">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-[20px] leading-10 text-[var(--text-color)] whitespace-nowrap font-bold font-number">
-            Danh sách danh mục
+            Danh sách thương hiệu
           </h1>
           <Button onClick={() => setIsFormAdd(true)} type="primary" className="py-7">
-            Thêm mới danh mục
+            Thêm mới thương hiệu
           </Button>
         </div>
         <div className="mb-4 flex justify-between items-center">
@@ -329,7 +326,7 @@ export default function ManagerCategory() {
           <div className="flex items-center gap-3">
             <Input.Search
               className="w-[300px] py-7 text-[var(--text-color)] text-[14px] font-medium"
-              placeholder="Tìm kiếm danh mục theo tên"
+              placeholder="Tìm kiếm thương hiệu theo tên"
               onChange={handleSearch}
             />
             <LuRefreshCw size={24} className="text-gray-500 hover:text-gray-700 cursor-pointer" />
@@ -362,23 +359,23 @@ export default function ManagerCategory() {
                       colSpan={4}
                       className="px-4 h-[50px] text-[20px] text-[var(--text-color)] text-center font-bold"
                     >
-                      {search ? `Không tìm thấy danh mục tên  ${search}` : 'Danh sách danh mục trống'}
+                      {search ? `Không tìm thấy thương hiệu tên  ${search}` : 'Danh sách thương hiệu trống'}
                     </td>
                   </tr>
                 ) : (
-                  data?.map((cat, index) => (
-                    <tr key={cat.id} className="border-b ">
+                  data?.map((br, index) => (
+                    <tr key={br.id} className="border-b ">
                       <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
                         {index + 1 + (page - 1) * 5}
                       </td>
                       <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                        {cat.categoryName}
+                        {br.brandName}
                       </td>
                       <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                        {cat.status ? <Tag color="green">Đang hoạt động</Tag> : <Tag color="red">Ngừng hoạt động</Tag>}
+                        {br.status ? <Tag color="green">Đang hoạt động</Tag> : <Tag color="red">Ngừng hoạt động</Tag>}
                       </td>
                       <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center">
-                        <Dropdown menu={{ items: options(cat.id) }} placement="bottom" trigger={['click']}>
+                        <Dropdown menu={{ items: options(br.id) }} placement="bottom" trigger={['click']}>
                           <Button className="border-none shadow-none focus:shadow-none focus:bg-none">
                             <span className="text-[26px] text-[#d3732a]">
                               <i className="uil uil-file-edit-alt"></i>
@@ -437,23 +434,23 @@ export default function ManagerCategory() {
 
         {/* Form add */}
         {isFormAdd && (
-          <AddCategory
+          <AddBrand
             handleChangeInput={handleChangeInput}
-            categoryNameError={categoryNameError}
-            handleAddCategory={handleAddCategory}
+            brandNameError={brandNameError}
+            handleAddBrand={handleAddBrand}
             setIsFormAdd={setIsFormAdd}
-            category={category}
+            brand={brand}
           />
         )}
 
         {/* Form edit */}
         {isFormEdit && (
-          <EditCategory
+          <EditBrand
             handleChangeInput={handleChangeInput}
-            category={category}
+            brand={brand}
             setIsFormEdit={setIsFormEdit}
-            handleEditCategory={() => handleEditCategory({ baseId })}
-            categoryNameError={categoryNameError}
+            handleEditBrand={() => handleEditBrand({ baseId })}
+            brandNameError={brandNameError}
           />
         )}
       </div>
