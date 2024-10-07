@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { findAllProduct } from "../../services/productService";
-import { FAILED, PENDING, SUCCESSFULLY } from "../constants/status";
+import { createSlice } from '@reduxjs/toolkit';
+import { findAllProduct } from '../../services/productService';
+import { FAILED, PENDING, SUCCESSFULLY } from '../constants/status';
 
 const productSlice = createSlice({
-  name: "product",
+  name: 'product',
   initialState: {
-    loadingProduct: "idle",
+    loadingProduct: 'idle',
     dataProduct: null,
     errorProduct: null,
     totalPagesProduct: 1,
@@ -23,7 +23,6 @@ const productSlice = createSlice({
 
     builder.addCase(findAllProduct.rejected, (state, action) => {
       state.loadingProduct = FAILED;
-      console.log(action.error.message);
       state.errorProduct = action.error.message;
     });
   },

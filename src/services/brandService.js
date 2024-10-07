@@ -18,12 +18,8 @@ export const findBrandAll = createAsyncThunk('brand/findAll', async ({ page, sea
  * @returns {Object} - Kết quả phản hồi từ server sau khi thêm thương hiệu.
  */
 export const addBrand = createAsyncThunk('brand/add', async (brand) => {
-  try {
-    const res = await BASE_URL[POST]('admin/brands', brand);
-    return res;
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await BASE_URL[POST]('admin/brands', brand);
+  return res;
 });
 
 /**

@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDebounce } from '@uidotdev/usehooks';
 import { addBrand, deleteBrand, editBrand, findBrandAll } from '../../../services/brandService';
-import { editBanner } from '../../../services/bannerService';
 import AddBrand from './AddBrand';
 import EditBrand from './EditBrand';
 
@@ -24,7 +23,8 @@ export default function ManagerBrand() {
     description: '',
   });
   const [brandNameError, setBrandNameError] = useState('');
-  const { data, loading, error, totalPages, numberOfElements, totalElements } = useSelector((state) => state.brand);
+  const { dataBrand, loadingBrand, errorBrand, totalPagesBrand, numberOfElementsBrand, totalElementsBrand } =
+    useSelector((state) => state.brand);
 
   const dispatch = useDispatch();
   const debounce = useDebounce(search, 500);
@@ -56,7 +56,9 @@ export default function ManagerBrand() {
           setBrandNameError('Tên thương hiệu không được để trống');
           inValid = false;
         } else {
-          const existingBrand = data.find((br) => br.brandName.toLowerCase() === value.toLowerCase() && br.id !== id);
+          const existingBrand = dataBrand.find(
+            (br) => br.brandName.toLowerCase() === value.toLowerCase() && br.id !== id,
+          );
           if (existingBrand) {
             setBrandNameError('Tên thương hiệu đã tồn tại');
             inValid = false;
@@ -129,7 +131,7 @@ export default function ManagerBrand() {
    */
   const handleOpenFormEdit = (id) => {
     // find the old cat
-    const findById = data.find((br) => br.id === id);
+    const findById = dataBrand.find((br) => br.id === id);
     setBaseId(id);
     setBrand(findById);
     setIsFormEdit(true);
@@ -147,10 +149,10 @@ export default function ManagerBrand() {
    * @param {*} id - ID của thương hiệu cần cập nhật.
    */
   const handleChangeStatus = (id) => {
-    const brandStatusFindById = data.find((br) => br.id === id);
+    const brandStatusFindById = dataBrand.find((br) => br.id === id);
     const updatedStatus = !brandStatusFindById.status;
 
-    dispatch(editBanner({ id, brand: { ...brandStatusFindById, status: updatedStatus } })).then(() => {
+    dispatch(editBrand({ id, brand: { ...brandStatusFindById, status: updatedStatus } })).then(() => {
       loadData();
       notification.success({
         message: 'Thành công',
@@ -189,7 +191,7 @@ export default function ManagerBrand() {
    */
   const handleDeleteBrand = (id) => {
     dispatch(deleteBrand(id)).then(() => {
-      if (numberOfElements === 1 && page > 1) {
+      if (numberOfElementsBrand === 1 && page > 1) {
         setPage(page - 1);
       } else {
         loadData();
@@ -230,7 +232,7 @@ export default function ManagerBrand() {
    * @returns {Array} - Mảng các đối tượng tùy chọn.
    */
   const options = (id) => {
-    const brand = data.find((br) => br.id === id);
+    const brand = dataBrand.find((br) => br.id === id);
     return [
       {
         key: '4',
@@ -343,7 +345,9 @@ export default function ManagerBrand() {
                   <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
                     Tên
                   </th>
-
+                  <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
+                    Mô tả
+                  </th>
                   <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
                     Trạng thái
                   </th>
@@ -353,7 +357,7 @@ export default function ManagerBrand() {
                 </tr>
               </thead>
               <tbody className="overflow-y-auto">
-                {data?.length === 0 ? (
+                {dataBrand?.length === 0 ? (
                   <tr>
                     <td
                       colSpan={4}
@@ -363,13 +367,16 @@ export default function ManagerBrand() {
                     </td>
                   </tr>
                 ) : (
-                  data?.map((br, index) => (
+                  dataBrand?.map((br, index) => (
                     <tr key={br.id} className="border-b ">
                       <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
                         {index + 1 + (page - 1) * 5}
                       </td>
                       <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
                         {br.brandName}
+                      </td>
+                      <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
+                        {br.description}
                       </td>
                       <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
                         {br.status ? <Tag color="green">Đang hoạt động</Tag> : <Tag color="red">Ngừng hoạt động</Tag>}
@@ -393,8 +400,8 @@ export default function ManagerBrand() {
 
         <div className="mt-4 flex justify-between items-center flex-wrap gap-3">
           <div className="text-[14px] whitespace-nowrap text-[var(--text-color)]">
-            Hiển thị <b className="font-number">{numberOfElements}</b> trên{' '}
-            <b className="font-number">{totalElements}</b> bản ghi
+            Hiển thị <b className="font-number">{numberOfElementsBrand}</b> trên{' '}
+            <b className="font-number">{totalElementsBrand}</b> bản ghi
           </div>
           <div className="flex items-center gap-5">
             {/* <Select
@@ -426,7 +433,7 @@ export default function ManagerBrand() {
               color="primary"
               size="large"
               page={page}
-              count={totalPages}
+              count={totalPagesBrand}
               onChange={handleChangePage}
             ></CustomPagination>
           </div>
