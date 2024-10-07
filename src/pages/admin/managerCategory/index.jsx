@@ -13,7 +13,8 @@ import {
   addCategory,
   deleteCategory,
   editCategory,
-  findAll,
+  findAllCategory,
+  findAllCategoryNoPagination,
 } from "../../../services/categoryService";
 import { useDebounce } from "@uidotdev/usehooks";
 
@@ -28,14 +29,21 @@ const ManagerCategory = () => {
     categoryName: "",
     description: "",
   });
-  const { data, loading, error, totalPages, numberOfElements, totalElements } =
-    useSelector((state) => state.category);
+  const {
+    dataCategory,
+    loadingCategory,
+    errorCategory,
+    totalPagesCategory,
+    numberOfElementsCategory,
+    totalElementsCategory,
+    allCategories,
+  } = useSelector((state) => state.category);
 
   const dispatch = useDispatch();
   const debounce = useDebounce(search, 500);
 
   const loadData = () => {
-    dispatch(findAll({ page, search: debounce }));
+    dispatch(findAllCategory({ page, search: debounce }));
   };
 
   useEffect(() => {
@@ -232,7 +240,7 @@ const ManagerCategory = () => {
                 </tr>
               </thead>
               <tbody className="overflow-y-auto">
-                {data?.map((cat, index) => (
+                {dataCategory?.map((cat, index) => (
                   <tr key={cat.id} className="border-b">
                     <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
                       {index + 1}
@@ -271,8 +279,8 @@ const ManagerCategory = () => {
 
         <div className="mt-4 flex justify-between items-center flex-wrap gap-3">
           <div className="text-[14px] whitespace-nowrap text-[var(--text-color)]">
-            Hiển thị <b className="font-number">{numberOfElements}</b> trên{" "}
-            <b className="font-number">{totalElements}</b> bản ghi
+            Hiển thị <b className="font-number">{numberOfElementsCategory}</b>{" "}
+            trên <b className="font-number">{totalElementsCategory}</b> bản ghi
           </div>
           <div className="flex items-center gap-5">
             <Select
@@ -319,12 +327,11 @@ const ManagerCategory = () => {
               color="primary"
               size="large"
               page={page}
-              count={totalPages}
+              count={totalPagesCategory}
               onChange={handleChangePage}
             ></CustomPagination>
           </div>
         </div>
-
 
         {isFormAdd && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[1000]">
@@ -334,7 +341,6 @@ const ManagerCategory = () => {
               }}
               className="bg-white px-6 py-5 rounded-lg w-full max-w-md z-[1000]"
             >
-
               <header className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold mb-4">Thêm danh mục</h2>
                 <IoClose
