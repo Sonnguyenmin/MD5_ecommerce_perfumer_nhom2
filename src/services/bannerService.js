@@ -2,6 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BASE_URL, formAxios } from '../api';
 import { DELETE, GET, POST, PUT } from '../constants/httpMethod';
 
+export const listBanner = createAsyncThunk('banners/listBanner', async () => {
+  const res = await BASE_URL[GET]('listBanner');
+  return res;
+});
+
 /**
  * Thực hiện lấy danh sách tất cả banner với phân trang và tìm kiếm.
  * @param {*} param - Chứa thông tin về trang (page) và từ khóa tìm kiếm (search).

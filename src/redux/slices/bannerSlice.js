@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import * as status from '../constants/status';
-import { findAllBanner } from '../../services/bannerService';
+import { findAllBanner, listBanner } from '../../services/bannerService';
 
 const bannerSlice = createSlice({
   name: 'banners',
@@ -29,6 +29,10 @@ const bannerSlice = createSlice({
     builder.addCase(findAllBanner.rejected, (state, action) => {
       state.loading = status.FAILED;
       state.error = action.error.message;
+    });
+
+    builder.addCase(listBanner.fulfilled, (state, action) => {
+      state.data = action.payload.data.content;
     });
   },
 });

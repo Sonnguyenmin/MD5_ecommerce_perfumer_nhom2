@@ -343,7 +343,7 @@ export default function ManagerBrand() {
                     STT
                   </th>
                   <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
-                    Tên
+                    Tên banner
                   </th>
                   <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
                     Mô tả

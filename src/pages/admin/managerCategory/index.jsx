@@ -362,9 +362,11 @@ export default function ManagerCategory() {
                     STT
                   </th>
                   <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
-                    Tên
+                    Tên danh mục
                   </th>
-
+                  <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
+                    Mô tả
+                  </th>
                   <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
                     Trạng thái
                   </th>
@@ -391,6 +393,9 @@ export default function ManagerCategory() {
                       </td>
                       <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
                         {cat.categoryName}
+                      </td>
+                      <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
+                        {cat.description}
                       </td>
                       <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
                         {cat.status ? <Tag color="green">Đang hoạt động</Tag> : <Tag color="red">Ngừng hoạt động</Tag>}
