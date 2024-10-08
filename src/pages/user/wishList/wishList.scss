@@ -1,0 +1,12 @@
+.wishlist_item {
+  position: relative;
+  text-decoration: none;
+  display: block;
+  margin: 6px;
+}
+
+.wishlist_item:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 4px;
+  border: 1px solid #f9f9f9;
+}

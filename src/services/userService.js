@@ -1,7 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { GET, PUT } from '../constants/httpMethod';
 import BASE_URL from '../api/axiosInstance';
+import { formAxios } from '../api';
 
+export const updateUserProfile = async (updatedData) => {
+  const res = await formAxios[PUT](`user/account/updateProfile`, updatedData);
+
+  return res;
+};
 /**
  * Tìm tất cả người dùng với phân trang và tìm kiếm.
  *

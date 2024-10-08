@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -9,8 +9,17 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { useDispatch, useSelector } from 'react-redux';
+import { listBanner } from '../../../services/bannerService';
 
 export default function Slider() {
+  const { data } = useSelector((state) => state.banner);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(listBanner());
+  }, []);
   return (
     <>
       <section className="slider">
@@ -31,24 +40,13 @@ export default function Slider() {
           modules={[Autoplay, Pagination, Navigation]}
           className="mySwiper"
         >
-          <SwiperSlide>
-            <img className="slider-item-img" src="/vperfume/slide/nicheperfume.webp" alt="Banner 1" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img className="slider-item-img" src="/vperfume/slide/2.webp" alt="Banner 2" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img className="slider-item-img" src="/vperfume/slide/3.webp" alt="Banner 3" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img className="slider-item-img" src="/vperfume/slide/4.webp" alt="Banner 4" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img className="slider-item-img" src="/vperfume/slide/5.webp" alt="Banner 5" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img className="slider-item-img" src="/vperfume/slide/6.webp" alt="Banner 6" />
-          </SwiperSlide>
+          {data?.map((banner, index) => {
+            return (
+              <SwiperSlide key={banner.id}>
+                <img className="slider-item-img" src={banner.urlImage} alt="Banner 1" />
+              </SwiperSlide>
+            );
+          })}
 
           <div className="swiper-button-item-prev">
             <img src="/fonts/arrow-back-outline.svg" alt="Previous" />

@@ -18,13 +18,13 @@ export default function SliderDetail() {
     <div className="sliderContainer">
       {/* Main Swiper */}
       <Swiper
-        // style={{
-        //   '--swiper-navigation-color': '#fff',
-        //   '--swiper-pagination-color': '#fff',
-        // }}
+        style={{
+          '--swiper-navigation-color': '#fff',
+          '--swiper-pagination-color': '#fff',
+        }}
         loop={true}
         spaceBetween={10}
-        thumbs={thumbsSwiper ? { swiper: thumbsSwiper } : undefined}
+        thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }} // Kết nối với thumbsSwiper
         pagination={{ clickable: true }}
         navigation={{
           nextEl: '.swiper-new-next',
