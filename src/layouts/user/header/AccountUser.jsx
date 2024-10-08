@@ -15,9 +15,6 @@ export default function AccountUser() {
     navigate('/register');
   };
 
-  // Lấy dữ liệu từ Redux store
-  const { data } = useSelector((state) => state.auth);
-
   const dispatch = useDispatch();
 
   /**

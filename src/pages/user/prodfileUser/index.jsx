@@ -1,7 +1,10 @@
 import './profileUser.scss';
 import { Link, NavLink, Outlet } from 'react-router-dom';
+import { Cookies } from 'react-cookie';
+import { useSelector } from 'react-redux';
 
 export default function ProfileUser() {
+  const { data } = useSelector((state) => state.users);
   return (
     <>
       <div className="grid wide">
@@ -20,32 +23,18 @@ export default function ProfileUser() {
             </li>
           </ul>
         </div>
-        <div className="product-details apps_content">
+        <div className="product-details apps_content mb-[30px]">
           <div className="rows sm-gutter">
             <div className="cols l-4 medium-12 c-12">
-              <div className="bg-white rounded-lg p-6 shadow-lg">
+              <div className="bg-white rounded-lg p-6 shadow-lg mb-5">
                 {/* <!-- Profile Header --> */}
                 <div className="flex flex-col items-center mb-6 relative">
                   <div className="bg-pink-400 text-white rounded-full h-14 w-14 flex items-center justify-center text-2xl">
-                    S
+                    <img src="" alt="" className="w-full h-full object-cover" />
                   </div>
-                  <h2 className="text-[1.5rem] font-semibold text-gray-900 my-4 ">NGUYỄN TRƯỜNG SƠN</h2>
-                  {/* <span class="absolute top-0 right-0 cursor-pointer">
-                    <svg
-                      class="w-5 h-5 text-gray-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M11 17h2m-6 4h8a2 2 0 002-2v-7a9 9 0 10-12 0v7a2 2 0 002 2zm-1-8h10m-9 4h8"
-                      ></path>
-                    </svg>
-                  </span> */}
+                  <h2 className="text-[1.5rem] font-semibold text-gray-900 my-4 ">
+                    {new Cookies().get('accessToken').data.username}
+                  </h2>
                 </div>
 
                 {/* <!-- Member Status --> */}
@@ -115,7 +104,9 @@ export default function ProfileUser() {
             </div>
 
             <div className="cols l-8 medium-12 c-12">
-              <Outlet />
+              <div className="bg-white rounded-lg  shadow-lg">
+                <Outlet />
+              </div>
             </div>
           </div>
         </div>
