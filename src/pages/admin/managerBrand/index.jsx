@@ -56,14 +56,16 @@ export default function ManagerBrand() {
           setBrandNameError('Tên thương hiệu không được để trống');
           inValid = false;
         } else {
-          const existingBrand = dataBrand.find(
-            (br) => br.brandName.toLowerCase() === value.toLowerCase() && br.id !== id,
-          );
-          if (existingBrand) {
-            setBrandNameError('Tên thương hiệu đã tồn tại');
-            inValid = false;
-          } else {
-            setBrandNameError('');
+          if (dataBrand) {
+            const existingBrand = dataBrand.some(
+              (br) => br.brandName.toLowerCase() === value.toLowerCase() && br.id !== id,
+            );
+            if (existingBrand) {
+              setBrandNameError('Tên thương hiệu đã tồn tại');
+              inValid = false;
+            } else {
+              setBrandNameError('');
+            }
           }
         }
         break;

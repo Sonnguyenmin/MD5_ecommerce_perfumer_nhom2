@@ -1,10 +1,8 @@
 import './profileUser.scss';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { Cookies } from 'react-cookie';
-import { useSelector } from 'react-redux';
 
 export default function ProfileUser() {
-  const { data } = useSelector((state) => state.users);
   return (
     <>
       <div className="grid wide">
@@ -29,11 +27,9 @@ export default function ProfileUser() {
               <div className="bg-white rounded-lg p-6 shadow-lg mb-5">
                 {/* <!-- Profile Header --> */}
                 <div className="flex flex-col items-center mb-6 relative">
-                  <div className="bg-pink-400 text-white rounded-full h-14 w-14 flex items-center justify-center text-2xl">
-                    <img src="" alt="" className="w-full h-full object-cover" />
-                  </div>
+                  <div className="bg-pink-400 text-white rounded-full h-14 w-14 flex items-center justify-center text-2xl"></div>
                   <h2 className="text-[1.5rem] font-semibold text-gray-900 my-4 ">
-                    {new Cookies().get('accessToken').data.username}
+                    {new Cookies().get('accessToken').data.fullName || 'Thành viên'}
                   </h2>
                 </div>
 

@@ -128,7 +128,6 @@ export default function Login() {
         }
       } catch (error) {
         message.error(error.toString());
-        // setErrorServer(error);
       } finally {
         setIsLoading(false);
       }
