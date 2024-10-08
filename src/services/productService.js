@@ -21,10 +21,18 @@ export const findAllProduct = createAsyncThunk(
   }
 );
 
+export const findProductbyId = createAsyncThunk(
+  "product/findById",
+  async (id) => {
+    const res = await BASE_URL.get(`admin/products/${id}`);
+    return res.data.content;
+  }
+);
+
 export const addProduct = createAsyncThunk("product/add", async (product) => {
+
   const res = formAxios[POST]("admin/products", product);
   console.log(res);
-  return res;
 });
 
 export const editProduct = createAsyncThunk(
@@ -41,9 +49,3 @@ export const deleteProduct = createAsyncThunk("product/add", async (id) => {
   console.log(res);
   return res;
 });
-
-// export const addProduct = createAsyncThunk("product/add", async (product) => {
-//   const res = formAxios.post("admin/products", product);
-//   console.log(res);
-//   return res;
-// });

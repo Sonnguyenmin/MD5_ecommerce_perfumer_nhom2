@@ -69,6 +69,7 @@ export default function ManagerBrand() {
         } else {
           if (dataBrand) {
             const existingBrand = dataBrand.some(
+
               (br) =>
                 br.brandName.toLowerCase() === value.toLowerCase() &&
                 br.id !== id
@@ -78,6 +79,7 @@ export default function ManagerBrand() {
               inValid = false;
             } else {
               setBrandNameError("");
+
             }
           }
         }
@@ -171,7 +173,9 @@ export default function ManagerBrand() {
       editBrand({
         id,
         brand: { ...brandStatusFindById, status: updatedStatus },
+
       })
+
     ).then(() => {
       loadData();
       notification.success({

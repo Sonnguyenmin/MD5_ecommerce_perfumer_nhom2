@@ -32,7 +32,7 @@ const categorySlice = createSlice({
 
     builder.addCase(findAllCategory.rejected, (state, action) => {
       state.loadingCategory = FAILED;
-      state.errorCategory = action.errorCategory.message;
+      state.errorCategory = action.error.message;
     });
     // FIND ALL NO PAGINATION
     builder.addCase(findAllCategoryNoPagination.pending, (state) => {
@@ -46,13 +46,17 @@ const categorySlice = createSlice({
 
     builder.addCase(findAllCategoryNoPagination.rejected, (state, action) => {
       state.loadingCategory = FAILED;
-      state.errorCategory = action.errorCategory.message;
+      state.errorCategory = action.error.message;
     });
 
     builder.addCase(listCategory.fulfilled, (state, action) => {
-      console.log("category slice: ", action.payload);
-      state.data = action.payload.content
+      state.dataCategory = action.payload;
     });
+
+    // builder.addCase(listCategory.fulfilled, (state, action) => {
+    //   console.log("category slice: ", action.payload);
+    //   state.data = action.payload.content
+    // });
 
 
   },

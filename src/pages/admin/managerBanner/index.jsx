@@ -201,8 +201,8 @@ export default function ManagerBanner() {
     }
 
     const formData = new FormData();
-    formData.append("bannerName", banner.bannerName);
 
+    formData.append('bannerName', banner.bannerName);
     // Nếu có file mới thì thêm vào formData, không thì giữ ảnh cũ
     if (file) {
       formData.append("urlImage", file);

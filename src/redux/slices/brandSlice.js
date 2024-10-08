@@ -1,9 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { FAILED, IDLE, PENDING, SUCCESSFULLY } from '../constants/status';
-import { findBrandAll } from '../../services/brandService';
+import { createSlice } from "@reduxjs/toolkit";
+import { FAILED, IDLE, PENDING, SUCCESSFULLY } from "../constants/status";
+import {
+  findAllBrandNoPagination,
+  findBrandAll,
+} from "../../services/brandService";
 
 const brandSlice = createSlice({
-  name: 'brand',
+  name: "brand",
   initialState: {
     loadingBrand: IDLE,
     dataBrand: null,
@@ -12,6 +15,7 @@ const brandSlice = createSlice({
     // size: 5,
     numberOfElementsBrand: 0,
     totalElementsBrand: 0,
+    allBrands: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -29,7 +33,22 @@ const brandSlice = createSlice({
     });
 
     builder.addCase(findBrandAll.rejected, (state, action) => {
-      state.loading.Brand = FAILED;
+      state.loadingBrand = FAILED;
+      state.errorBrand = action.error.message;
+    });
+
+    // FIND ALL NO PAGINATION
+    builder.addCase(findAllBrandNoPagination.pending, (state) => {
+      state.loadingBrand = PENDING;
+    });
+
+    builder.addCase(findAllBrandNoPagination.fulfilled, (state, action) => {
+      state.loadingBrand = SUCCESSFULLY;
+      state.allBrands = action.payload;
+    });
+
+    builder.addCase(findAllBrandNoPagination.rejected, (state, action) => {
+      state.loadingBrand = FAILED;
       state.errorBrand = action.error.message;
     });
   },

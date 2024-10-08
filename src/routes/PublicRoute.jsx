@@ -53,7 +53,7 @@ const PublicRoutes = [
         element: <ProductDetails />,
       },
       {
-        path: '/shops',
+        path: '/categories/:id',
         element: <Shops />,
       },
       {
