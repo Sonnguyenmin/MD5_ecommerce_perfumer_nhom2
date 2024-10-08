@@ -1,25 +1,25 @@
-import { Button, Dropdown, Input, notification, Select, Tag } from "antd";
-import Pagination from "@mui/material/Pagination";
-import { FaFilter } from "react-icons/fa";
-import { LuRefreshCw } from "react-icons/lu";
-import { styled } from "@mui/material/styles";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useDebounce } from "@uidotdev/usehooks";
-import { changUserStatus, findUsersAll } from "../../../services/userService";
+import { Button, Dropdown, Input, notification, Select, Tag } from 'antd';
+import Pagination from '@mui/material/Pagination';
+import { FaFilter } from 'react-icons/fa';
+import { LuRefreshCw } from 'react-icons/lu';
+import { styled } from '@mui/material/styles';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDebounce } from '@uidotdev/usehooks';
+import { changUserStatus, findUsersAll } from '../../../services/userService';
 
 export default function ManagerUser() {
   // #region Khai báo các biến trạng thái users
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
+  const [sortOptions, setSortOptions] = useState('');
 
-  const { data, loading, error, totalPages, numberOfElements, totalElements } =
-    useSelector((state) => state.users);
+  const { data, loading, error, totalPages, numberOfElements, totalElements } = useSelector((state) => state.users);
   const dispatch = useDispatch();
   const debounce = useDebounce(search, 500);
 
   const loadData = () => {
-    dispatch(findUsersAll({ page, search: debounce }));
+    dispatch(findUsersAll({ page, search: debounce, sortOptions }));
   };
   // #endregion
 
@@ -28,7 +28,7 @@ export default function ManagerUser() {
    */
   useEffect(() => {
     loadData();
-  }, [page, debounce]);
+  }, [page, debounce, sortOptions]);
 
   /**
    * Hàm xử lý thay đổi trang trong phân trang.
@@ -60,28 +60,24 @@ export default function ManagerUser() {
     const updatedStatus = !userStatusFindById.status;
     try {
       // Gửi yêu cầu cập nhật trạng thái
-      const response = await dispatch(
-        changUserStatus({ id, status: updatedStatus })
-      );
+      const response = await dispatch(changUserStatus({ id, status: updatedStatus }));
 
       // console.log(response);
       // Kiểm tra phản hồi từ Redux
-      if (response.meta.requestStatus === "fulfilled") {
+      if (response.meta.requestStatus === 'fulfilled') {
         loadData();
         notification.success({
-          message: "Thành công",
-          description: `Khách hàng đã được ${
-            updatedStatus ? "Đang hoạt động" : "Không hoạt động"
-          }!`,
+          message: 'Thành công',
+          description: `Khách hàng đã được ${updatedStatus ? 'Đang hoạt động' : 'Không hoạt động'}!`,
           duration: 1,
         });
       } else {
-        throw new Error("Cập nhật trạng thái không thành công.");
+        throw new Error('Cập nhật trạng thái không thành công.');
       }
     } catch (error) {
       notification.error({
-        message: "Lỗi",
-        description: "Không thể cập nhật trạng thái của Admin!",
+        message: 'Lỗi',
+        description: 'Không thể cập nhật trạng thái của Admin!',
         duration: 1,
       });
     }
@@ -89,16 +85,41 @@ export default function ManagerUser() {
 
   const items = [
     {
-      key: "1",
-      label: <span>Hủy bỏ bộ lọc</span>,
+      key: '1',
+      label: (
+        <span
+          onClick={() => {
+            setSortOptions(''); // Clear sorting
+            loadData();
+          }}
+        >
+          Hủy bỏ bộ lọc
+        </span>
+      ),
     },
     {
-      key: "2",
-      label: <span>Đang hoạt động</span>,
+      key: '2',
+      label: (
+        <span
+          onClick={() => {
+            setSortOptions('username,asc'); // Sort by username A-Z
+          }}
+        >
+          Sắp xếp tên từ A - Z
+        </span>
+      ),
     },
     {
-      key: "3",
-      label: <span>Ngừng hoạt động</span>,
+      key: '3',
+      label: (
+        <span
+          onClick={() => {
+            setSortOptions('username,desc'); // Sort by username Z-A
+          }}
+        >
+          Sắp xếp tên từ Z - A
+        </span>
+      ),
     },
   ];
 
@@ -106,13 +127,10 @@ export default function ManagerUser() {
     const users = data.find((user) => user.id === id);
     return [
       {
-        key: "5",
+        key: '5',
         label: (
-          <span
-            className="leading-[32px]"
-            onClick={() => handleChangeStatus(id)}
-          >
-            {users.status ? "Chặn" : "Bỏ chặn"}
+          <span className="leading-[32px]" onClick={() => handleChangeStatus(id)}>
+            {users.status ? 'Chặn' : 'Bỏ chặn'}
           </span>
         ),
       },
@@ -123,19 +141,19 @@ export default function ManagerUser() {
    * Thành phần phân trang tùy chỉnh sử dụng Material-UI.
    */
   const CustomPagination = styled(Pagination)({
-    "& .MuiPaginationItem-root": {
-      fontFamily: "Arial, sans-serif", // Tùy chỉnh phông chữ
-      fontSize: "12px",
-      backgroundColor: "lightgrey", // Màu nền
-      color: "black", // Màu chữ
-      "&:hover": {
-        backgroundColor: "darkgrey", // Màu nền khi hover
+    '& .MuiPaginationItem-root': {
+      fontFamily: 'Arial, sans-serif', // Tùy chỉnh phông chữ
+      fontSize: '12px',
+      backgroundColor: 'lightgrey', // Màu nền
+      color: 'black', // Màu chữ
+      '&:hover': {
+        backgroundColor: 'darkgrey', // Màu nền khi hover
       },
     },
-    "& .Mui-selected": {
-      backgroundColor: "blue", // Màu nền khi được chọn
-      color: "white", // Màu chữ khi được chọn
-      fontWeight: "bold", // Chữ đậm khi được chọn
+    '& .Mui-selected': {
+      backgroundColor: 'blue', // Màu nền khi được chọn
+      color: 'white', // Màu chữ khi được chọn
+      fontWeight: 'bold', // Chữ đậm khi được chọn
     },
   });
 
@@ -155,10 +173,7 @@ export default function ManagerUser() {
             placement="bottom"
           >
             <Button className="border-none shadow-none">
-              <FaFilter
-                size={20}
-                className="cursor-pointer text-gray-500 hover:text-gray-600"
-              />
+              <FaFilter size={20} className="cursor-pointer text-gray-500 hover:text-gray-600" />
             </Button>
           </Dropdown>
 
@@ -168,10 +183,7 @@ export default function ManagerUser() {
               placeholder="Tìm kiếm khách hàng theo tên"
               onChange={handleSearch}
             />
-            <LuRefreshCw
-              size={24}
-              className="text-gray-500 hover:text-gray-700 cursor-pointer"
-            />
+            <LuRefreshCw size={24} className="text-gray-500 hover:text-gray-700 cursor-pointer" />
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -212,9 +224,7 @@ export default function ManagerUser() {
                       colSpan={8}
                       className="px-4 h-[50px] text-[20px] text-[var(--text-color)] text-center font-bold"
                     >
-                      {search
-                        ? `Không tìm thấy khách hàng tên ${search}`
-                        : "Danh sách khách hàng trống"}
+                      {search ? `Không tìm thấy khách hàng tên ${search}` : 'Danh sách khách hàng trống'}
                     </td>
                   </tr>
                 ) : (
@@ -224,37 +234,29 @@ export default function ManagerUser() {
                         {index + 1 + (page - 1) * 5}
                       </td>
                       <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                        {user.username || "Đang cập nhật"}
+                        {user.username || 'Đang cập nhật'}
                       </td>
                       <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
                         <img
-                          src={user.avatar ? user.avatar : "/profile.png"}
+                          src={user.avatar ? user.avatar : '/profile.png'}
                           alt=""
                           className="w-[90%] h-[90%] object-contain"
                         />
                       </td>
                       <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                        {user.fullName || "Đang cập nhật"}
+                        {user.fullName || 'Đang cập nhật'}
                       </td>
                       <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                        {user.phone || "Đang cập nhật"}
+                        {user.phone || 'Đang cập nhật'}
                       </td>
                       <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                        {user.address || "Đang cập nhật"}
+                        {user.address || 'Đang cập nhật'}
                       </td>
                       <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                        {user.status ? (
-                          <Tag color="green">Đang hoạt động</Tag>
-                        ) : (
-                          <Tag color="red">Không hoạt động</Tag>
-                        )}
+                        {user.status ? <Tag color="green">Đang hoạt động</Tag> : <Tag color="red">Không hoạt động</Tag>}
                       </td>
                       <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center">
-                        <Dropdown
-                          menu={{ items: options(user.id) }}
-                          placement="bottom"
-                          trigger={["click"]}
-                        >
+                        <Dropdown menu={{ items: options(user.id) }} placement="bottom" trigger={['click']}>
                           <Button className="border-none shadow-none focus:shadow-none focus:bg-none">
                             <span className="text-[26px] text-[#d3732a]">
                               <i className="uil uil-file-edit-alt"></i>
@@ -272,7 +274,7 @@ export default function ManagerUser() {
 
         <div className="mt-4 flex justify-between items-center flex-wrap gap-3">
           <div className="text-[14px] whitespace-nowrap text-[var(--text-color)]">
-            Hiển thị <b className="font-number">{numberOfElements}</b> trên{" "}
+            Hiển thị <b className="font-number">{numberOfElements}</b> trên{' '}
             <b className="font-number">{totalElements}</b> bản ghi
           </div>
           <div className="flex items-center gap-5">
@@ -283,20 +285,20 @@ export default function ManagerUser() {
               }}
               options={[
                 {
-                  value: "10",
-                  label: "Hiển thị 10 bản ghi / trang",
+                  value: '10',
+                  label: 'Hiển thị 10 bản ghi / trang',
                 },
                 {
-                  value: "20",
-                  label: "Hiển thị 20 bản ghi / trang",
+                  value: '20',
+                  label: 'Hiển thị 20 bản ghi / trang',
                 },
                 {
-                  value: "50",
-                  label: "Hiển thị 50 bản ghi / trang",
+                  value: '50',
+                  label: 'Hiển thị 50 bản ghi / trang',
                 },
                 {
-                  value: "100",
-                  label: "Hiển thị 100 bản ghi / trang",
+                  value: '100',
+                  label: 'Hiển thị 100 bản ghi / trang',
                 },
               ]}
             />

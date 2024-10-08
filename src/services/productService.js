@@ -2,9 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL, formAxios } from "../api";
 import { GET, POST, PUT } from "../constants/httpMethod";
 
-
-
-
 export const listProductByCategory = createAsyncThunk("newProduct", async () => {
   const res = await BASE_URL[GET]("/product/top");
   return res;
@@ -21,13 +18,17 @@ export const findAllProduct = createAsyncThunk(
   }
 );
 
-export const findProductbyId = createAsyncThunk(
-  "product/findById",
-  async (id) => {
-    const res = await BASE_URL.get(`admin/products/${id}`);
-    return res.data.content;
-  }
-);
+
+export const findAllProduct = createAsyncThunk('product/findAll', async ({ page, search }) => {
+  const res = await BASE_URL.get(`admin/products?page=${page - 1}&search=${search}`);
+  return res.data.content;
+});
+
+export const findProductbyId = createAsyncThunk('product/findById', async (id) => {
+  const res = await BASE_URL.get(`admin/products/${id}`);
+  return res.data.content;
+});
+
 
 export const addProduct = createAsyncThunk("product/add", async (product) => {
 
@@ -44,7 +45,7 @@ export const editProduct = createAsyncThunk(
   }
 );
 
-export const deleteProduct = createAsyncThunk("product/add", async (id) => {
+export const deleteProduct = createAsyncThunk('product/add', async (id) => {
   const res = BASE_URL.delete(`admin/products/${id}`);
   console.log(res);
   return res;

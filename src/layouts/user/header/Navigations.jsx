@@ -3,14 +3,15 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { listCategory } from '../../../services/categoryService';
+import { listBrands } from '../../../services/brandService';
 
 export default function Navigations() {
   const { dataCategory } = useSelector((state) => state.category);
+  const { dataBrand } = useSelector((state) => state.brand);
   const dispatch = useDispatch();
-  const location = useLocation();
 
   useEffect(() => {
-    dispatch(listCategory());
+    dispatch(listCategory(), listBrands());
   }, [dispatch]);
   return (
     <>
@@ -47,16 +48,16 @@ export default function Navigations() {
             <div className="submenu-content">
               <div className="submenu-wrap">
                 <ul className="submenu-list">
-                  {dataCategory?.map((cate, index) => {
+                  {dataBrand?.map((brand, index) => {
                     return (
-                      <li className="submenu-item" key={cate.id}>
+                      <li className="submenu-item" key={brand.id}>
                         <NavLink
-                          // to={`/categories/${cate.id}`}
+                          // to={`/brands/${brand.id}`}
                           className={({ isActive }) =>
                             `submenu-link submenu-title ${isActive ? 'submenu-link-active' : ''}`
                           }
                         >
-                          {cate.categoryName}
+                          {brand.brandName}
                         </NavLink>
                       </li>
                     );
