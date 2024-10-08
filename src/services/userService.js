@@ -16,8 +16,8 @@ export const updateUserProfile = async (updatedData) => {
  * @param {string} params.search - Chuỗi tìm kiếm để lọc người dùng.
  * @return {Promise<Array>} - Danh sách người dùng được tìm thấy.
  */
-export const findUsersAll = createAsyncThunk('users/findAll', async ({ page, search }) => {
-  const res = await BASE_URL[GET](`admin/userAdmin?page=${page - 1}&search=${search}`);
+export const findUsersAll = createAsyncThunk('users/findAll', async ({ page, search, sortOptions }) => {
+  const res = await BASE_URL[GET](`admin/userAdmin?page=${page - 1}&search=${search}&sort=${sortOptions}`);
   return res.data.content;
 });
 

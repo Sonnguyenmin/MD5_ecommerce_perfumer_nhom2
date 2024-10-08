@@ -62,7 +62,6 @@ export default function InfoUserProfile() {
 
     await updateUserProfile(updatedData)
       .then((resp) => {
-        console.log(resp);
         setFormData({ ...formData, ...resp.data.content });
         new Cookies().set('accessToken', { data: formData }, { maxAge: 86400000 });
         notification.success({

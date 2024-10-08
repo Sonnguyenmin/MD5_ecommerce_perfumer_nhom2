@@ -1,12 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { FAILED, IDLE, PENDING, SUCCESSFULLY } from "../constants/status";
-import {
-  findAllBrandNoPagination,
-  findBrandAll,
-} from "../../services/brandService";
+import { createSlice } from '@reduxjs/toolkit';
+import { FAILED, IDLE, PENDING, SUCCESSFULLY } from '../constants/status';
+import { findAllBrandNoPagination, findBrandAll, listBrands } from '../../services/brandService';
 
 const brandSlice = createSlice({
-  name: "brand",
+  name: 'brand',
   initialState: {
     loadingBrand: IDLE,
     dataBrand: null,
@@ -50,6 +47,10 @@ const brandSlice = createSlice({
     builder.addCase(findAllBrandNoPagination.rejected, (state, action) => {
       state.loadingBrand = FAILED;
       state.errorBrand = action.error.message;
+    });
+
+    builder.addCase(listBrands.fulfilled, (state, action) => {
+      state.dataBrand = action.payload;
     });
   },
 });
