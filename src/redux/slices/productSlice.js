@@ -1,11 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { findAllProduct } from "../../services/productService";
-import { FAILED, PENDING, SUCCESSFULLY } from "../constants/status";
+import { createSlice } from '@reduxjs/toolkit';
+// import { findAllProduct, listProductByCategory, productDetail } from '../../services/productService';
+import { FAILED, PENDING, SUCCESSFULLY } from '../constants/status';
+import { findAllProduct, listProductByCategory } from '../../services/productService';
 
 const productSlice = createSlice({
-  name: "product",
+  name: 'product',
   initialState: {
-    loadingProduct: "idle",
+    loadingProduct: 'idle',
     dataProduct: null,
     errorProduct: null,
     totalPagesProduct: 1,
@@ -27,7 +28,13 @@ const productSlice = createSlice({
       state.errorProduct = action.error.message;
     });
 
-    // FIND BY ID
+    builder.addCase(listProductByCategory.fulfilled, (state, action) => {
+      state.dataProduct = action.payload;
+    });
+
+    // builder.addCase(productDetail.fulfilled, (state, action) => {
+    //   state.dataProduct = action.payload;
+    // });
   },
 });
 

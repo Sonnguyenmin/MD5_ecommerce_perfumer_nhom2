@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink, useLocation } from 'react-router-dom';
@@ -15,7 +16,7 @@ export default function Navigations() {
     <>
       <nav className="h_with-link">
         <ul className="h_nav-list">
-          <li className="h_nav-item">
+  <li className="h_nav-item">
             <Link className="h_nav-link">TRANG CHỦ</Link>
           </li>
           <li className="h_nav-item">
@@ -67,6 +68,7 @@ export default function Navigations() {
         </ul>
       </nav>
       <ul className=" h_sort-list">
+
         <li className="h_sort-item">
           <NavLink to="/" className="h_sort-link" end>
             TRANG CHỦ

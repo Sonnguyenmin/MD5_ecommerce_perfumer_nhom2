@@ -4,10 +4,11 @@ import authSlice from './authSlice';
 import userSlice from './userSlice';
 import bannerSlice from './bannerSlice';
 import brandSlice from './brandSlice';
-import productSlice from './productSlice';
-import shopsSlice from './shopsSlice';
-import productDetailSlice from './productDetailSlice';
 
+import productSlice from './productSlice';
+// import shopsSlice from './shopsSlice';
+import productDetailSlice from './productDetailSlice';
+import productDetailUserSlice from './productDetailUserSlice';
 const reducers = combineReducers({
   category: categorySlice,
   auth: authSlice,
@@ -15,8 +16,8 @@ const reducers = combineReducers({
   banner: bannerSlice,
   brand: brandSlice,
   product: productSlice,
-  shops: shopsSlice,
-  productDetail: productDetailSlice,
+  ProductDetail: productDetailSlice,
+  productDetailUser: productDetailUserSlice,
 });
 
 export default reducers;

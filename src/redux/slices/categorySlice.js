@@ -52,6 +52,13 @@ const categorySlice = createSlice({
     builder.addCase(listCategory.fulfilled, (state, action) => {
       state.dataCategory = action.payload;
     });
+
+    // builder.addCase(listCategory.fulfilled, (state, action) => {
+    //   console.log("category slice: ", action.payload);
+    //   state.data = action.payload.content
+    // });
+
+
   },
 });
 
