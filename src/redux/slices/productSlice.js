@@ -1,17 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { findAllProduct } from '../../services/productService';
-import { FAILED, PENDING, SUCCESSFULLY } from '../constants/status';
+import { createSlice } from "@reduxjs/toolkit";
+import { findAllProduct } from "../../services/productService";
+import { FAILED, PENDING, SUCCESSFULLY } from "../constants/status";
 
 const productSlice = createSlice({
-  name: 'product',
+  name: "product",
   initialState: {
-    loadingProduct: 'idle',
+    loadingProduct: "idle",
     dataProduct: null,
     errorProduct: null,
     totalPagesProduct: 1,
   },
   reducers: {},
   extraReducers: (builder) => {
+    // FIND ALL PRODUCTS
     builder.addCase(findAllProduct.pending, (state) => {
       state.loadingProduct = PENDING;
     });
@@ -25,6 +26,8 @@ const productSlice = createSlice({
       state.loadingProduct = FAILED;
       state.errorProduct = action.error.message;
     });
+
+    // FIND BY ID
   },
 });
 

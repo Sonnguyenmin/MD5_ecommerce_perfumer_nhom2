@@ -1,12 +1,13 @@
 // import LazyLoader from '../components/LazyLoader';
-import React from 'react';
-import Dashboard from '../pages/admin/dashboard';
-import AdminLayout from '../layouts/admin/AdminLayout';
-import ManagerCategory from '../pages/admin/managerCategory';
-import ManagerProduct from '../pages/admin/managerProduct';
-import ManagerUser from '../pages/admin/managerUser';
-import ManagerBanner from '../pages/admin/managerBanner';
-import ManagerBrand from '../pages/admin/managerBrand';
+import React from "react";
+import Dashboard from "../pages/admin/dashboard";
+import AdminLayout from "../layouts/admin/AdminLayout";
+import ManagerCategory from "../pages/admin/managerCategory";
+import ManagerProduct from "../pages/admin/managerProduct";
+import ManagerUser from "../pages/admin/managerUser";
+import ManagerBanner from "../pages/admin/managerBanner";
+import ManagerBrand from "../pages/admin/managerBrand";
+import ProductDetail from "../pages/admin/productDetailManagement/ProductDetail";
 
 // const AdminPage = React.lazy(() => import('../layouts/admin/AdminLayout'));
 // const DashboardPage = React.lazy(() => import('../pages/admin/dashboard'));
@@ -36,7 +37,7 @@ import ManagerBrand from '../pages/admin/managerBrand';
 
 const PrivateRoutes = [
   {
-    path: '/admin',
+    path: "/admin",
     element: <AdminLayout />,
     children: [
       {
@@ -44,24 +45,28 @@ const PrivateRoutes = [
         element: <Dashboard />,
       },
       {
-        path: 'categories',
+        path: "categories",
         element: <ManagerCategory />,
       },
       {
-        path: 'products',
+        path: "products",
         element: <ManagerProduct />,
       },
       {
-        path: 'users',
+        path: "users",
         element: <ManagerUser />,
       },
       {
-        path: 'slider',
+        path: "slider",
         element: <ManagerBanner />,
       },
       {
-        path: 'brands',
+        path: "brands",
         element: <ManagerBrand />,
+      },
+      {
+        path: "productDetail/:id",
+        element: <ProductDetail />,
       },
     ],
   },
