@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { formatMoney } from "../../../utils/formatData";
+import React, { useEffect, useState } from 'react';
+import { formatMoney } from '../../../utils/formatData';
+import { useSelector } from 'react-redux';
 
 export default function ProductInfo({ toggleVisibility, visible, product }) {
   const [volumeSelected, setVolumeSelected] = useState(null);
@@ -7,7 +8,7 @@ export default function ProductInfo({ toggleVisibility, visible, product }) {
   useEffect(() => {
     if (product?.content && product.content.length > 0) {
       setVolumeSelected(product.content[0].id); // Đặt ID thể tích đầu tiên là mặc định
-      console.log("set:", product.content[0]);
+      console.log('set:', product.content[0]);
     }
   }, [product]);
 
@@ -16,7 +17,7 @@ export default function ProductInfo({ toggleVisibility, visible, product }) {
   };
 
   // Tìm giá dựa trên volumeSelected
-  const selectedProduct = product?.content?.find(item => item.id === volumeSelected);
+  const selectedProduct = product?.content?.find((item) => item.id === volumeSelected);
   const price = selectedProduct ? selectedProduct.unitPrice : 0;
 
   return (
@@ -25,24 +26,21 @@ export default function ProductInfo({ toggleVisibility, visible, product }) {
         <div className="product-details-group">
           <h2 className="product-details-title-head">
             {product?.content?.[0]?.product?.productName}
-            {console.log("Product:", product)}
+            {console.log('Product:', product)}
           </h2>
           <div className="product-details-code">
-            Mã sp:{" "}
-            <span className="product-code-value">
-              {product?.content?.[0]?.product?.sku}
-            </span>
+            Mã sp: <span className="product-code-value">{product?.content?.[0]?.product?.sku}</span>
           </div>
           <div className="flex items-center my-[16px] flex-wrap gap-2">
             <div className="text-[1.4rem]">
-              Thương hiệu:{" "}
+              Thương hiệu:{' '}
               <span className="text-[var(--primary-user-color)] text-[1.4rem] font-medium mr-3">
                 {product?.content?.[0]?.product?.brand?.brandName}
               </span>
               |
             </div>
             <div className="text-[1.4rem] mx-3">
-              Danh mục:{" "}
+              Danh mục:{' '}
               <span className="text-[var(--primary-user-color)] text-[1.4rem] font-medium mr-3">
                 {product?.content?.[0]?.product?.category?.categoryName}
               </span>
@@ -55,13 +53,7 @@ export default function ProductInfo({ toggleVisibility, visible, product }) {
                 <label title="text" htmlFor="star5" />
                 <input defaultValue={4} name="rate" id="star4" type="radio" />
                 <label title="text" htmlFor="star4" />
-                <input
-                  defaultValue={3}
-                  name="rate"
-                  id="star3"
-                  type="radio"
-                  defaultChecked=""
-                />
+                <input defaultValue={3} name="rate" id="star3" type="radio" defaultChecked="" />
                 <label title="text" htmlFor="star3" />
                 <input defaultValue={2} name="rate" id="star2" type="radio" />
                 <label title="text" htmlFor="star2" />
@@ -81,25 +73,21 @@ export default function ProductInfo({ toggleVisibility, visible, product }) {
           </div>
         </div>
       </div>
-      
+
       <div className="product-swatch-options">
         <div className="product-swatch-attribute">
           <span className="attribute-size">Dung tích:</span>
           {product?.content?.map((item) => (
             <div className="swatch-size-inner" key={item.id}>
               <div
-                className={`swatch-size-item ${
-                  item.id === volumeSelected ? "active-capacity" : ""
-                }`}
+                className={`swatch-size-item ${item.id === volumeSelected ? 'active-capacity' : ''}`}
                 onClick={() => handleChangeVolume(item.id)}
               >
                 <div className="flex items-center text-[1.1rem] font-medium my-1">
                   <ion-icon name="checkmark-circle-outline"></ion-icon>
                   <p className="ml-2">Chiết {item.volume}ml</p>
                 </div>
-                <div className="text-[1.4rem] font-semibold my-1">
-                  {formatMoney(item.unitPrice)}
-                </div>
+                <div className="text-[1.4rem] font-semibold my-1">{formatMoney(item.unitPrice)}</div>
               </div>
             </div>
           ))}
@@ -111,56 +99,26 @@ export default function ProductInfo({ toggleVisibility, visible, product }) {
             <button className="swatch-inner-minus">
               <ion-icon name="remove-outline" />
             </button>
-            <input
-              type="text"
-              className="swatch-inner--input"
-              defaultValue={1}
-            />
+            <input type="text" className="swatch-inner--input" defaultValue={1} />
             <button className="swatch-inner-plus">
               <ion-icon name="add-outline" />
             </button>
           </div>
         </div>
-        
+
         <div className="product-swatch-btn">
-          <button className="product-swatch-bottom-check">
-            Thêm vào giỏ hàng
-          </button>
+          <button className="product-swatch-bottom-check">Thêm vào giỏ hàng</button>
         </div>
       </div>
 
       <div className="product-details-desc">
-        <div
-          className="details-desc-wrap"
-          onClick={() => toggleVisibility("material")}
-        >
-          <div
-            className={
-              visible.material
-                ? "details-desc-list action"
-                : "details-desc-list"
-            }
-          >
-            Chất liệu
-          </div>
-          {visible.material && (
-            <div className="details-desc-content">
-              94% polyester 6% spandex.
-            </div>
-          )}
+        <div className="details-desc-wrap" onClick={() => toggleVisibility('material')}>
+          <div className={visible.material ? 'details-desc-list action' : 'details-desc-list'}>Chất liệu</div>
+          {visible.material && <div className="details-desc-content">94% polyester 6% spandex.</div>}
         </div>
 
-        <div
-          className="details-desc-wrap"
-          onClick={() => toggleVisibility("instructions")}
-        >
-          <div
-            className={
-              visible.instructions
-                ? "details-desc-list action"
-                : "details-desc-list"
-            }
-          >
+        <div className="details-desc-wrap" onClick={() => toggleVisibility('instructions')}>
+          <div className={visible.instructions ? 'details-desc-list action' : 'details-desc-list'}>
             Hướng dẫn sử dụng
           </div>
           {visible.instructions && (

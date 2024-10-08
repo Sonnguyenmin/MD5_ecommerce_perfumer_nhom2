@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
-import { Autoplay, Pagination, Navigation, FreeMode } from "swiper/modules";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { listProductByCategory } from "../../../services/productService";
+import { Autoplay, Pagination, Navigation, FreeMode } from 'swiper/modules';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { listProductByCategory } from '../../../services/productService';
 
 export default function NewPerfumer() {
   const { dataProduct } = useSelector((state) => state.product);
@@ -40,8 +40,8 @@ export default function NewPerfumer() {
             }}
             pagination={{ clickable: true }}
             navigation={{
-              nextEl: ".swiper-new-next",
-              prevEl: ".swiper-new-prev",
+              nextEl: '.swiper-new-next',
+              prevEl: '.swiper-new-prev',
             }}
             modules={[FreeMode, Pagination, Autoplay, Navigation]}
             className="mySwiper"
@@ -61,11 +61,7 @@ export default function NewPerfumer() {
                     <ion-icon name="heart-outline"></ion-icon>
                   </div>
                   <div className="product_free">
-                    <img
-                      src="/imgs/sale/newproduct.webp"
-                      alt=""
-                      className="product_free-img"
-                    />
+                    <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
                   </div>
                   <Link
                     href=""
@@ -78,10 +74,7 @@ export default function NewPerfumer() {
                     <span>Thêm nhanh vào giỏ</span>
                   </div>
                   <div className="product_opsions">
-                    <Link
-                      to={`/productDetail/${item.id}`}
-                      className="product_item-head"
-                    >
+                    <Link to={`/productDetail/${item.id}`} className="product_item-head">
                       {item.productName}
                     </Link>
                     <div className="product_item-price">889.000 ₫</div>

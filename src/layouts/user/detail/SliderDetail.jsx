@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
-import "swiper/css";
-import "swiper/css/free-mode";
-import "swiper/css/navigation";
-import "swiper/css/thumbs";
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
 
 // Import required modules
-import { FreeMode, Pagination, Navigation, Thumbs } from "swiper/modules";
+import { FreeMode, Pagination, Navigation, Thumbs } from 'swiper/modules';
 
 export default function SliderDetail({ product }) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -25,8 +25,8 @@ export default function SliderDetail({ product }) {
       {/* Main Swiper */}
       <Swiper
         style={{
-          "--swiper-navigation-color": "#fff",
-          "--swiper-pagination-color": "#fff",
+          '--swiper-navigation-color': '#fff',
+          '--swiper-pagination-color': '#fff',
         }}
         loop={true}
         spaceBetween={10}
@@ -35,14 +35,14 @@ export default function SliderDetail({ product }) {
         }} // Kết nối với thumbsSwiper
         pagination={{ clickable: true }}
         navigation={{
-          nextEl: ".swiper-new-next",
-          prevEl: ".swiper-new-prev",
+          nextEl: '.swiper-new-next',
+          prevEl: '.swiper-new-prev',
         }}
         modules={[FreeMode, Navigation, Thumbs, Pagination]}
         className="mainSwiper"
       >
         {product &&
-          product.content
+          product?.content
             .map((item) => item.image)
             .map((item) => (
               <SwiperSlide>
@@ -70,7 +70,7 @@ export default function SliderDetail({ product }) {
         className="thumbsSwiper"
       >
         {product &&
-          product.content
+          product?.content
             .map((item) => item.image)
             .map((item) => (
               <SwiperSlide>
