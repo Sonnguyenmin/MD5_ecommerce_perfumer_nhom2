@@ -154,7 +154,12 @@ export default function ManagerBrand() {
     const brandStatusFindById = dataBrand.find((br) => br.id === id);
     const updatedStatus = !brandStatusFindById.status;
 
-    dispatch(editBrand({ id, brand: { ...brandStatusFindById, status: updatedStatus } })).then(() => {
+    dispatch(
+      editBrand({
+        id,
+        brand: { ...brandStatusFindById, status: updatedStatus },
+      }),
+    ).then(() => {
       loadData();
       notification.success({
         message: 'Thành công',

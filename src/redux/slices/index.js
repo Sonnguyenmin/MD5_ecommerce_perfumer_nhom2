@@ -6,6 +6,7 @@ import bannerSlice from './bannerSlice';
 import brandSlice from './brandSlice';
 import productSlice from './productSlice';
 import shopsSlice from './shopsSlice';
+import productDetailSlice from './productDetailSlice';
 
 const reducers = combineReducers({
   category: categorySlice,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   brand: brandSlice,
   product: productSlice,
   shops: shopsSlice,
+  productDetail: productDetailSlice,
 });
 
 export default reducers;
