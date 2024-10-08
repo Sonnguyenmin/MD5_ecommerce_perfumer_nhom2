@@ -49,7 +49,7 @@ const PublicRoutes = [
         element: <HomeUser />,
       },
       {
-        path: '/productDetail',
+        path: '/productDetail/:id',
         element: <ProductDetails />,
       },
       {

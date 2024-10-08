@@ -3,7 +3,7 @@ import { FAILED, IDLE, PENDING, SUCCESSFULLY } from '../constants/status';
 import { findAllProDetail } from '../../services/productDetailService';
 
 const productDetailSlice = createSlice({
-  name: 'productDetail',
+  name: 'ProductDetail',
   initialState: {
     loadingProDetail: IDLE,
     dataProDetail: null,

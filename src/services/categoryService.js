@@ -7,6 +7,7 @@ import { DELETE, GET, POST, PUT } from '../constants/httpMethod';
  * Gọi API để lấy danh sách danh mục
  * Trả về dữ liệu danh mục
  */
+
 export const listCategory = createAsyncThunk('category/listCategory', async () => {
   const res = await BASE_URL[GET]('/listCategories');
   return res.data.content;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import Navigations from './navigations';
+import Navigations from './Navigations';
 import CartHeader from './CartHeader';
 import AccountUser from './AccountUser';
 
