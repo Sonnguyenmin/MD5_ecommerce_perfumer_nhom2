@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { findAllCategory, findAllCategoryNoPagination } from '../../services/categoryService';
+import { findAllCategory, findAllCategoryNoPagination, listCategory } from '../../services/categoryService';
 import { FAILED, IDLE, PENDING, SUCCESSFULLY } from '../constants/status';
 
 const categorySlice = createSlice({
@@ -48,6 +48,13 @@ const categorySlice = createSlice({
       state.loadingCategory = FAILED;
       state.errorCategory = action.errorCategory.message;
     });
+
+    builder.addCase(listCategory.fulfilled, (state, action) => {
+      console.log("category slice: ", action.payload);
+      state.data = action.payload.content
+    });
+
+
   },
 });
 

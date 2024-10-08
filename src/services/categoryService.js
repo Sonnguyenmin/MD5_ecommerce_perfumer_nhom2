@@ -2,6 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BASE_URL } from '../api';
 import { DELETE, GET, POST, PUT } from '../constants/httpMethod';
 
+export const listCategory = createAsyncThunk('category', async () => {
+  const res = await BASE_URL.get("/listCategory");
+  console.log("category service", res.data);
+  return res.data;
+});
+
+
 export const findAllCategory = createAsyncThunk('category/findAll', async ({ page, search }) => {
   const res = await BASE_URL.get(`admin/categories?page=${page - 1}&search=${search}`);
   return res.data.content;

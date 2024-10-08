@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { findAllProduct } from '../../services/productService';
+// import { findAllProduct, listProductByCategory, productDetail } from '../../services/productService';
 import { FAILED, PENDING, SUCCESSFULLY } from '../constants/status';
+import { findAllProduct, listProductByCategory } from '../../services/productService';
 
 const productSlice = createSlice({
   name: 'product',
@@ -25,6 +26,10 @@ const productSlice = createSlice({
       state.loadingProduct = FAILED;
       state.errorProduct = action.error.message;
     });
+
+    builder.addCase(listProductByCategory.fulfilled, (state, action) => {
+      state.dataProduct = action.payload;
+    })
   },
 });
 

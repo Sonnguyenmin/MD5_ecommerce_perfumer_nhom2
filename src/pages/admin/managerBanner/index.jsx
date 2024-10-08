@@ -1,17 +1,22 @@
-import { Button, Dropdown, Input, notification, Select } from 'antd';
+import { Button, Dropdown, Input, notification, Select } from "antd";
 
-import Pagination from '@mui/material/Pagination';
+import Pagination from "@mui/material/Pagination";
 
-import { FaFilter } from 'react-icons/fa';
-import { LuRefreshCw } from 'react-icons/lu';
-import { styled } from '@mui/material/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { useDebounce } from '@uidotdev/usehooks';
-import { addBanner, deleteBanner, editBanner, findAllBanner } from '../../../services/bannerService';
-import { useEffect, useState } from 'react';
-import AddBanner from './AddBanner';
-import DeleteBanner from './DeleteBanner';
-import EditBanner from './EditBanner';
+import { FaFilter } from "react-icons/fa";
+import { LuRefreshCw } from "react-icons/lu";
+import { styled } from "@mui/material/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { useDebounce } from "@uidotdev/usehooks";
+import {
+  addBanner,
+  deleteBanner,
+  editBanner,
+  findAllBanner,
+} from "../../../services/bannerService";
+import { useEffect, useState } from "react";
+import AddBanner from "./AddBanner";
+import DeleteBanner from "./DeleteBanner";
+import EditBanner from "./EditBanner";
 
 export default function ManagerBanner() {
   //#region Hàm khởi tạo trạng thái banner
@@ -19,16 +24,18 @@ export default function ManagerBanner() {
   const [isFormEdit, setIsFormEdit] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [baseId, setBaseId] = useState(null);
   const [banner, setBanner] = useState({
-    bannerName: '',
-    urlImage: '',
+    bannerName: "",
+    urlImage: "",
   });
   const [file, setFile] = useState(null);
 
-  const [urlImageError, setUrlImageError] = useState('');
-  const { data, totalPages, numberOfElements, totalElements } = useSelector((state) => state.banner);
+  const [urlImageError, setUrlImageError] = useState("");
+  const { data, totalPages, numberOfElements, totalElements } = useSelector(
+    (state) => state.banner
+  );
 
   const dispatch = useDispatch();
   const debounce = useDebounce(search, 500);
@@ -54,12 +61,12 @@ export default function ManagerBanner() {
   const validateData = (name, value) => {
     let inValid = true;
     switch (name) {
-      case 'urlImage':
+      case "urlImage":
         if (!value) {
-          setUrlImageError('Ảnh banner không được để trống');
+          setUrlImageError("Ảnh banner không được để trống");
           inValid = false;
         } else {
-          setUrlImageError('');
+          setUrlImageError("");
         }
         break;
       default:
@@ -106,7 +113,7 @@ export default function ManagerBanner() {
   const handleGetFile = (e) => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
-    validateData('urlImage', selectedFile);
+    validateData("urlImage", selectedFile);
   };
 
   /**
@@ -114,40 +121,40 @@ export default function ManagerBanner() {
    * Kiểm tra tính hợp lệ của hình ảnh và thực hiện hành động thêm banner.
    */
   const handleAddBanner = () => {
-    const isUrlImageValid = validateData('urlImage', file);
+    const isUrlImageValid = validateData("urlImage", file);
 
     if (!isUrlImageValid) {
       notification.error({
-        message: 'Lỗi',
-        description: 'Vui lòng chọn hình ảnh banner!',
+        message: "Lỗi",
+        description: "Vui lòng chọn hình ảnh banner!",
         duration: 2,
       });
       return;
     }
 
     const formData = new FormData();
-    formData.append('bannerName', banner.bannerName);
-    formData.append('urlImage', file);
+    formData.append("bannerName", banner.bannerName);
+    formData.append("urlImage", file);
 
     dispatch(addBanner(formData))
       .then(() => {
         loadData();
         notification.success({
-          message: 'Thành công',
-          description: 'Banner đã được thêm thành công!',
+          message: "Thành công",
+          description: "Banner đã được thêm thành công!",
           duration: 1,
         });
       })
       .catch((error) => {
         notification.error({
-          message: 'Lỗi',
-          description: 'Có lỗi xảy ra trong quá trình thêm banner!',
+          message: "Lỗi",
+          description: "Có lỗi xảy ra trong quá trình thêm banner!",
           duration: 2,
         });
       });
 
     //reset lại form
-    setBanner({ bannerName: '', urlImage: '' });
+    setBanner({ bannerName: "", urlImage: "" });
     setFile(null);
     setIsFormAdd(false);
   };
@@ -181,12 +188,12 @@ export default function ManagerBanner() {
   const handleEditBanner = ({ baseId }) => {
     // Nếu không có file mới, giữ lại ảnh cũ
     if (file) {
-      const isUrlImageValid = validateData('urlImage', file);
+      const isUrlImageValid = validateData("urlImage", file);
 
       if (!isUrlImageValid) {
         notification.error({
-          message: 'Lỗi',
-          description: 'Vui lòng chọn hình ảnh banner hợp lệ!',
+          message: "Lỗi",
+          description: "Vui lòng chọn hình ảnh banner hợp lệ!",
           duration: 1,
         });
         return;
@@ -194,32 +201,32 @@ export default function ManagerBanner() {
     }
 
     const formData = new FormData();
-    formData.append('bannerName', banner.bannerName);
+    formData.append("bannerName", banner.bannerName);
 
     // Nếu có file mới thì thêm vào formData, không thì giữ ảnh cũ
     if (file) {
-      formData.append('urlImage', file);
+      formData.append("urlImage", file);
     }
 
     dispatch(editBanner({ baseId, formData }))
       .then(() => {
         loadData();
         notification.success({
-          message: 'Thành công',
-          description: 'Banner đã được chỉnh sửa thành công!',
+          message: "Thành công",
+          description: "Banner đã được chỉnh sửa thành công!",
           duration: 1,
         });
       })
       .catch((error) => {
         notification.error({
-          message: 'Lỗi',
-          description: 'Chỉnh sửa banner không thành công!',
+          message: "Lỗi",
+          description: "Chỉnh sửa banner không thành công!",
           duration: 1,
         });
       });
 
     // Reset lại form
-    setBanner({ bannerName: '', urlImage: '' });
+    setBanner({ bannerName: "", urlImage: "" });
     setFile(null);
     setIsFormEdit(false);
   };
@@ -237,8 +244,8 @@ export default function ManagerBanner() {
         loadData();
       }
       notification.success({
-        message: 'Thành công',
-        description: 'banner đã được xóa thành công!',
+        message: "Thành công",
+        description: "banner đã được xóa thành công!",
         duration: 1,
       });
     });
@@ -250,15 +257,15 @@ export default function ManagerBanner() {
    */
   const items = [
     {
-      key: '1',
+      key: "1",
       label: <span>Sắp xếp theo STT</span>,
     },
     {
-      key: '2',
+      key: "2",
       label: <span>Sắp xếp theo A đến Z</span>,
     },
     {
-      key: '3',
+      key: "3",
       label: <span>Sắp xếp theo Z đến A</span>,
     },
   ];
@@ -271,7 +278,7 @@ export default function ManagerBanner() {
   const options = (id) => {
     return [
       {
-        key: '4',
+        key: "4",
         label: (
           <span
             className="leading-[32px]"
@@ -284,7 +291,7 @@ export default function ManagerBanner() {
         ),
       },
       {
-        key: '5',
+        key: "5",
         label: (
           <span className="leading-[32px]" onClick={() => handleOpenModal(id)}>
             Xóa
@@ -298,32 +305,41 @@ export default function ManagerBanner() {
    * Thành phần phân trang tùy chỉnh sử dụng Material-UI.
    */
   const CustomPagination = styled(Pagination)({
-    '& .MuiPaginationItem-root': {
-      fontFamily: 'Arial, sans-serif', // Tùy chỉnh phông chữ
-      fontSize: '12px',
-      backgroundColor: 'lightgrey', // Màu nền
-      color: 'black', // Màu chữ
-      '&:hover': {
-        backgroundColor: 'darkgrey', // Màu nền khi hover
+    "& .MuiPaginationItem-root": {
+      fontFamily: "Arial, sans-serif", // Tùy chỉnh phông chữ
+      fontSize: "12px",
+      backgroundColor: "lightgrey", // Màu nền
+      color: "black", // Màu chữ
+      "&:hover": {
+        backgroundColor: "darkgrey", // Màu nền khi hover
       },
     },
-    '& .Mui-selected': {
-      backgroundColor: 'blue', // Màu nền khi được chọn
-      color: 'white', // Màu chữ khi được chọn
-      fontWeight: 'bold', // Chữ đậm khi được chọn
+    "& .Mui-selected": {
+      backgroundColor: "blue", // Màu nền khi được chọn
+      color: "white", // Màu chữ khi được chọn
+      fontWeight: "bold", // Chữ đậm khi được chọn
     },
   });
 
   return (
     <>
-      <DeleteBanner handleDeleteBanner={handleDeleteBanner} isModal={isModal} setIsModal={setIsModal} baseId={baseId} />
+      <DeleteBanner
+        handleDeleteBanner={handleDeleteBanner}
+        isModal={isModal}
+        setIsModal={setIsModal}
+        baseId={baseId}
+      />
 
       <div className="w-full bg-[var(--panel-color)] rounded-[6px] mx-auto p-6">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-[20px] text-[var(--text-color)] whitespace-nowrap font-bold font-number">
             Danh sách Banner
           </h1>
-          <Button type="primary" className="py-6" onClick={() => setIsFormAdd(true)}>
+          <Button
+            type="primary"
+            className="py-6"
+            onClick={() => setIsFormAdd(true)}
+          >
             Thêm mới banner
           </Button>
         </div>
@@ -335,7 +351,10 @@ export default function ManagerBanner() {
             placement="bottom"
           >
             <Button className="border-none shadow-none">
-              <FaFilter size={20} className="cursor-pointer text-gray-500 hover:text-gray-600" />
+              <FaFilter
+                size={20}
+                className="cursor-pointer text-gray-500 hover:text-gray-600"
+              />
             </Button>
           </Dropdown>
 
@@ -345,7 +364,10 @@ export default function ManagerBanner() {
               placeholder="Tìm kiếm banner theo tên"
               onChange={handleBannerSearch}
             />
-            <LuRefreshCw size={24} className="text-gray-500 hover:text-gray-700 cursor-pointer" />
+            <LuRefreshCw
+              size={24}
+              className="text-gray-500 hover:text-gray-700 cursor-pointer"
+            />
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -374,7 +396,9 @@ export default function ManagerBanner() {
                       colSpan={4}
                       className="px-4 h-[50px] text-[20px] text-[var(--text-color)] text-center font-bold"
                     >
-                      {search ? `Không tìm thấy banner tên ${search}` : 'Danh sách banner trống'}
+                      {search
+                        ? `Không tìm thấy banner tên ${search}`
+                        : "Danh sách banner trống"}
                     </td>
                   </tr>
                 ) : (
@@ -384,13 +408,21 @@ export default function ManagerBanner() {
                         {index + 1 + (page - 1) * 5}
                       </td>
                       <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                        {banner.bannerName || 'Đang cập nhật'}
+                        {banner.bannerName || "Đang cập nhật"}
                       </td>
                       <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                        <img src={banner.urlImage} alt="" className="w-[90%] h-[90%] object-contain" />
+                        <img
+                          src={banner.urlImage}
+                          alt=""
+                          className="w-[90%] h-[90%] object-contain"
+                        />
                       </td>
                       <td className="px-4 h-[65px] text-[15px] text-[var(--text-color)] text-center">
-                        <Dropdown menu={{ items: options(banner.id) }} placement="bottom" trigger={['click']}>
+                        <Dropdown
+                          menu={{ items: options(banner.id) }}
+                          placement="bottom"
+                          trigger={["click"]}
+                        >
                           <Button className="border-none shadow-none focus:shadow-none focus:bg-none">
                             <span className="text-[26px] text-[#d3732a]">
                               <i className="uil uil-file-edit-alt"></i>
@@ -408,7 +440,7 @@ export default function ManagerBanner() {
 
         <div className="mt-4 flex justify-between items-center flex-wrap gap-3">
           <div className="text-[14px] whitespace-nowrap text-[var(--text-color)]">
-            Hiển thị <b className="font-number">{numberOfElements}</b> trên{' '}
+            Hiển thị <b className="font-number">{numberOfElements}</b> trên{" "}
             <b className="font-number">{totalElements}</b> bản ghi
           </div>
           <div className="flex items-center gap-5">
@@ -419,20 +451,20 @@ export default function ManagerBanner() {
               }}
               options={[
                 {
-                  value: '10',
-                  label: 'Hiển thị 10 bản ghi / trang',
+                  value: "10",
+                  label: "Hiển thị 10 bản ghi / trang",
                 },
                 {
-                  value: '20',
-                  label: 'Hiển thị 20 bản ghi / trang',
+                  value: "20",
+                  label: "Hiển thị 20 bản ghi / trang",
                 },
                 {
-                  value: '50',
-                  label: 'Hiển thị 50 bản ghi / trang',
+                  value: "50",
+                  label: "Hiển thị 50 bản ghi / trang",
                 },
                 {
-                  value: '100',
-                  label: 'Hiển thị 100 bản ghi / trang',
+                  value: "100",
+                  label: "Hiển thị 100 bản ghi / trang",
                 },
               ]}
             />

@@ -1,14 +1,19 @@
-import { Button, Dropdown, Input, Modal, notification, Tag } from 'antd';
-import Pagination from '@mui/material/Pagination';
-import { FaFilter } from 'react-icons/fa';
-import { LuRefreshCw } from 'react-icons/lu';
-import { styled } from '@mui/material/styles';
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useDebounce } from '@uidotdev/usehooks';
-import { addBrand, deleteBrand, editBrand, findBrandAll } from '../../../services/brandService';
-import AddBrand from './AddBrand';
-import EditBrand from './EditBrand';
+import { Button, Dropdown, Input, Modal, notification, Tag } from "antd";
+import Pagination from "@mui/material/Pagination";
+import { FaFilter } from "react-icons/fa";
+import { LuRefreshCw } from "react-icons/lu";
+import { styled } from "@mui/material/styles";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useDebounce } from "@uidotdev/usehooks";
+import {
+  addBrand,
+  deleteBrand,
+  editBrand,
+  findBrandAll,
+} from "../../../services/brandService";
+import AddBrand from "./AddBrand";
+import EditBrand from "./EditBrand";
 
 export default function ManagerBrand() {
   //#region Khai báo các biến trạng thái brand
@@ -16,15 +21,21 @@ export default function ManagerBrand() {
   const [isFormEdit, setIsFormEdit] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [baseId, setBaseId] = useState(null);
   const [brand, setBrand] = useState({
-    brandName: '',
-    description: '',
+    brandName: "",
+    description: "",
   });
-  const [brandNameError, setBrandNameError] = useState('');
-  const { dataBrand, loadingBrand, errorBrand, totalPagesBrand, numberOfElementsBrand, totalElementsBrand } =
-    useSelector((state) => state.brand);
+  const [brandNameError, setBrandNameError] = useState("");
+  const {
+    dataBrand,
+    loadingBrand,
+    errorBrand,
+    totalPagesBrand,
+    numberOfElementsBrand,
+    totalElementsBrand,
+  } = useSelector((state) => state.brand);
 
   const dispatch = useDispatch();
   const debounce = useDebounce(search, 500);
@@ -51,19 +62,23 @@ export default function ManagerBrand() {
   const validateData = (name, value, id = null) => {
     let inValid = true;
     switch (name) {
-      case 'brandName':
+      case "brandName":
         if (!value.trim()) {
-          setBrandNameError('Tên thương hiệu không được để trống');
+          setBrandNameError("Tên thương hiệu không được để trống");
           inValid = false;
         } else {
-          const existingBrand = dataBrand.find(
-            (br) => br.brandName.toLowerCase() === value.toLowerCase() && br.id !== id,
-          );
-          if (existingBrand) {
-            setBrandNameError('Tên thương hiệu đã tồn tại');
-            inValid = false;
-          } else {
-            setBrandNameError('');
+          if (dataBrand) {
+            const existingBrand = dataBrand.some(
+              (br) =>
+                br.brandName.toLowerCase() === value.toLowerCase() &&
+                br.id !== id
+            );
+            if (existingBrand) {
+              setBrandNameError("Tên thương hiệu đã tồn tại");
+              inValid = false;
+            } else {
+              setBrandNameError("");
+            }
           }
         }
         break;
@@ -110,14 +125,14 @@ export default function ManagerBrand() {
    * @param {*} brand - thương hiệu cần thêm.
    */
   const handleAddBrand = (brand) => {
-    const brandNameValid = validateData('brandName', brand.brandName);
+    const brandNameValid = validateData("brandName", brand.brandName);
 
     if (brandNameValid) {
       dispatch(addBrand(brand)).then(() => {
         loadData();
         notification.success({
-          message: 'Thành công',
-          description: 'Thương hiệu đã được thêm thành công!',
+          message: "Thành công",
+          description: "Thương hiệu đã được thêm thành công!",
           duration: 2,
         });
       });
@@ -152,11 +167,18 @@ export default function ManagerBrand() {
     const brandStatusFindById = dataBrand.find((br) => br.id === id);
     const updatedStatus = !brandStatusFindById.status;
 
-    dispatch(editBrand({ id, brand: { ...brandStatusFindById, status: updatedStatus } })).then(() => {
+    dispatch(
+      editBrand({
+        id,
+        brand: { ...brandStatusFindById, status: updatedStatus },
+      })
+    ).then(() => {
       loadData();
       notification.success({
-        message: 'Thành công',
-        description: `Thương hiệu đã được ${updatedStatus ? 'Đang hoạt động' : 'Ngừng hoạt động'}!`,
+        message: "Thành công",
+        description: `Thương hiệu đã được ${
+          updatedStatus ? "Đang hoạt động" : "Ngừng hoạt động"
+        }!`,
         duration: 1,
       });
     });
@@ -169,13 +191,17 @@ export default function ManagerBrand() {
    * @param {*} param - Chứa baseId của thương hiệu cần chỉnh sửa.
    */
   const handleEditBrand = ({ baseId }) => {
-    const brandNameValid = validateData('brandName', brand.brandName.trim(), baseId);
+    const brandNameValid = validateData(
+      "brandName",
+      brand.brandName.trim(),
+      baseId
+    );
     if (brandNameValid) {
       dispatch(editBrand({ id: baseId, brand: brand })).then(() => {
         loadData();
         notification.success({
-          message: 'Thành công',
-          description: 'Thương hiệu đã được chỉnh sửa thành công!',
+          message: "Thành công",
+          description: "Thương hiệu đã được chỉnh sửa thành công!",
           duration: 1,
         });
       });
@@ -197,8 +223,8 @@ export default function ManagerBrand() {
         loadData();
       }
       notification.success({
-        message: 'Thành công',
-        description: 'Thương hiệu đã được xóa thành công!',
+        message: "Thành công",
+        description: "Thương hiệu đã được xóa thành công!",
         duration: 1,
       });
     });
@@ -211,15 +237,15 @@ export default function ManagerBrand() {
    */
   const items = [
     {
-      key: '1',
+      key: "1",
       label: <span>Hủy bỏ bộ lọc</span>,
     },
     {
-      key: '2',
+      key: "2",
       label: <span>Đang hoạt động</span>,
     },
     {
-      key: '3',
+      key: "3",
       label: <span>Ngừng hoạt động</span>,
     },
   ];
@@ -235,7 +261,7 @@ export default function ManagerBrand() {
     const brand = dataBrand.find((br) => br.id === id);
     return [
       {
-        key: '4',
+        key: "4",
         label: (
           <span
             className="leading-[32px]"
@@ -248,15 +274,18 @@ export default function ManagerBrand() {
         ),
       },
       {
-        key: '5',
+        key: "5",
         label: (
-          <span className="leading-[32px]" onClick={() => handleChangeStatus(id)}>
-            {brand.status ? 'Chặn' : 'Bỏ chặn'}
+          <span
+            className="leading-[32px]"
+            onClick={() => handleChangeStatus(id)}
+          >
+            {brand.status ? "Chặn" : "Bỏ chặn"}
           </span>
         ),
       },
       {
-        key: '6',
+        key: "6",
         label: (
           <span className="leading-[32px]" onClick={() => handleOpenModal(id)}>
             Xóa
@@ -270,19 +299,19 @@ export default function ManagerBrand() {
    * Thành phần phân trang tùy chỉnh sử dụng Material-UI.
    */
   const CustomPagination = styled(Pagination)({
-    '& .MuiPaginationItem-root': {
-      fontFamily: 'Arial, sans-serif', // Tùy chỉnh phông chữ
-      fontSize: '12px',
-      backgroundColor: 'lightgrey', // Màu nền
-      color: 'black', // Màu chữ
-      '&:hover': {
-        backgroundColor: 'darkgrey', // Màu nền khi hover
+    "& .MuiPaginationItem-root": {
+      fontFamily: "Arial, sans-serif", // Tùy chỉnh phông chữ
+      fontSize: "12px",
+      backgroundColor: "lightgrey", // Màu nền
+      color: "black", // Màu chữ
+      "&:hover": {
+        backgroundColor: "darkgrey", // Màu nền khi hover
       },
     },
-    '& .Mui-selected': {
-      backgroundColor: 'blue', // Màu nền khi được chọn
-      color: 'white', // Màu chữ khi được chọn
-      fontWeight: 'bold', // Chữ đậm khi được chọn
+    "& .Mui-selected": {
+      backgroundColor: "blue", // Màu nền khi được chọn
+      color: "white", // Màu chữ khi được chọn
+      fontWeight: "bold", // Chữ đậm khi được chọn
     },
   });
 
@@ -295,7 +324,11 @@ export default function ManagerBrand() {
         footer={
           <>
             <Button onClick={() => setIsModal(false)}>Hủy</Button>
-            <Button danger type="primary" onClick={() => handleDeleteBrand(baseId)}>
+            <Button
+              danger
+              type="primary"
+              onClick={() => handleDeleteBrand(baseId)}
+            >
               Xóa
             </Button>
           </>
@@ -309,7 +342,11 @@ export default function ManagerBrand() {
           <h1 className="text-[20px] leading-10 text-[var(--text-color)] whitespace-nowrap font-bold font-number">
             Danh sách thương hiệu
           </h1>
-          <Button onClick={() => setIsFormAdd(true)} type="primary" className="py-7">
+          <Button
+            onClick={() => setIsFormAdd(true)}
+            type="primary"
+            className="py-7"
+          >
             Thêm mới thương hiệu
           </Button>
         </div>
@@ -321,7 +358,10 @@ export default function ManagerBrand() {
             placement="bottom"
           >
             <Button className="border-none shadow-none">
-              <FaFilter size={20} className="cursor-pointer text-gray-500 hover:text-gray-600" />
+              <FaFilter
+                size={20}
+                className="cursor-pointer text-gray-500 hover:text-gray-600"
+              />
             </Button>
           </Dropdown>
 
@@ -331,7 +371,10 @@ export default function ManagerBrand() {
               placeholder="Tìm kiếm thương hiệu theo tên"
               onChange={handleSearch}
             />
-            <LuRefreshCw size={24} className="text-gray-500 hover:text-gray-700 cursor-pointer" />
+            <LuRefreshCw
+              size={24}
+              className="text-gray-500 hover:text-gray-700 cursor-pointer"
+            />
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -363,7 +406,9 @@ export default function ManagerBrand() {
                       colSpan={4}
                       className="px-4 h-[50px] text-[20px] text-[var(--text-color)] text-center font-bold"
                     >
-                      {search ? `Không tìm thấy thương hiệu tên  ${search}` : 'Danh sách thương hiệu trống'}
+                      {search
+                        ? `Không tìm thấy thương hiệu tên  ${search}`
+                        : "Danh sách thương hiệu trống"}
                     </td>
                   </tr>
                 ) : (
@@ -379,10 +424,18 @@ export default function ManagerBrand() {
                         {br.description}
                       </td>
                       <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
-                        {br.status ? <Tag color="green">Đang hoạt động</Tag> : <Tag color="red">Ngừng hoạt động</Tag>}
+                        {br.status ? (
+                          <Tag color="green">Đang hoạt động</Tag>
+                        ) : (
+                          <Tag color="red">Ngừng hoạt động</Tag>
+                        )}
                       </td>
                       <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center">
-                        <Dropdown menu={{ items: options(br.id) }} placement="bottom" trigger={['click']}>
+                        <Dropdown
+                          menu={{ items: options(br.id) }}
+                          placement="bottom"
+                          trigger={["click"]}
+                        >
                           <Button className="border-none shadow-none focus:shadow-none focus:bg-none">
                             <span className="text-[26px] text-[#d3732a]">
                               <i className="uil uil-file-edit-alt"></i>
@@ -400,7 +453,7 @@ export default function ManagerBrand() {
 
         <div className="mt-4 flex justify-between items-center flex-wrap gap-3">
           <div className="text-[14px] whitespace-nowrap text-[var(--text-color)]">
-            Hiển thị <b className="font-number">{numberOfElementsBrand}</b> trên{' '}
+            Hiển thị <b className="font-number">{numberOfElementsBrand}</b> trên{" "}
             <b className="font-number">{totalElementsBrand}</b> bản ghi
           </div>
           <div className="flex items-center gap-5">
