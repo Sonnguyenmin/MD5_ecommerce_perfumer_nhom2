@@ -9,6 +9,7 @@ import productSlice from './productSlice';
 // import shopsSlice from './shopsSlice';
 import productDetailSlice from './productDetailSlice';
 import productDetailUserSlice from './productDetailUserSlice';
+import productRealSlice from "./productRealSlice";
 const reducers = combineReducers({
   category: categorySlice,
   auth: authSlice,
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   product: productSlice,
   ProductDetail: productDetailSlice,
   productDetailUser: productDetailUserSlice,
+  productReal: productRealSlice,
 });
 
 export default reducers;
