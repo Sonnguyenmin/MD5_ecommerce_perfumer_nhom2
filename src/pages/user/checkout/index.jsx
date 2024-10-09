@@ -1,11 +1,48 @@
-import { Link } from 'react-router-dom';
-import './checkout.scss';
+import { Link, useNavigate } from "react-router-dom";
+import "./checkout.scss";
 
-import React from 'react';
+import { React, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { findAllCart } from "../../../services/cartService";
+import { orderNow } from "../../../services/orderService";
+import { notification } from "antd";
 
 export default function CheckOut() {
+  const { dataCart } = useSelector((state) => state.carts);
+  const [note, setNote] = useState("");
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(findAllCart());
+  }, []);
+  const handleNote = (e) => {
+    setNote(e.target.value);
+  };
+
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    const orderRequest = {
+      receiveName: dataCart?.[0]?.users.fullName,
+      receiveFullAddress: dataCart?.[0]?.users.address,
+      receivePhone: dataCart?.[0]?.users.phone,
+      note: note,
+    };
+    dispatch(orderNow(orderRequest))
+      .then((response) => {
+        notification.success({message:"thanh toan thanh cong"});
+        navigate("/");
+      })
+      .catch((error) => {
+        // Xử lý khi có lỗi xảy ra
+        notification.error({message:"Thanh toán thất bại:"});
+        // Bạn có thể hiển thị một thông báo lỗi cho người dùng ở đây
+      });
+      
+  };
+
   return (
     <>
+      {console.log(dataCart?.[0]?.users.fullName)}
       <div className="grid wide">
         <div className="breadcrumb apps_content">
           <ul className="breadcrumb_list">
@@ -42,7 +79,7 @@ export default function CheckOut() {
                   <div className="checkout-inner">
                     <header className="checkout-header">
                       <h2 className="checkout-title">Thông tin giao hàng</h2>
-                      <Link href="" className="checkout-edit">
+                      <Link to="/profile" className="checkout-edit">
                         Thay đổi
                       </Link>
                     </header>
@@ -50,15 +87,14 @@ export default function CheckOut() {
                       <div className="checkout-form-fullname">
                         <div className="checkout-form-name">
                           <label className="checkout-form-label" htmlFor="">
-                            Họ
+                            Họ & Tên
                           </label>
-                          <input type="text" name="firstName" className="form-control" />
-                        </div>
-                        <div className="checkout-form-name">
-                          <label className="checkout-form-label" htmlFor="">
-                            Tên
-                          </label>
-                          <input type="text" name="lastName" className="form-control" />
+                          <input
+                            type="text"
+                            name="firstName"
+                            className="form-control"
+                            value={dataCart?.[0]?.users.fullName}
+                          />
                         </div>
                       </div>
                       <div className="checkout-form-fullname">
@@ -66,44 +102,48 @@ export default function CheckOut() {
                           <label className="checkout-form-label" htmlFor="">
                             Số điện thoại
                           </label>
-                          <input type="text" name="telephone" className="form-control" />
+                          <input
+                            type="text"
+                            name="telephone"
+                            className="form-control"
+                            value={dataCart?.[0]?.users.phone}
+                          />
                         </div>
                         <div className="checkout-form-name">
                           <label className="checkout-form-label" htmlFor="">
                             Email
                           </label>
-                          <input type="email" name="email" className="form-control" />
+                          <input
+                            type="email"
+                            name="email"
+                            className="form-control"
+                            value={dataCart?.[0]?.users.email}
+                          />
                         </div>
                       </div>
+
                       <div className="checkout-form-group">
                         <label className="checkout-form-label" htmlFor="">
-                          Tỉnh / Thành Phố
+                          Địa chỉ
                         </label>
-                        <select name="" className="form-control">
-                          <option value="" />
-                        </select>
+                        <input
+                          type="text"
+                          name="streetName"
+                          className="form-control"
+                          value={dataCart?.[0]?.users.address}
+                        />
                       </div>
                       <div className="checkout-form-group">
                         <label className="checkout-form-label" htmlFor="">
-                          Quận / Huyện
+                          Note:
                         </label>
-                        <select name="" className="form-control">
-                          <option value="" />
-                        </select>
-                      </div>
-                      <div className="checkout-form-group">
-                        <label className="checkout-form-label" htmlFor="">
-                          Phường / Xã
-                        </label>
-                        <select name="" className="form-control">
-                          <option value="" />
-                        </select>
-                      </div>
-                      <div className="checkout-form-group">
-                        <label className="checkout-form-label" htmlFor="">
-                          Nhập địa chỉ
-                        </label>
-                        <input type="text" name="streetName" className="form-control" />
+                        <input
+                          type="text"
+                          name="streetName"
+                          className="form-control"
+                          value={note}
+                          onChange={handleNote}
+                        />
                       </div>
                     </div>
                   </div>
@@ -112,39 +152,62 @@ export default function CheckOut() {
                   <div className="checkout-inner">
                     <header className="checkout-product">
                       <h2 className="checkout-product-title">
-                        Sản phẩm <span className="check-product-count">(1)</span>
+                        Sản phẩm{" "}
+                        <span className="check-product-count">(1)</span>
                       </h2>
                     </header>
                     <table className="checkout-table">
                       <tbody>
-                        <tr className="checkout-tr">
-                          <td className="checkout-col">
-                            <div className="checkout-info">
-                              <div className="checkout-photo">
-                                <Link href="" className="checkout-photo-link">
-                                  <img src="vperfume/nuochoanu/1.jpg" alt="" className="checkout-photo-img" />
-                                </Link>
-                              </div>
-                              <div className="checkout-details">
-                                <strong className="checkout-details-name">Váy liên bé gái</strong>
-                                <div className="checkout-options">
-                                  <div className="checkout-options-group">
-                                    <span className="checkout-options-color"></span>
+                        {dataCart &&
+                          dataCart.map((item, index) => (
+                            <tr className="checkout-tr" key={index}>
+                              <td className="checkout-col">
+                                <div className="checkout-info">
+                                  <div className="checkout-photo">
+                                    <Link
+                                      to={`/product/${item.productDetail.product.id}`}
+                                      className="checkout-photo-link"
+                                    >
+                                      <img
+                                        src={item.productDetail.image}
+                                        alt={
+                                          item.productDetail.product.productName
+                                        }
+                                        className="checkout-photo-img"
+                                      />
+                                    </Link>
                                   </div>
-                                  <div className="checkout-options-group">
-                                    <span className="checkout-options-size">Triết 10ml</span>
+                                  <div className="checkout-details">
+                                    <strong className="checkout-details-name">
+                                      {item.productDetail.product.productName}
+                                    </strong>
+                                    <div className="checkout-options">
+                                      <div className="checkout-options-group">
+                                        <span className="checkout-options-color"></span>
+                                      </div>
+                                      <div className="checkout-options-group">
+                                        <span className="checkout-options-size">
+                                          Triết {item.productDetail.volume}ml
+                                        </span>
+                                      </div>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="checkout-col">
-                            <span className="checkout-price-span">399.000 ₫</span>
-                          </td>
-                          <td className="checkout-col checkout-qty">
-                            <span>Số lượng : 2</span>
-                          </td>
-                        </tr>
+                              </td>
+                              <td className="checkout-col">
+                                <span className="checkout-price-span">
+                                  {(
+                                    item.productDetail.unitPrice *
+                                    item.orderQuantity
+                                  ).toLocaleString()}{" "}
+                                  ₫
+                                </span>
+                              </td>
+                              <td className="checkout-col checkout-qty">
+                                <span>Số lượng : {item.orderQuantity}</span>
+                              </td>
+                            </tr>
+                          ))}
                       </tbody>
                     </table>
                   </div>
@@ -154,61 +217,65 @@ export default function CheckOut() {
                 <div className="checkout-wrapper">
                   <div className="checkout-inner">
                     <div className="checkout-change">
-                      <h2 className="checkout-change-head">Phương thức vận chuyển</h2>
+                      <h2 className="checkout-change-head">
+                        Phương thức vận chuyển
+                      </h2>
                     </div>
                     <div className="checkout-desc">
-                      Cập nhật thông tin giao hàng để xem chi phí và thời gian giao hàng.
-                    </div>
-                  </div>
-                </div>
-                <div className="checkout-wrapper">
-                  <div className="checkout-inner">
-                    <div className="checkout-change checkout-payment">
-                      <h2 className="checkout-change-head">Phương thức thanh toán</h2>
-                    </div>
-                    <div className="payment-content">
-                      <div className="payment-content-form">
-                        <label htmlFor="cashondelivery" className="payment-content-label">
-                          <input
-                            id="cashondelivery"
-                            type="radio"
-                            defaultValue="cashondelivery"
-                            className="payment-content-input"
-                          />
-                          <span className="payment-content-card">
-                            <b>Thanh toán Khi nhận hàng</b>
-                            <img src="/fonts/money-outline.svg" alt="" />
-                          </span>
-                        </label>
-                      </div>
-                      <div className="payment-content-form">
-                        <label htmlFor="vnpay" className="payment-content-label">
-                          <input id="vnpay" type="radio" defaultValue="vnpay" className="payment-content-input" />
-                          <span className="payment-content-card">
-                            <b>Thanh toán bằng VNpay</b>
-                            <img src="/fonts/vnpay-outline.svg" alt="" />
-                          </span>
-                        </label>
-                      </div>
+                      Cập nhật thông tin giao hàng để xem chi phí và thời gian
+                      giao hàng.
                     </div>
                   </div>
                 </div>
                 <div className="checkout-wrapper">
                   <div className="checkout-inner">
                     <div className="checkout-detail">
-                      <h2 className="checkout-detail-title">Chi tiết đơn hàng</h2>
+                      <h2 className="checkout-detail-title">
+                        Chi tiết đơn hàng
+                      </h2>
                     </div>
                     <div className="checkout-detail-content">
                       <div className="checkout-detail-group">
-                        <div className="checkout-detail-list">Giá trị đơn hàng</div>
-                        <div className="checkout-detail-price">1.297.000 ₫</div>
+                        <div className="checkout-detail-list">
+                          Giá trị đơn hàng
+                        </div>
+                        <div className="checkout-detail-price">
+                          {dataCart &&
+                            dataCart
+                              .reduce(
+                                (acc, item) =>
+                                  acc +
+                                  item.productDetail.unitPrice *
+                                    item.orderQuantity,
+                                0
+                              )
+                              .toLocaleString()}{" "}
+                          ₫
+                        </div>
                       </div>
                       <div className="checkout-detail-group">
                         <div className="grand-totals">Tổng tiền thanh toán</div>
-                        <div className="total-amount">1.297.000 ₫</div>
+                        <div className="total-amount">
+                          {dataCart &&
+                            dataCart
+                              .reduce(
+                                (acc, item) =>
+                                  acc +
+                                  item.productDetail.unitPrice *
+                                    item.orderQuantity,
+                                0
+                              )
+                              .toLocaleString()}{" "}
+                          ₫
+                        </div>
                       </div>
                       <div className="checkout-bottom-btn">
-                        <button className="checkout-bottom-check">Thanh toán</button>
+                        <button
+                          className="checkout-bottom-check"
+                          onClick={handleCheckout}
+                        >
+                          Thanh toán
+                        </button>
                       </div>
                     </div>
                   </div>

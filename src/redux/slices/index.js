@@ -10,6 +10,10 @@ import wishListSlice from './wishListSlice';
 // import shopsSlice from './shopsSlice';
 import productDetailSlice from './productDetailSlice';
 import productDetailUserSlice from './productDetailUserSlice';
+import productRealSlice from './productRealSlice';
+import cartSlice from './cartSlice';
+import orderSlice from './orderSlice';
+
 const reducers = combineReducers({
   category: categorySlice,
   auth: authSlice,
@@ -21,6 +25,9 @@ const reducers = combineReducers({
   productDetailUser: productDetailUserSlice,
   comment: commentSlice,
   wishList: wishListSlice,
+  productReal: productRealSlice,
+  carts: cartSlice,
+  orders: orderSlice,
 });
 
 export default reducers;

@@ -2,43 +2,49 @@ import React, { useEffect, useState } from 'react';
 import { formatMoney } from '../../../utils/formatData';
 import { useSelector } from 'react-redux';
 
-export default function ProductInfo({ toggleVisibility, visible, product }) {
+export default function ProductInfo({ toggleVisibility, visible, listProductDetail, dataReal }) {
   const [volumeSelected, setVolumeSelected] = useState(null);
 
   useEffect(() => {
-    if (product?.content && product.content.length > 0) {
-      setVolumeSelected(product.content[0].id); // Đặt ID thể tích đầu tiên là mặc định
+    if (listProductDetail?.content && listProductDetail.content.length > 0) {
+      setVolumeSelected(listProductDetail.content[0].id); // Đặt ID thể tích đầu tiên là mặc định
+      console.log('set:', listProductDetail.content[0]);
     }
-  }, [product]);
+  }, [listProductDetail]);
+
+  useEffect(() => {
+    console.log('datareal in product infor:', dataReal);
+  }, [dataReal]);
 
   const handleChangeVolume = (id) => {
     setVolumeSelected(id);
   };
 
   // Tìm giá dựa trên volumeSelected
-  const selectedProduct = product?.content?.find((item) => item.id === volumeSelected);
+  const selectedProduct = listProductDetail?.content?.find((item) => item.id === volumeSelected);
   const price = selectedProduct ? selectedProduct.unitPrice : 0;
+  console.log('thong tin can tim', dataReal);
 
   return (
     <div className="product-details-right">
       <div className="product-details-title">
         <div className="product-details-group">
-          <h2 className="product-details-title-head">{product?.content?.[0]?.product?.productName}</h2>
+          <h2 className="product-details-title-head">{dataReal?.productName}</h2>
           <div className="product-details-code">
-            Mã sp: <span className="product-code-value">{product?.content?.[0]?.product?.sku}</span>
+            Mã sp: <span className="product-code-value">{dataReal?.sku}</span>
           </div>
           <div className="flex items-center my-[16px] flex-wrap gap-2">
             <div className="text-[1.4rem]">
               Thương hiệu:{' '}
               <span className="text-[var(--primary-user-color)] text-[1.4rem] font-medium mr-3">
-                {product?.content?.[0]?.product?.brand?.brandName}
+                {dataReal?.brand?.brandName}
               </span>
               |
             </div>
             <div className="text-[1.4rem] mx-3">
               Danh mục:{' '}
               <span className="text-[var(--primary-user-color)] text-[1.4rem] font-medium mr-3">
-                {product?.content?.[0]?.product?.category?.categoryName}
+                {dataReal?.category?.categoryName}
               </span>
               |
             </div>
@@ -73,7 +79,7 @@ export default function ProductInfo({ toggleVisibility, visible, product }) {
       <div className="product-swatch-options">
         <div className="product-swatch-attribute">
           <span className="attribute-size">Dung tích:</span>
-          {product?.content?.map((item) => (
+          {listProductDetail?.content?.map((item) => (
             <div className="swatch-size-inner" key={item.id}>
               <div
                 className={`swatch-size-item ${item.id === volumeSelected ? 'active-capacity' : ''}`}
@@ -109,31 +115,15 @@ export default function ProductInfo({ toggleVisibility, visible, product }) {
 
       <div className="product-details-desc">
         <div className="details-desc-wrap" onClick={() => toggleVisibility('material')}>
-          <div className={visible.material ? 'details-desc-list action' : 'details-desc-list'}>Chất liệu</div>
-          {visible.material && <div className="details-desc-content">94% polyester 6% spandex.</div>}
+          <div className={visible.material ? 'details-desc-list action' : 'details-desc-list'}>Mô tả sản phẩm:</div>
+          {visible.material && <div className="details-desc-content">{dataReal.instruct}</div>}
         </div>
 
         <div className="details-desc-wrap" onClick={() => toggleVisibility('instructions')}>
           <div className={visible.instructions ? 'details-desc-list action' : 'details-desc-list'}>
             Hướng dẫn sử dụng
           </div>
-          {visible.instructions && (
-            <div className="details-desc-content">
-              Giặt máy ở chế độ nhẹ, nhiệt độ thường.
-              <br />
-              Không sử dụng chất tẩy.
-              <br />
-              Phơi trong bóng mát.
-              <br />
-              Sấy khô ở nhiệt độ thấp.
-              <br />
-              Là ở nhiệt độ thấp 110 độ C.
-              <br />
-              Giặt với sản phẩm cùng màu.
-              <br />
-              Không là lên chi tiết trang trí.
-            </div>
-          )}
+          {visible.instructions && <div className="details-desc-content">{dataReal.guarantee}</div>}
         </div>
       </div>
     </div>
