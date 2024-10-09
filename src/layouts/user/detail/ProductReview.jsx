@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ProductDescription from './productDescription';
 import ProductRelateReviews from './productRelateReviews';
 
-export default function ProductReview({ product }) {
+export default function ProductReview({ product, handleCommentChange, handleSubmit, commentText }) {
   const [selectedValue, setSelectedValue] = useState('Description');
 
   const handleChange = (event) => {

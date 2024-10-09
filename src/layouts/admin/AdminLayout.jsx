@@ -106,14 +106,12 @@ export default function AdminLayout() {
           toggleDarkMode={toggleDarkMode}
           isDarkMode={isDarkMode}
           isClose={isClose}
-          t={t}
         />
         <div className="admin-content">
           <HeaderAdmin
             toggleCloseSidebar={toggleCloseSidebar}
             toggleDarkMode={toggleDarkMode}
             isDarkMode={isDarkMode}
-            t={t}
             handleChangeLanguage={handleChangeLanguage}
             language={language}
           />

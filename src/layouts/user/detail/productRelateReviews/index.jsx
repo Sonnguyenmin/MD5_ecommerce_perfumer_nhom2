@@ -1,10 +1,18 @@
 import { Button, Input } from 'antd';
 import React from 'react';
 
-export default function ProductRelateReviews() {
+export default function ProductRelateReviews({ product }) {
+  console.log('product: ', product);
+
   return (
     <>
-      <div className="bg-white shadow-[rgba(0,0,0,0.16)_0px_10px_36px_0px,rgba(0,0,0,0.06)_0px_0px_0px_1px] rounded-lg p-4 w-full">
+      <div className=" p-4 w-full">
+        <form className="comment-form">
+          <Input.TextArea rows={4} placeholder="Viết bình luận ở đây..." />
+          <Button type="primary" htmlType="submit" className="mt-2">
+            Thêm bình luận
+          </Button>
+        </form>
         <div className="p-[20px_0_30px_0] border-b border-r-slate-400">
           <div className="flex items-center space-x-4">
             <div className="w-[50px] h-[50px] bg-gray-200 rounded-full">

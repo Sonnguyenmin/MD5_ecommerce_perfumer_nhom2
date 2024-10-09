@@ -1,7 +1,60 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import './shops.scss';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { filerProductByCategory } from '../../../services/productDetailService';
+import { formatMoney } from '../../../utils/formatData';
+import { FaHeart } from 'react-icons/fa';
+import { CiHeart } from 'react-icons/ci';
+import { Cookies } from 'react-cookie';
+import { addWishList, getAllWishlist } from '../../../services/wishlistService';
+import { notification } from 'antd';
 
 export default function Shops() {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const filterProducts = useSelector((state) => state.product);
+  const { dataWishlist } = useSelector((state) => state.wishList);
+
+  useEffect(() => {
+    dispatch(filerProductByCategory(id));
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    dispatch(getAllWishlist());
+  }, []);
+
+  // Add sản phẩm vào danh sách ưu thích
+  const handleAddWishList = (id) => {
+    const accessToken = new Cookies().get('accessToken');
+    if (!accessToken) {
+      notification.error({
+        message: 'Thất bại',
+        description: 'Bạn chưa đăng nhập. Mời bạn đăng nhập để thêm sản phẩm yêu thích.',
+        duration: 1,
+      });
+      return;
+    }
+    const checkWish = dataWishlist?.content?.map((wl) => wl.product.id).includes(id);
+    if (checkWish) {
+      notification.success({
+        message: 'Thành công',
+        description: 'Xóa thành công danh sách sản phẩm',
+        duration: 1,
+      });
+    } else {
+      notification.success({
+        message: 'Thành công',
+        description: 'Thêm thành công danh sách sản phẩm',
+        duration: 1,
+      });
+    }
+    // Gọi API
+    dispatch(addWishList(id)).then(() => {
+      dispatch(getAllWishlist());
+    });
+  };
+
   return (
     <>
       <section className="banner">
@@ -78,318 +131,46 @@ export default function Shops() {
           <section className="newproducts">
             <div className="product">
               <div className="rows sm-gutter ">
-                <div className="cols l-3 medium-6 c-6">
-                  <div className="product_item ">
-                    <div className="product_withList">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </div>
-                    <div className="product_free">
-                      <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
-                    </div>
-                    <Link
-                      href=""
-                      className="product_item-img"
-                      style={{
-                        backgroundImage: 'url(/vperfume/nuochoanu/1.jpg)',
-                      }}
-                    />
-                    <div className="product_item-tocart">
-                      <span>Thêm nhanh vào giỏ</span>
-                    </div>
-                    <div className="product_opsions">
-                      <Link href="" className="product_item-head">
-                        Áo khoác chống nắng nam
-                      </Link>
-                      <div className="product_item-price">549.000 ₫</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="cols l-3 medium-6 c-6">
-                  <div className="product_item ">
-                    <div className="product_withList">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </div>
-                    <div className="product_free">
-                      <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
-                    </div>
-                    <Link
-                      href=""
-                      className="product_item-img"
-                      style={{
-                        backgroundImage: 'url(/vperfume/nuochoanu/1.jpg)',
-                      }}
-                    />
-                    <div className="product_item-tocart">
-                      <span>Thêm nhanh vào giỏ</span>
-                    </div>
-                    <div className="product_opsions">
-                      <Link href="" className="product_item-head">
-                        Áo khoác chống nắng nam
-                      </Link>
-                      <div className="product_item-price">549.000 ₫</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="cols l-3 medium-6 c-6">
-                  <div className="product_item ">
-                    <div className="product_withList">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </div>
-                    <div className="product_free">
-                      <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
-                    </div>
-                    <Link
-                      href=""
-                      className="product_item-img"
-                      style={{
-                        backgroundImage: 'url(/vperfume/nuochoanu/1.jpg)',
-                      }}
-                    />
-                    <div className="product_item-tocart">
-                      <span>Thêm nhanh vào giỏ</span>
-                    </div>
-                    <div className="product_opsions">
-                      <Link href="" className="product_item-head">
-                        Áo khoác chống nắng nam
-                      </Link>
-                      <div className="product_item-price">549.000 ₫</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="cols l-3 medium-6 c-6">
-                  <div className="product_item ">
-                    <div className="product_withList">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </div>
-                    <div className="product_free">
-                      <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
-                    </div>
-                    <Link
-                      href=""
-                      className="product_item-img"
-                      style={{
-                        backgroundImage: 'url(/vperfume/nuochoanu/1.jpg)',
-                      }}
-                    />
-                    <div className="product_item-tocart">
-                      <span>Thêm nhanh vào giỏ</span>
-                    </div>
-                    <div className="product_opsions">
-                      <Link href="" className="product_item-head">
-                        Áo khoác chống nắng nam
-                      </Link>
-                      <div className="product_item-price">549.000 ₫</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="cols l-3 medium-6 c-6">
-                  <div className="product_item ">
-                    <div className="product_withList">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </div>
-                    <div className="product_free">
-                      <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
-                    </div>
-                    <Link
-                      href=""
-                      className="product_item-img"
-                      style={{
-                        backgroundImage: 'url(/vperfume/nuochoanu/1.jpg)',
-                      }}
-                    />
-                    <div className="product_item-tocart">
-                      <span>Thêm nhanh vào giỏ</span>
-                    </div>
-                    <div className="product_opsions">
-                      <Link href="" className="product_item-head">
-                        Áo khoác chống nắng nam
-                      </Link>
-                      <div className="product_item-price">549.000 ₫</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="cols l-3 medium-6 c-6">
-                  <div className="product_item ">
-                    <div className="product_withList">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </div>
-                    <div className="product_free">
-                      <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
-                    </div>
-                    <Link
-                      href=""
-                      className="product_item-img"
-                      style={{
-                        backgroundImage: 'url(/vperfume/nuochoanu/1.jpg)',
-                      }}
-                    />
-                    <div className="product_item-tocart">
-                      <span>Thêm nhanh vào giỏ</span>
-                    </div>
-                    <div className="product_opsions">
-                      <Link href="" className="product_item-head">
-                        Áo khoác chống nắng nam
-                      </Link>
-                      <div className="product_item-price">549.000 ₫</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="cols l-3 medium-6 c-6">
-                  <div className="product_item ">
-                    <div className="product_withList">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </div>
-                    <div className="product_free">
-                      <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
-                    </div>
-                    <Link
-                      href=""
-                      className="product_item-img"
-                      style={{
-                        backgroundImage: 'url(/vperfume/nuochoanu/1.jpg)',
-                      }}
-                    />
-                    <div className="product_item-tocart">
-                      <span>Thêm nhanh vào giỏ</span>
-                    </div>
-                    <div className="product_opsions">
-                      <Link href="" className="product_item-head">
-                        Áo khoác chống nắng nam
-                      </Link>
-                      <div className="product_item-price">549.000 ₫</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="cols l-3 medium-6 c-6">
-                  <div className="product_item ">
-                    <div className="product_withList">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </div>
-                    <div className="product_free">
-                      <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
-                    </div>
-                    <Link
-                      href=""
-                      className="product_item-img"
-                      style={{
-                        backgroundImage: 'url(/vperfume/nuochoanu/1.jpg)',
-                      }}
-                    />
-                    <div className="product_item-tocart">
-                      <span>Thêm nhanh vào giỏ</span>
-                    </div>
-                    <div className="product_opsions">
-                      <Link href="" className="product_item-head">
-                        Áo khoác chống nắng nam
-                      </Link>
-                      <div className="product_item-price">549.000 ₫</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="cols l-3 medium-6 c-6">
-                  <div className="product_item ">
-                    <div className="product_withList">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </div>
-                    <div className="product_free">
-                      <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
-                    </div>
-                    <Link
-                      href=""
-                      className="product_item-img"
-                      style={{
-                        backgroundImage: 'url(/vperfume/nuochoanu/1.jpg)',
-                      }}
-                    />
-                    <div className="product_item-tocart">
-                      <span>Thêm nhanh vào giỏ</span>
-                    </div>
-                    <div className="product_opsions">
-                      <Link href="" className="product_item-head">
-                        Áo khoác chống nắng nam
-                      </Link>
-                      <div className="product_item-price">549.000 ₫</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="cols l-3 medium-6 c-6">
-                  <div className="product_item ">
-                    <div className="product_withList">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </div>
-                    <div className="product_free">
-                      <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
-                    </div>
-                    <Link
-                      href=""
-                      className="product_item-img"
-                      style={{
-                        backgroundImage: 'url(/vperfume/nuochoanu/1.jpg)',
-                      }}
-                    />
-                    <div className="product_item-tocart">
-                      <span>Thêm nhanh vào giỏ</span>
-                    </div>
-                    <div className="product_opsions">
-                      <Link href="" className="product_item-head">
-                        Áo khoác chống nắng nam
-                      </Link>
-                      <div className="product_item-price">549.000 ₫</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="cols l-3 medium-6 c-6">
-                  <div className="product_item ">
-                    <div className="product_withList">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </div>
-                    <div className="product_free">
-                      <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
-                    </div>
-                    <Link
-                      href=""
-                      className="product_item-img"
-                      style={{
-                        backgroundImage: 'url(/vperfume/nuochoanu/1.jpg)',
-                      }}
-                    />
-                    <div className="product_item-tocart">
-                      <span>Thêm nhanh vào giỏ</span>
-                    </div>
-                    <div className="product_opsions">
-                      <Link href="" className="product_item-head">
-                        Áo khoác chống nắng nam
-                      </Link>
-                      <div className="product_item-price">549.000 ₫</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="cols l-3 medium-6 c-6">
-                  <div className="product_item ">
-                    <div className="product_withList">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </div>
-                    <div className="product_free">
-                      <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
-                    </div>
-                    <Link
-                      href=""
-                      className="product_item-img"
-                      style={{
-                        backgroundImage: 'url(/vperfume/nuochoanu/1.jpg)',
-                      }}
-                    />
-                    <div className="product_item-tocart">
-                      <span>Thêm nhanh vào giỏ</span>
-                    </div>
-                    <div className="product_opsions">
-                      <Link href="" className="product_item-head">
-                        Áo khoác chống nắng nam
-                      </Link>
-                      <div className="product_item-price">549.000 ₫</div>
-                    </div>
-                  </div>
-                </div>
+                {filterProducts?.dataProduct?.length > 0 ? (
+                  <>
+                    {filterProducts?.dataProduct?.map((product) => (
+                      <div className="cols l-3 medium-6 c-6" key={product.id}>
+                        <div className="product_item ">
+                          <div onClick={() => handleAddWishList(product.id)} className="product_withList">
+                            {dataWishlist && dataWishlist?.content?.map((wl) => wl.product.id).includes(product.id) ? (
+                              <FaHeart size={20} className="text-red-600" />
+                            ) : (
+                              <CiHeart size={20} />
+                            )}
+                          </div>
+                          {/* <div className="product_free">
+                            <img src="/imgs/sale/newproduct.webp" alt="" className="product_free-img" />
+                          </div> */}
+                          <Link
+                            href=""
+                            className="product_item-img"
+                            style={{
+                              backgroundImage: `url(${product.image})`,
+                            }}
+                          />
+                          <div className="product_item-tocart">
+                            <span>Thêm nhanh vào giỏ</span>
+                          </div>
+                          <div className="product_opsions">
+                            <Link href="" className="product_item-head">
+                              {product.productName}
+                            </Link>
+                            {/* <div className="product_item-price">{formatMoney(product.unitPrice)}</div> */}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <p className="text-[40px] text-center block my-[200px] ">Danh mục này không có sản phẩm nào !</p>
+                  </>
+                )}
               </div>
               <ul className="pagination tootbal_pagination">
                 <li className="pagination-item">

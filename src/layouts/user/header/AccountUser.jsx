@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../../../redux/slices/authSlice';
 import { notification } from 'antd';
-import { loadUserFormCookie } from '../../../services/authService';
+// import { loadUserFormCookie } from '../../../services/authService';
 import { Cookies } from 'react-cookie';
+import { removeWishlist } from '../../../redux/slices/wishListSlice';
 
 export default function AccountUser() {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ export default function AccountUser() {
       description: 'Bạn đã đăng xuất thành công!',
       duration: 2,
     });
+    dispatch(removeWishlist());
     navigate('/');
   };
   return (

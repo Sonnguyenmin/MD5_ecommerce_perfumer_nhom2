@@ -1,28 +1,22 @@
-import { useEffect, useState } from "react";
-import "./productDetail.scss";
-import SliderDetail from "../../../layouts/user/detail/SliderDetail";
-import ProductReview from "../../../layouts/user/detail/ProductReview";
-import ProductRelate from "../../../layouts/user/detail/ProductRelate";
-import ProductPayment from "../../../layouts/user/detail/ProductPayment";
-import ProductInfo from "../../../layouts/user/detail/ProductInfo";
-import ProductBreadcrumb from "../../../layouts/user/detail/ProductBreadcrumb";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { findProductDetailById } from "../../../services/productDetailService";
-import { findProductByIdForUser } from "../../../services/productService";
+import { useEffect, useState } from 'react';
+import './productDetail.scss';
+import SliderDetail from '../../../layouts/user/detail/SliderDetail';
+import ProductReview from '../../../layouts/user/detail/ProductReview';
+import ProductRelate from '../../../layouts/user/detail/ProductRelate';
+import ProductPayment from '../../../layouts/user/detail/ProductPayment';
+import ProductInfo from '../../../layouts/user/detail/ProductInfo';
+import ProductBreadcrumb from '../../../layouts/user/detail/ProductBreadcrumb';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { findProductDetailById } from '../../../services/productDetailService';
+import { findProductByIdForUser } from '../../../services/productService';
 
 export default function ProductDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
-  const { dataProduct, loadingProduct, errorProduct } = useSelector(
-    (state) => state.productDetailUser
-  );
-  const {
-    data: dataReal,
-    status: statusReal,
-    error: errorReal,
-  } = useSelector((state) => state.productReal);
+  const { dataProduct, loadingProduct, errorProduct } = useSelector((state) => state.productDetailUser);
+  const { data: dataReal, status: statusReal, error: errorReal } = useSelector((state) => state.productReal);
 
   console.log(dataProduct);
 
@@ -44,10 +38,11 @@ export default function ProductDetails() {
   };
 
   // Kiểm tra trạng thái loading và lỗi
-  if (loadingProduct === "pending") return <div>Loading...</div>;
+  if (loadingProduct === 'pending') return <div>Loading...</div>;
   if (errorProduct) return <div>Error: {errorProduct}</div>;
 
   // const [currentImage, setCurrentImage] = useState(1); // Bắt đầu với hình ảnh đầu tiên
+
   return (
     <>
       <div className="grid wide">
@@ -72,7 +67,7 @@ export default function ProductDetails() {
         {/* product Reviews */}
         <section className="ProductDetail-reviews apps_content">
           <div className="grid wide">
-            <ProductReview product={dataProduct?.id} />
+            <ProductReview product={dataProduct} />
           </div>
         </section>
         {/* end product reviews */}
