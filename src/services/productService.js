@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BASE_URL, formAxios } from '../api';
-import { GET, POST, PUT } from '../constants/httpMethod';
+import { DELETE, GET, POST, PUT } from '../constants/httpMethod';
 
 export const listProductByCategory = createAsyncThunk('newProduct', async () => {
   const res = await BASE_URL[GET]('/product/top');
@@ -13,23 +13,28 @@ export const findAllProduct = createAsyncThunk('product/findAll', async ({ page,
 });
 
 export const findProductbyId = createAsyncThunk('product/findById', async (id) => {
-  const res = await BASE_URL.get(`admin/products/${id}`);
+  const res = await BASE_URL[GET](`admin/products/${id}`);
   return res.data.content;
 });
 
 export const addProduct = createAsyncThunk('product/add', async (product) => {
   const res = formAxios[POST]('admin/products', product);
-  console.log(res);
+  // console.log(res);
 });
 
 export const editProduct = createAsyncThunk('product/edit', async ({ id, product }) => {
   const res = formAxios[PUT](`admin/products/${id}`, product);
-  console.log(res);
+  // console.log(res);
   return res;
 });
 
 export const deleteProduct = createAsyncThunk('product/add', async (id) => {
-  const res = BASE_URL.delete(`admin/products/${id}`);
-  console.log(res);
+  const res = BASE_URL[DELETE](`admin/products/${id}`);
+  // console.log(res);
+  return res;
+});
+
+export const findProductByIdForUser = createAsyncThunk('product/', async ({ id }) => {
+  const res = BASE_URL[GET](`/product/${id}`);
   return res;
 });
