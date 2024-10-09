@@ -8,7 +8,6 @@ export default function ProductInfo({ toggleVisibility, visible, product }) {
   useEffect(() => {
     if (product?.content && product.content.length > 0) {
       setVolumeSelected(product.content[0].id); // Đặt ID thể tích đầu tiên là mặc định
-      console.log('set:', product.content[0]);
     }
   }, [product]);
 
@@ -24,10 +23,7 @@ export default function ProductInfo({ toggleVisibility, visible, product }) {
     <div className="product-details-right">
       <div className="product-details-title">
         <div className="product-details-group">
-          <h2 className="product-details-title-head">
-            {product?.content?.[0]?.product?.productName}
-            {console.log('Product:', product)}
-          </h2>
+          <h2 className="product-details-title-head">{product?.content?.[0]?.product?.productName}</h2>
           <div className="product-details-code">
             Mã sp: <span className="product-code-value">{product?.content?.[0]?.product?.sku}</span>
           </div>

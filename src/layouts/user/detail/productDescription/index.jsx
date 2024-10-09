@@ -3,7 +3,7 @@ import React from 'react';
 export default function ProductDescription() {
   return (
     <>
-      <div className="bg-white shadow-[rgba(0,0,0,0.16)_0px_10px_36px_0px,rgba(0,0,0,0.06)_0px_0px_0px_1px] rounded-lg p-4 w-full">
+      <div className=" p-4 w-full">
         <div className=" p-4">
           <h1 className="text-[2rem] font-bold text-[#5366f5] mb-8 ">Giới thiệu chai nước hoa nữ Lyric Woman</h1>
 

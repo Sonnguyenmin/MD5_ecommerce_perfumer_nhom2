@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { FAILED, IDLE, PENDING, SUCCESSFULLY } from '../constants/status';
-import { findAllProDetail } from '../../services/productDetailService';
+import { findProductDetailById, filerProductByCategory } from '../../services/productDetailService';
 
 const productDetailSlice = createSlice({
   name: 'ProductDetail',
@@ -26,8 +26,6 @@ const productDetailSlice = createSlice({
     //   state.errorProDetail = action.error.message;
     // });
     builder.addCase(findProductDetailById.fulfilled, (state, action) => {
-      console.log('Slice product detail', action.payload);
-      console.log('product detail', action.payload);
       state.dataProduct = action.payload;
     });
     builder.addCase(findProductDetailById.rejected, (state, action) => {

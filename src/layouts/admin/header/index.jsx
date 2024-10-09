@@ -6,17 +6,18 @@ import React from 'react';
 import { logout } from '../../../redux/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { notification } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 export default function HeaderAdmin({
   toggleCloseSidebar,
   toggleDarkMode,
   isDarkMode,
-  t,
   handleChangeLanguage,
   language,
 }) {
   // Lấy dữ liệu từ Redux store
   const { data } = useSelector((state) => state.auth);
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
 
@@ -52,11 +53,11 @@ export default function HeaderAdmin({
             <ul className="header-img-translate">
               <li className="header-img-translate-item mb-2" onClick={() => handleChangeLanguage('en')}>
                 <img src="/england.svg" alt="" />
-                <span className="ml-3">{t('admin.0.headerAdmin.0.england')}</span>
+                <span className="ml-3">{t('england')}</span>
               </li>
               <li className="header-img-translate-item" onClick={() => handleChangeLanguage('vi')}>
                 <img src="/vietnam.png" alt="" />
-                <span className="ml-3">{t('admin.0.headerAdmin.0.vietnamese')}</span>
+                <span className="ml-3">{t('vietnamese')}</span>
               </li>
             </ul>
           </li>
@@ -78,13 +79,13 @@ export default function HeaderAdmin({
                 <li className="profile-inner">
                   <div href="" className="profile-inner-link">
                     <i className="uil uil-user"></i>
-                    {data?.data?.fullName || t('admin.0.headerAdmin.0.nameAdmin')}
+                    {data?.data?.fullName || t('nameAdmin')}
                   </div>
                 </li>
                 <li className="profile-inner">
                   <div className="profile-inner-link" onClick={handleLogout}>
                     <i className="uil uil-sign-out-alt"></i>
-                    {t('admin.0.headerAdmin.0.signOutAdmin')}
+                    {t('signOutAdmin')}
                   </div>
                 </li>
               </ul>

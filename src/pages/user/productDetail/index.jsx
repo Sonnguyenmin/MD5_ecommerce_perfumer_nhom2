@@ -16,10 +16,12 @@ export default function ProductDetails() {
 
   const { dataProduct, loadingProduct, errorProduct } = useSelector((state) => state.productDetailUser);
 
-  console.log(dataProduct);
-
   useEffect(() => {
     dispatch(findProductDetailById({ id }));
+
+    if (dataProduct) {
+      const findOneProduct = dataProduct?.content.find((item) => item.id == id);
+    }
   }, [dispatch, id]);
 
   const [visible, setVisible] = useState({});
@@ -36,6 +38,7 @@ export default function ProductDetails() {
   if (errorProduct) return <div>Error: {errorProduct}</div>;
 
   // const [currentImage, setCurrentImage] = useState(1); // Bắt đầu với hình ảnh đầu tiên
+
   return (
     <>
       <div className="grid wide">
@@ -55,7 +58,7 @@ export default function ProductDetails() {
         {/* product Reviews */}
         <section className="ProductDetail-reviews apps_content">
           <div className="grid wide">
-            <ProductReview product={dataProduct?.id} />
+            <ProductReview product={dataProduct} />
           </div>
         </section>
         {/* end product reviews */}

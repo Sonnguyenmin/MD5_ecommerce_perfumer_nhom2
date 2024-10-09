@@ -1,44 +1,29 @@
 {
-  "admin": [
-    {
-      "sidebar": [
-        {
-          "dashboard": "Dashboard",
-          "brand": "Brand",
-          "category": "Categories",
-          "capacity": "Capacity",
-          "product": "Products",
-          "productDetail": "ProductDetail",
-          "order": "Order",
-          "comment": "Comment",
-          "banner": "Banner",
-          "user": "Users",
-          "signOut": "Sign Out",
-          "darkMode": "Dark Mode",
-          "lightMode": "Light Mode"
-        }
-      ],
-      "headerAdmin": [
-        {
-          "vietnamese": "Vietnam",
-          "england": "England",
-          "nameAdmin": "Administrator",
-          "signOutAdmin": "Sign Out"
-        }
-      ],
-      "category": [
-        {
-          "title": "List of categories",
-          "search": "Search categories by name",
-          "nameCate": "Name",
-          "statusCate": "Status",
-          "actionCate": "Actions",
-          "page1": "Show 10 records/page",
-          "page2": "Show 20 records/page",
-          "page3": "Show 50 records/page",
-          "page4": "Show 100 records/page"
-        }
-      ]
-    }
-  ]
+  "dashboard": "Dashboard",
+  "brand": "Brand",
+  "category": "Categories",
+  "capacity": "Capacity",
+  "product": "Products",
+  "productDetail": "ProductDetail",
+  "order": "Order",
+  "comment": "Comment",
+  "banner": "Banner",
+  "user": "Users",
+  "signOut": "Sign Out",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode",
+  "vietnamese": "Vietnam",
+  "england": "England",
+  "nameAdmin": "Administrator",
+  "signOutAdmin": "Sign Out",
+  "title": "List of categories",
+  "search": "Search categories by name",
+  "nameCate": "Name",
+  "statusCate": "Status",
+  "actionCate": "Actions",
+  "page1": "Show 10 records/page",
+  "page2": "Show 20 records/page",
+  "page3": "Show 50 records/page",
+  "page4": "Show 100 records/page",
+  "listProduct": "List product"
 }

@@ -53,6 +53,7 @@ export default function ProfileUser() {
                 <ul className="space-y-3">
                   <li className=" flex items-center text-gray-700 h-[40px] text-[1.4rem] font-semibold cursor-pointer">
                     <NavLink
+                      end
                       className={({ isActive }) =>
                         `px-3 h-full block w-full leading-[40px] ${isActive ? 'profile-users-active' : ''}`
                       }
