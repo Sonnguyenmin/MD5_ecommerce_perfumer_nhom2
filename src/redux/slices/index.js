@@ -10,6 +10,9 @@ import productSlice from './productSlice';
 import productDetailSlice from './productDetailSlice';
 import productDetailUserSlice from './productDetailUserSlice';
 import productRealSlice from "./productRealSlice";
+import cartSlice from './cartSlice';
+import orderSlice from './orderSlice';
+
 const reducers = combineReducers({
   category: categorySlice,
   auth: authSlice,
@@ -20,6 +23,8 @@ const reducers = combineReducers({
   ProductDetail: productDetailSlice,
   productDetailUser: productDetailUserSlice,
   productReal: productRealSlice,
+  carts: cartSlice,
+  orders: orderSlice,
 });
 
 export default reducers;

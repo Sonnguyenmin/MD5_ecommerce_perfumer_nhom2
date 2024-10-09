@@ -24,10 +24,6 @@ export default function ProductDetails() {
     error: errorReal,
   } = useSelector((state) => state.productReal);
 
-  // const { dataProduct, loadingProduct, errorProduct } = useSelector(
-  //   (state) => state.productDetailUser
-  // );
-
   console.log(dataProduct);
 
   //goi theo admin
