@@ -1,32 +1,46 @@
+import { useDispatch, useSelector } from 'react-redux';
 import './dashboard.scss';
+import { getAllDashBoard } from '../../../services/DashBoardService';
+import { useEffect } from 'react';
+import { formatMoney } from '../../../utils/formatData';
 
 export default function Dashboard() {
+  const {dataDashBoard} = useSelector((state) => state.dashBoards);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllDashBoard());
+   
+  }, [dispatch]);
+
   return (
     <>
       <div className="dashboard-content">
-        <div className="overview">
-          <div className="box box1">
-            <i className="uil uil-users-alt"></i>
-            <span className="dashboard-number">2000</span>
-            <span className="dashboard-text">Người dùng</span>
-          </div>
-          <div className="box box2">
-            <i className="uil uil-taxi"></i>
-            <span className="dashboard-number">2000</span>
-            <span className="dashboard-text">Sản phẩm</span>
-          </div>
-          <div className="box box3">
-            <i className="uil uil-comment-alt-chart-lines"></i>
-            <span className="dashboard-number">2000</span>
-            <span className="dashboard-text">Bình luận</span>
-          </div>
-          <div className="box box4">
-            <i className="uil uil-comment-alt-chart-lines"></i>
-            <span className="dashboard-number">2000</span>
-            <span className="dashboard-text">Bình luận</span>
-          </div>
-        </div>
+       
+           <div className="overview">
+           <div className="box box1">
+             <i className="uil uil-users-alt"></i>
+             <span className="dashboard-number">{dataDashBoard?.content?.totalUser}</span>
+             <span className="dashboard-text">Người dùng</span>
+           </div>
+           <div className="box box2">
+             <i className="uil uil-taxi"></i>
+             <span className="dashboard-number">{dataDashBoard?.content?.totalProduct}</span>
+             <span className="dashboard-text">Sản phẩm</span>
+           </div>
+           <div className="box box3">
+             <i className="uil uil-comment-alt-chart-lines"></i>
+             <span className="dashboard-number">{dataDashBoard?.content?.totalOrder}</span>
+             <span className="dashboard-text">Tổng đơn hàng</span>
+           </div>
+           <div className="box box4">
+             <i className="uil uil-comment-alt-chart-lines"></i>
+             <span className="dashboard-number">{formatMoney(dataDashBoard?.content?.revenue)}</span>
+             <span className="dashboard-text">Doanh thu</span>
+           </div>
+         </div>
+ 
 
+       
         <div className="table-container">
           <h2>Danh sách Người Dùng</h2>
           <table className="responsive-table">

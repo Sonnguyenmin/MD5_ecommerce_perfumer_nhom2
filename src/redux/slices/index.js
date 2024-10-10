@@ -13,7 +13,7 @@ import productDetailUserSlice from './productDetailUserSlice';
 import productRealSlice from './productRealSlice';
 import cartSlice from './cartSlice';
 import orderSlice from './orderSlice';
-
+import dashBoardSlice from './dashBoardSlice';
 const reducers = combineReducers({
   category: categorySlice,
   auth: authSlice,
@@ -28,6 +28,7 @@ const reducers = combineReducers({
   productReal: productRealSlice,
   carts: cartSlice,
   orders: orderSlice,
+  dashBoards: dashBoardSlice,
 });
 
 export default reducers;
