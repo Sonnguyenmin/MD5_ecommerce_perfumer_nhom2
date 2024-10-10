@@ -28,11 +28,7 @@ export default function HeaderAdmin({
    */
   const handleLogout = () => {
     dispatch(logout());
-    notification.success({
-      message: 'Thành công',
-      description: 'Bạn đã đăng xuất thành công!',
-      duration: 1,
-    });
+
     navigate('/login');
   };
 

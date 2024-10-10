@@ -8,13 +8,10 @@ export default function ProductInfo({ toggleVisibility, visible, listProductDeta
   useEffect(() => {
     if (listProductDetail?.content && listProductDetail.content.length > 0) {
       setVolumeSelected(listProductDetail.content[0].id); // Đặt ID thể tích đầu tiên là mặc định
-      console.log('set:', listProductDetail.content[0]);
     }
   }, [listProductDetail]);
 
-  useEffect(() => {
-    console.log('datareal in product infor:', dataReal);
-  }, [dataReal]);
+  useEffect(() => {}, [dataReal]);
 
   const handleChangeVolume = (id) => {
     setVolumeSelected(id);
@@ -23,15 +20,17 @@ export default function ProductInfo({ toggleVisibility, visible, listProductDeta
   // Tìm giá dựa trên volumeSelected
   const selectedProduct = listProductDetail?.content?.find((item) => item.id === volumeSelected);
   const price = selectedProduct ? selectedProduct.unitPrice : 0;
-  console.log('thong tin can tim', dataReal);
 
   return (
     <div className="product-details-right">
       <div className="product-details-title">
         <div className="product-details-group">
           <h2 className="product-details-title-head">{dataReal?.productName}</h2>
+          <div className="product-details-code mb-6">
+            Mã SP: <span className="product-code-value ">{dataReal?.id}</span>
+          </div>
           <div className="product-details-code">
-            Mã sp: <span className="product-code-value">{dataReal?.sku}</span>
+            Sku: <span className="product-code-value">{dataReal?.sku}</span>
           </div>
           <div className="flex items-center my-[16px] flex-wrap gap-2">
             <div className="text-[1.4rem]">
@@ -65,7 +64,6 @@ export default function ProductInfo({ toggleVisibility, visible, listProductDeta
             </div>
           </div>
         </div>
-        <button className="product-details-title-heart" />
       </div>
 
       <div className="product-details-price">

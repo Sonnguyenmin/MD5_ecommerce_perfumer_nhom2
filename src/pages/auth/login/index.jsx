@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import './login.scss';
-import { Alert, Button, Input, message, notification } from 'antd';
+import { Button, Input, message, notification } from 'antd';
 import { useEffect, useRef, useState } from 'react';
 import { login } from '../../../services/authService';
 import { useDispatch } from 'react-redux';
@@ -11,6 +11,8 @@ export default function Login() {
   const handleClose = () => {
     navigate('/');
   };
+
+  const currentPath = JSON.parse(localStorage.getItem('currentPath'));
 
   //#region khởi tạo các trường trong ô input
   const [user, setUser] = useState({
@@ -23,7 +25,6 @@ export default function Login() {
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [errorServer, setErrorServer] = useState(false);
 
   const inputRefFocus = useRef();
   const navigate = useNavigate();
@@ -117,7 +118,11 @@ export default function Login() {
           if (data?.roles.some((item) => item === 'ROLE_ADMIN')) {
             navigate('/admin');
           } else {
-            navigate('/');
+            if (currentPath) {
+              navigate(currentPath);
+            } else {
+              navigate('/');
+            }
           }
 
           notification.success({

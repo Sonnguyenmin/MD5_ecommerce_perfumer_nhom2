@@ -18,8 +18,6 @@ export default function ProductDetails() {
   const { dataProduct, loadingProduct, errorProduct } = useSelector((state) => state.productDetailUser);
   const { data: dataReal, status: statusReal, error: errorReal } = useSelector((state) => state.productReal);
 
-  console.log(dataProduct);
-
   //goi theo admin
   useEffect(() => {
     dispatch(findProductDetailById({ id }));
@@ -67,7 +65,7 @@ export default function ProductDetails() {
         {/* product Reviews */}
         <section className="ProductDetail-reviews apps_content">
           <div className="grid wide">
-            <ProductReview product={dataProduct} />
+            <ProductReview productId={dataReal?.id} />
           </div>
         </section>
         {/* end product reviews */}

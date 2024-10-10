@@ -8,6 +8,12 @@ export default function UserLayout() {
   const location = useLocation();
 
   useEffect(() => {
+    const pathName = location.pathname;
+
+    localStorage.setItem('currentPath', JSON.stringify(pathName));
+  }, [location.pathname]);
+
+  useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
