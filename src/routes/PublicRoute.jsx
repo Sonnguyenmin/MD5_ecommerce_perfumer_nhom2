@@ -12,6 +12,7 @@ import ProfileUser from '../pages/user/prodfileUser';
 import InfoUserProfile from '../pages/user/infoUserProfile';
 import WishList from '../pages/user/wishList';
 import OrderDetailUser from '../pages/user/orderDetailsUser';
+import OrderDetailsUserByOrder from '../pages/user/orderDetailsUserByOrder';
 // import LazyLoader from '../components/LazyLoader';
 
 // const UserPage = React.lazy(() => import('../layouts/user/UserLayout'));
@@ -75,6 +76,10 @@ const PublicRoutes = [
           {
             path: 'orderDetailUser',
             element: <OrderDetailUser />,
+          },
+          {
+            path: 'orderDetailUserByOrder',
+            element: <OrderDetailsUserByOrder />,
           },
         ],
       },

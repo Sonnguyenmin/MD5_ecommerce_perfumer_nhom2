@@ -8,9 +8,8 @@ import { styled } from '@mui/material/styles';
 import { listOrderByUser } from '../../../services/historyOrderUserService';
 import { Cookies } from 'react-cookie';
 import { formatMoney } from '../../../utils/formatData';
-import { Link, NavLink } from 'react-router-dom';
 
-export default function OrderDetailUser() {
+export default function OrderDetailsUserByOrder() {
   const dispatch = useDispatch();
 
   const [page, setPage] = useState(1);
@@ -72,28 +71,16 @@ export default function OrderDetailUser() {
                   STT
                 </th>
                 <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
-                  Mã số ĐH
+                  Tên sản phẩm
                 </th>
                 <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
-                  Số tiền
+                  Hình ảnh sản phẩm
                 </th>
                 <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
-                  Người nhận
+                  Giá tiền
                 </th>
                 <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
-                  Ghi chú
-                </th>
-                <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
-                  Địa chỉ nhận
-                </th>
-                <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
-                  Số điện thoại
-                </th>
-                <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
-                  Trạng thái đón hàng
-                </th>
-                <th className="px-4 h-20 text-[15px] font-semibold text-[var(--text-color)] text-center whitespace-nowrap">
-                  Hành động
+                  Mã sản phẩm chi tiết
                 </th>
               </tr>
             </thead>
@@ -104,8 +91,8 @@ export default function OrderDetailUser() {
                     <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
                       {index + 1 + (page - 1) * 5}
                     </td>
-                    <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] font-semibold text-center whitespace-nowrap">
-                      <Link to="/profile/orderDetailUserByOrder"> {order.serialNumber} </Link>
+                    <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
+                      {order.serialNumber}
                     </td>
                     <td className="px-4 h-[50px] text-[15px] text-[var(--text-color)] text-center whitespace-nowrap">
                       {formatMoney(order.totalPrice)}

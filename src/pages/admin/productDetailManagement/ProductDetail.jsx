@@ -40,7 +40,7 @@ const ProductDetail = () => {
   });
 
   // DATA OF PRODUCT DETAIL
-  const { dataProDetail, errorProDetail, totalPagesProDetail } = useSelector((state) => state.productDetail);
+  const { dataProDetail, errorProDetail, totalPagesProDetail } = useSelector((state) => state.ProductDetail);
 
   const dispatch = useDispatch();
   const debounce = useDebounce(search, 500);

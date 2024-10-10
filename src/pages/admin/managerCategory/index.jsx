@@ -423,31 +423,6 @@ export default function ManagerCategory() {
             <b className="font-number">{totalElementsCategory}</b> bản ghi
           </div>
           <div className="flex items-center gap-5">
-            {/* <Select
-              defaultValue="Hiển thị 10 bản ghi / trang"
-              style={{
-                width: 220,
-              }}
-              options={[
-                {
-                  value: '10',
-                  label: 'Hiển thị 10 bản ghi / trang',
-                },
-                {
-                  value: '20',
-                  label: 'Hiển thị 20 bản ghi / trang',
-                },
-                {
-                  value: '50',
-                  label: 'Hiển thị 50 bản ghi / trang',
-                },
-                {
-                  value: '100',
-                  label: 'Hiển thị 100 bản ghi / trang',
-                },
-              ]}
-            /> */}
-
             <CustomPagination
               color="primary"
               size="large"

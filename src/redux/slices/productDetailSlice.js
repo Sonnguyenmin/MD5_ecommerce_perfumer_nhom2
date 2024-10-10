@@ -14,7 +14,7 @@ const productDetailSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(findProductDetailById.fulfilled, (state, action) => {
       state.dataProduct = action.payload;
-      console.log('admin sclie find product by id', action.payload);
+      // console.log('admin sclie find product by id', action.payload);
     });
     builder.addCase(findProductDetailById.rejected, (state, action) => {
       state.loadingProduct = FAILED;

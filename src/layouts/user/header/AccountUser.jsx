@@ -23,11 +23,7 @@ export default function AccountUser() {
    */
   const handleUserLogout = () => {
     dispatch(logout());
-    notification.success({
-      message: 'Thành công',
-      description: 'Bạn đã đăng xuất thành công!',
-      duration: 2,
-    });
+
     dispatch(removeWishlist());
     navigate('/');
   };
