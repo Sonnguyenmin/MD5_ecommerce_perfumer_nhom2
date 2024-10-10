@@ -8,6 +8,8 @@ import ManagerUser from "../pages/admin/managerUser";
 import ManagerBanner from "../pages/admin/managerBanner";
 import ManagerBrand from "../pages/admin/managerBrand";
 import ProductDetail from "../pages/admin/productDetailManagement/ProductDetail";
+import ManageOrder from "../pages/admin/managerOrder";
+import ManageOrderDetail from "../pages/admin/managerOrderDetail";
 
 // const AdminPage = React.lazy(() => import('../layouts/admin/AdminLayout'));
 // const DashboardPage = React.lazy(() => import('../pages/admin/dashboard'));
@@ -63,6 +65,14 @@ const PrivateRoutes = [
       {
         path: "brands",
         element: <ManagerBrand />,
+      },
+      {
+        path: "order",
+        element: <ManageOrder />,
+      },
+      {
+        path: "orderDetail/:id",
+        element: <ManageOrderDetail />,
       },
       {
         path: "productDetail/:id",
